@@ -12,9 +12,6 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
-#include "commands/ExampleCommand.h"
-#include "commands/MyAutoCommand.h"
-#include "subsystems/ExampleSubsystem.h"
 
 class Robot : public frc::TimedRobot {
  public:
