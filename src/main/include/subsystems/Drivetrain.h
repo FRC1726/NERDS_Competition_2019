@@ -7,7 +7,27 @@
 
 #pragma once
 
-constexpr int DRIVE_FRONT_LEFT = 0;
-constexpr int DRIVE_FRONT_RIGHT = 1;
-constexpr int DRIVE_BACK_LEFT = 2;
-constexpr int DRIVE_BACK_LEFT = 3;
+#include <frc/commands/Subsystem.h>
+#include <VictorSP.h>
+#include <DifferentialDrive.h>
+#include SpeedControllerGroup.h
+
+class Drivetrain : public frc::Subsystem {
+public:
+  Drivetrain();
+  void InitDefaultCommand() override;
+
+  void arcadeDrive(double, double);
+  void curvatureDrive(double, double, bool);
+
+private:
+  VictorSP frontLeft;
+  VictorSP frontRight;
+  VictorSP backLeft;
+  VictorSP backRight;
+
+  SpeedControllerGroup left;
+  SpeedControllerGroup right;
+
+  DifferentialDrive drive;
+};
