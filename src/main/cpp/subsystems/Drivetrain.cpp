@@ -7,7 +7,7 @@
 
 #include "subsystems/Drivetrain.h"
 #include "RobotMap.h"
-
+#include <frc/DriverStation.h>
 #include "commands/DriveWithJoysticks.h"
 
 Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
@@ -17,7 +17,9 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   backRight(DRIVE_BACK_RIGHT),
   left(frontLeft, backLeft),
   right(frontRight, backRight),
-  drive(left, right)
+  drive(left, right),
+  encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
+  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true)
 {
 
 }
@@ -36,4 +38,16 @@ void Drivetrain::arcadeDrive(double speed, double turn){
 
 void Drivetrain::curvatureDrive(double speed, double turn, bool quickTurn){
   drive.CurvatureDrive(speed, turn, quickTurn);
+}
+
+double Drivetrain::getDistance(int encoder){
+  switch(encoder){
+    case 1:
+    return encoderLeft.GetDistance();
+    case 2:
+    return encoderRight.GetDistance();
+    default:
+    frc::DriverStation::ReportError("Encoder does not exist.");
+    return 0;
+  }
 }

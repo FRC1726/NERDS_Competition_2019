@@ -11,6 +11,7 @@
 #include <frc/VictorSP.h>
 #include <frc/Drive/DifferentialDrive.h>
 #include <frc/SpeedControllerGroup.h>
+#include <frc/Encoder.h>
 
 class Drivetrain : public frc::Subsystem {
 public:
@@ -20,6 +21,7 @@ public:
   void arcadeDrive(double, double);
   void curvatureDrive(double, double, bool);
 
+  double getDistance(int);
 private:
   frc::VictorSP frontLeft;
   frc::VictorSP frontRight;
@@ -30,4 +32,7 @@ private:
   frc::SpeedControllerGroup right;
 
   frc::DifferentialDrive drive;
+
+  frc::Encoder encoderLeft;
+  frc::Encoder encoderRight;
 };

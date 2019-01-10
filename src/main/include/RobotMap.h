@@ -13,6 +13,12 @@ constexpr int DRIVE_FRONT_RIGHT = 1;
 constexpr int DRIVE_BACK_LEFT = 2;
 constexpr int DRIVE_BACK_RIGHT = 3;
 
+//encodews stuff owo
+constexpr int ENCODER_LEFT_A = 0;
+constexpr int ENCODER_LEFT_B = 1;
+constexpr int ENCODER_RIGHT_A = 2;
+constexpr int ENCODER_RIGHT_B = 3;
+
 //joysticks
 constexpr int JOYSTICK_DRIVER = 0;
 constexpr int AXIS_LEFT_X = 0;

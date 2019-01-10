@@ -44,14 +44,14 @@ bool CurvatureWithJoysticks::IsFinished() { return false; }
 
 // Called once after isFinished returns true
 void CurvatureWithJoysticks::End() {
-  Robot::drivetrain.arcadeDrive(0, 0);
+  Robot::drivetrain.curvatureDrive(0, 0, false);
 }
 
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void CurvatureWithJoysticks::Interrupted() {
-  Robot::drivetrain.curvatureDrive(0, 0);
+  Robot::drivetrain.curvatureDrive(0, 0, false);
 }
 
 double CurvatureWithJoysticks::applyDeadZone(double input, double deadzone){
