@@ -17,4 +17,7 @@ class DriveWithJoysticks : public frc::Command {
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+  double applyDeadZone(double, double);
+  double driveProfile(double, double, double);
 };

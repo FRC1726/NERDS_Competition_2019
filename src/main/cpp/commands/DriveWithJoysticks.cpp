@@ -8,6 +8,7 @@
 #include "commands/DriveWithJoysticks.h"
 #include "Robot.h"
 #include "RobotMap.h"
+#include <cmath>
 
 DriveWithJoysticks::DriveWithJoysticks() {
   // Use Requires() here to declare subsystem dependencies
@@ -42,4 +43,33 @@ void DriveWithJoysticks::End() {
 // subsystems is scheduled to run
 void DriveWithJoysticks::Interrupted() {
   Robot::drivetrain.arcadeDrive(0, 0);
+}
+
+double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
+  double absolute = fabs(input);
+
+  if(absolute < deadzone) {
+   return 0;
+  }
+
+  double normalized = (absolute - deadzone)/(1 - deadzone);
+  
+  if(input < 0){
+    return -normalized;
+  }else{
+    return normalized;
+  }
+}
+
+double DriveWithJoysticks::driveProfile(double input, double max, double min){
+  double absolute = fabs(input);
+
+  double output = absolute * (max - min) + min;
+  output *= output;
+
+  if(input < 0){
+    return -output;
+  }else{
+    return output;
+  }
 }
