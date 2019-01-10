@@ -9,9 +9,9 @@
 
 //drivetrain
 constexpr int DRIVE_FRONT_LEFT = 0;
-constexpr int DRIVE_FRONT_RIGHT = 1;
-constexpr int DRIVE_BACK_LEFT = 2;
-constexpr int DRIVE_BACK_RIGHT = 3;
+constexpr int DRIVE_BACK_LEFT = 1;
+constexpr int DRIVE_FRONT_RIGHT = 3;
+constexpr int DRIVE_BACK_RIGHT = 2;
 
 //encodews stuff owo
 constexpr int ENCODER_LEFT_A = 0;
@@ -28,10 +28,10 @@ constexpr double PI = 3.14159265358979323846;
 constexpr int JOYSTICK_DRIVER = 0;
 constexpr int AXIS_LEFT_X = 0;
 constexpr int AXIS_LEFT_Y = 1;
-constexpr int AXIS_RIGHT_X = 2;
-constexpr int AXIS_RIGHT_Y = 3;
-constexpr int AXIS_RIGHT_TRIGGER = 4;
-constexpr int AXIS_LEFT_TRIGGER = 5;
+constexpr int AXIS_RIGHT_X = 4;
+constexpr int AXIS_RIGHT_Y = 5;
+constexpr int AXIS_RIGHT_TRIGGER = 2;
+constexpr int AXIS_LEFT_TRIGGER = 3;
 
 //config
 constexpr double DEAD_ZONE = .02;

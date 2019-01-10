@@ -23,8 +23,8 @@ void DriveWithJoysticks::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoysticks::Execute() {
-  double speed = Robot::oi.getAxis(AXIS_LEFT_X);
-  double turn = Robot::oi.getAxis(AXIS_RIGHT_Y);
+  double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
+  double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
   
   speed = applyDeadZone(speed, DEAD_ZONE);
   turn = applyDeadZone(turn, DEAD_ZONE);
