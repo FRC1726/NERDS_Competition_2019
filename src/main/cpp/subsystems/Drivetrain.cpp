@@ -21,7 +21,10 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
   encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true)
 {
-
+  double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
+  double linearDistance = (PI * WHEEL_DIAMETER) * (360 / angularDistance);
+  encoderLeft.SetDistancePerPulse(linearDistance);
+  encoderRight.SetDistancePerPulse(linearDistance);
 }
 
 void Drivetrain::InitDefaultCommand() {

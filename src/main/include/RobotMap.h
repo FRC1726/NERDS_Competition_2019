@@ -19,6 +19,11 @@ constexpr int ENCODER_LEFT_B = 1;
 constexpr int ENCODER_RIGHT_A = 2;
 constexpr int ENCODER_RIGHT_B = 3;
 
+constexpr double PULSES_PER_REVOLUTION = 360;
+constexpr double GEARING_RATIO = 1;
+constexpr double WHEEL_DIAMETER = 6;
+constexpr double PI = 3.14159265358979323846;
+
 //joysticks
 constexpr int JOYSTICK_DRIVER = 0;
 constexpr int AXIS_LEFT_X = 0;
