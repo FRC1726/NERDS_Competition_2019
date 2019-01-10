@@ -7,8 +7,14 @@
 
 #pragma once
 
+#include "config.h"
+
 class ConfigLoader {
  public:
-  ConfigLoader();  
+  ConfigLoader(); 
+  double getConfig(ParameterKey<double>);
+  int getConfig(ParameterKey<int>);
+  bool getConfig(ParameterKey<bool>);
   
+ private:
 };

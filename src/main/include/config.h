@@ -2,11 +2,11 @@
 
 #include <string>
 
-/* constexpr std::string DRIVE_JOY_MAX = "Joystick/Drivetrain/Max Speed"
-constexpr std::string DRIVE_JOY_MIN = "Joystick/Drivetrain/Min Speed"
-constexpr std::string DRIVE_JOY_DEADZONE = "Joystick/Drivetrain/Deadzone"
-constexpr std::string 
-*/
-template <constexpr std::string DRIVE_JOY_MAX, "Joystick/Drivetrain/Max Speed">
-template <constexpr std::string DRIVE_JOY_MIN, "Joystick/Drivetrain/Min Speed">
-template <constexpr std::string DRIVE_JOY_DEADZONE, "Joystick/Drivetrain/Deadzone">
+
+template <typename T>
+struct ParameterKey {
+    std::string key;
+    T value;
+};
+
+const ParameterKey<double> MAGIC_KEY_NAME = {"path/to/key", 2.5};
