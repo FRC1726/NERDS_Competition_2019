@@ -21,3 +21,9 @@ constexpr int AXIS_RIGHT_X = 2;
 constexpr int AXIS_RIGHT_Y = 3;
 constexpr int AXIS_RIGHT_TRIGGER = 4;
 constexpr int AXIS_LEFT_TRIGGER = 5;
+
+//config
+constexpr double DEAD_ZONE = .02;
+constexpr double MIN = .35;
+constexpr double MAX = 1;
+constexpr double QUICK_TURN = .4;

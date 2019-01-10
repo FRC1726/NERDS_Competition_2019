@@ -5,24 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveWithJoysticks.h"
+#include "commands/CurvatureWithJoysticks.h"
 #include "Robot.h"
 #include "RobotMap.h"
 #include <cmath>
-
-DriveWithJoysticks::DriveWithJoysticks() {
+CurvatureWithJoysticks::CurvatureWithJoysticks() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrain);
 }
 
 // Called just before this Command runs the first time
-void DriveWithJoysticks::Initialize() {
-  
-}
+void CurvatureWithJoysticks::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void DriveWithJoysticks::Execute() {
+void CurvatureWithJoysticks::Execute() { 
   double speed = Robot::oi.getAxis(AXIS_LEFT_X);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_Y);
   
@@ -32,26 +29,32 @@ void DriveWithJoysticks::Execute() {
   speed = driveProfile(speed, MAX, MIN);
   turn = driveProfile(turn, MAX, MIN);
 
-  Robot::drivetrain.arcadeDrive(speed, turn);
-}
+  bool quickTurn;
+  if(turn < QUICK_TURN){
+    quickTurn = true;
+  }else{
+    quickTurn = false;
+  }
+
+  Robot::drivetrain.curvatureDrive(speed, turn, quickTurn);
+  }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveWithJoysticks::IsFinished() { 
-  return false;
-}
+bool CurvatureWithJoysticks::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void DriveWithJoysticks::End() {
+void CurvatureWithJoysticks::End() {
   Robot::drivetrain.arcadeDrive(0, 0);
 }
+
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveWithJoysticks::Interrupted() {
-  Robot::drivetrain.arcadeDrive(0, 0);
+void CurvatureWithJoysticks::Interrupted() {
+  Robot::drivetrain.curvatureDrive(0, 0);
 }
 
-double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
+double CurvatureWithJoysticks::applyDeadZone(double input, double deadzone){
   double absolute = fabs(input);
 
   if(absolute < deadzone) {
@@ -67,7 +70,7 @@ double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
   }
 }
 
-double DriveWithJoysticks::driveProfile(double input, double max, double min){
+double CurvatureWithJoysticks::driveProfile(double input, double max, double min){
   double absolute = fabs(input);
 
   double output = absolute * (max - min) + min;
