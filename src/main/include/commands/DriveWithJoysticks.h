@@ -7,17 +7,14 @@
 
 #pragma once
 
-//drivetrain
-constexpr int DRIVE_FRONT_LEFT = 0;
-constexpr int DRIVE_FRONT_RIGHT = 1;
-constexpr int DRIVE_BACK_LEFT = 2;
-constexpr int DRIVE_BACK_RIGHT = 3;
+#include <frc/commands/Command.h>
 
-//joysticks
-constexpr int JOYSTICK_DRIVER = 0;
-constexpr int AXIS_LEFT_X = 0;
-constexpr int AXIS_LEFT_Y = 1;
-constexpr int AXIS_RIGHT_X = 2;
-constexpr int AXIS_RIGHT_Y = 3;
-constexpr int AXIS_RIGHT_TRIGGER = 4;
-constexpr int AXIS_LEFT_TRIGGER = 5;
+class DriveWithJoysticks : public frc::Command {
+ public:
+  DriveWithJoysticks();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};

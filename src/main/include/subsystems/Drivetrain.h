@@ -8,9 +8,9 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <VictorSP.h>
-#include <DifferentialDrive.h>
-#include SpeedControllerGroup.h
+#include <frc/VictorSP.h>
+#include <frc/Drive/DifferentialDrive.h>
+#include <frc/SpeedControllerGroup.h>
 
 class Drivetrain : public frc::Subsystem {
 public:
@@ -21,13 +21,13 @@ public:
   void curvatureDrive(double, double, bool);
 
 private:
-  VictorSP frontLeft;
-  VictorSP frontRight;
-  VictorSP backLeft;
-  VictorSP backRight;
+  frc::VictorSP frontLeft;
+  frc::VictorSP frontRight;
+  frc::VictorSP backLeft;
+  frc::VictorSP backRight;
 
-  SpeedControllerGroup left;
-  SpeedControllerGroup right;
+  frc::SpeedControllerGroup left;
+  frc::SpeedControllerGroup right;
 
-  DifferentialDrive drive;
+  frc::DifferentialDrive drive;
 };

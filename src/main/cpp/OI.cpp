@@ -7,8 +7,14 @@
 
 #include "OI.h"
 
-#include <frc/WPILib.h>
+#include "RobotMap.h"
 
-OI::OI() {
+OI::OI() :
+  driver(JOYSTICK_DRIVER)
+{
   // Process operator interface input here.
+}
+
+double OI::getAxis(int axis){
+  return driver.GetRawAxis(axis);
 }
