@@ -19,7 +19,8 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   right(frontRight, backRight),
   drive(left, right),
   encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
-  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true)
+  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
+  gyro(SerialPort::Port::kUSB1)
 {
   double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
   double linearDistance = (PI * WHEEL_DIAMETER) * (360 / angularDistance);

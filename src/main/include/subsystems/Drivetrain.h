@@ -13,6 +13,8 @@
 #include <frc/SpeedControllerGroup.h>
 #include <frc/Encoder.h>
 
+#include <AHRS.h>
+
 class Drivetrain : public frc::Subsystem {
 public:
   Drivetrain();
@@ -35,4 +37,6 @@ private:
 
   frc::Encoder encoderLeft;
   frc::Encoder encoderRight;
+
+  AHRS gyro;
 };
