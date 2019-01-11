@@ -24,6 +24,8 @@ public:
   void curvatureDrive(double, double, bool);
 
   double getDistance(int);
+
+  double getAngle();
 private:
   frc::VictorSP frontLeft;
   frc::VictorSP frontRight;

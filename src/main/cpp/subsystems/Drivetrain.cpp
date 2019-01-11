@@ -55,3 +55,7 @@ double Drivetrain::getDistance(int encoder){
     return 0;
   }
 }
+
+double Drivetrain::getAngle(){
+  return gyro.GetYaw();
+}
