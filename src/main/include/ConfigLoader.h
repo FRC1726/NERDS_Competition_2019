@@ -8,6 +8,7 @@
 #pragma once
 
 #include "config.h"
+#include <string>
 
 class ConfigLoader {
  public:
@@ -15,6 +16,10 @@ class ConfigLoader {
   double getConfig(ParameterKey<double>);
   int getConfig(ParameterKey<int>);
   bool getConfig(ParameterKey<bool>);
-  
+
+  bool saveConfigToFile(std::string);
+  bool loadConfigFromFile(std::string);
  private:
+
+    static void printError(size_t, const char*);
 };

@@ -6,12 +6,16 @@
 /*----------------------------------------------------------------------------*/
 #include <frc/Preferences.h>
 #include <frc/DriverStation.h>
+#include <NetworkTables/NetworkTableInstance.h>
+#include <wpi/Twine.h>
+#include <sstream>
 
 #include "ConfigLoader.h"
 
 ConfigLoader::ConfigLoader() {
 
 }
+
 double ConfigLoader::getConfig(ParameterKey<double> config) {
     //check if exist, if not throws warning and returns default expression
     if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
@@ -20,6 +24,7 @@ double ConfigLoader::getConfig(ParameterKey<double> config) {
 
     return frc::Preferences::GetInstance()->GetDouble(config.key, config.value);
 }
+
 int ConfigLoader::getConfig(ParameterKey<int> config) {
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
@@ -28,6 +33,7 @@ int ConfigLoader::getConfig(ParameterKey<int> config) {
 
     return frc::Preferences::GetInstance()->GetInt(config.key, config.value);
 }
+
 bool ConfigLoader::getConfig(ParameterKey<bool> config){
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
@@ -35,4 +41,22 @@ bool ConfigLoader::getConfig(ParameterKey<bool> config){
     }
 
     return frc::Preferences::GetInstance()->GetBoolean(config.key, config.value);
+}
+
+bool ConfigLoader::saveConfigToFile(std::string filename){
+    nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+
+    baseTable.SaveEntries(filename, "Preferences");
+}
+
+bool ConfigLoader::loadConfigFromFile(std::string filename){
+    nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+
+    baseTable.LoadEntries(filename, "Preferences", ConfigLoader::printError);
+}
+
+void ConfigLoader::printError(size_t line, const char* message){
+    std::stringstream msgStream;
+    msgStream << line << " " << message;
+    frc::DriverStation::ReportError(msgStream.str());
 }
