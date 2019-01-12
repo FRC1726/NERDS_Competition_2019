@@ -4,9 +4,7 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-/*
 
-UNTIL FURTHER INSTRUCTION DON"T USE THIS
 
 
 #include "commands/CurvatureWithJoysticks.h"
