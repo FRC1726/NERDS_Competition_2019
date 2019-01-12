@@ -26,11 +26,11 @@ void DriveWithJoysticks::Execute() {
   double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
   
-  speed = applyDeadZone(speed, DEAD_ZONE);
-  turn = applyDeadZone(turn, DEAD_ZONE);
+  speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+  turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
-  speed = driveProfile(speed, MAX, MIN);
-  turn = driveProfile(turn, MAX, MIN);
+  speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
 
   Robot::drivetrain.arcadeDrive(speed, turn);
 }

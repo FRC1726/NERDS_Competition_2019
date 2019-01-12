@@ -25,8 +25,8 @@ AutoTurn::AutoTurn(double target) : PIDCommand(1, 0, 0),
 void AutoTurn::Initialize() {
   auto controller = GetPIDController();
 
-  controller->SetOutputRange(-1, 1);
-  controller->SetPID(1,0,0); //Change me to preferences
+  controller->SetOutputRange(-Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MAX));
+  controller->SetPID(Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL), Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL), Robot::loader.getConfig(AUTOTURN_PID_DERIVATIVE)); //Change me to preferences
   controller->SetSetpoint(targetAngle);
   controller->Enable();  
 }

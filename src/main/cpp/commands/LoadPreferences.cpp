@@ -17,7 +17,10 @@ LoadPreferences::LoadPreferences() {
 
 // Called just before this Command runs the first time
 void LoadPreferences::Initialize() {
-  Robot::loader.savePreference(MAGIC_KEY_NAME);
+  Robot::loader.savePreference(JOYSTICK_DRIVE_MAX);
+  Robot::loader.savePreference(JOYSTICK_DRIVE_MIN);
+  Robot::loader.savePreference(JOYSTICK_DRIVE_DEADZONE);
+
 }
 
 // Called repeatedly when this Command is scheduled to run
