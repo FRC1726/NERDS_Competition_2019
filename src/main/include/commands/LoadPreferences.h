@@ -5,23 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-<<<<<<< HEAD
-#include "RobotMap.h"
-=======
-#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/commands/Command.h>
 
-#include "commands/LoadPreferences.h"
->>>>>>> da31fd4c8ee82b6a2e17d2910950e84ed0ac65dd
-
-OI::OI() :
-  driver(JOYSTICK_DRIVER)
-{
-  // Process operator interface input here.
-  frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
-}
-
-double OI::getAxis(int axis){
-  return driver.GetRawAxis(axis);
-}
+class LoadPreferences : public frc::Command {
+ public:
+  LoadPreferences();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
