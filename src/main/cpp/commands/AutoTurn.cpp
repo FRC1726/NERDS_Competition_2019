@@ -8,10 +8,12 @@
 #include "commands/AutoTurn.h"
 
 #include "Robot.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
-AutoTurn::AutoTurn(double target) : PIDCommand(1, 0, 0),
+AutoTurn::AutoTurn(double target) : frc::PIDCommand("Turn To Angle", 0, 0, 0),
   timer(),
-  targetAngle(target)
+  targetAngle(target),
+  PIDError(0)
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -38,9 +40,10 @@ void AutoTurn::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void AutoTurn::Execute() {
   double currentAngle = Robot::drivetrain.getAngle();
-  PIDWrite(currentAngle);
-  double turnSpeed = PIDGet();
-  Robot::drivetrain.arcadeDrive(0, turnSpeed);
+  Robot::drivetrain.arcadeDrive(0, PIDError);
+
+  SmartDashboard::PutNumber("Debug/Auto Turn/Current Angle", currentAngle);
+  SmartDashboard::PutNumber("Debug/Auto Turn/Current Speed", PIDError);
   }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -59,9 +62,30 @@ bool AutoTurn::IsFinished() {
 // Called once after isFinished returns true
 void AutoTurn::End() {
   auto controller = GetPIDController();
+  controller->Reset();
+  Robot::drivetrain.arcadeDrive(0,0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void AutoTurn::Interrupted() {
+  auto controller = GetPIDController();
+  controller->Reset();
+  Robot::drivetrain.arcadeDrive(0,0);
+}
+
+void AutoTurn::PIDWrite(double output){
+  PIDError = output;
+}
+
+double AutoTurn::PIDGet(){
+  return Robot::drivetrain.getAngle();
+}
+
+double AutoTurn::ReturnPIDInput(){
+  return 0;
+}
+
+void AutoTurn::UsePIDOutput(double output){
+  
 }

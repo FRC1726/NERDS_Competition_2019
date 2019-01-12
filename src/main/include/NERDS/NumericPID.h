@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,29 +7,28 @@
 
 #pragma once
 
-#include <frc/commands/PIDCommand.h>
-#include <frc/Timer.h>
+#include <frc/PIDSource.h>
+#include <frc/PIDOutput.h>
+#include <frc/PIDController.h>
+#include <memory>
 
-
-class AutoTurn : public frc::PIDCommand {
+class NumericPID : public frc::PIDSource, public frc::PIDOutput {
  public:
-  AutoTurn(double);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
+  NumericPID(double, double, double);
   void PIDWrite(double) override;
   double PIDGet() override;
 
-private:
-  frc::Timer timer;
+  double Get();
+  void Write(double);
 
-  double targetAngle;
-  double PIDError;
+  std::shared_ptr<frc::PIDController> GetController();
 
 protected:
-  double ReturnPIDInput() override;
-  void UsePIDOutput(double) override;
+
+
+private:
+  std::shared_ptr<frc::PIDController> controller;
+
+  double PIDInput;
+  double PIDError;
 };
