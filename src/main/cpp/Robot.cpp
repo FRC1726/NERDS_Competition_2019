@@ -10,14 +10,9 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-<<<<<<< HEAD
 OI Robot::oi;
 Drivetrain Robot::drivetrain;
-=======
-
-OI Robot::m_oi;
 ConfigLoader Robot::loader;
->>>>>>> da31fd4c8ee82b6a2e17d2910950e84ed0ac65dd
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);

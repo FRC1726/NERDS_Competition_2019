@@ -7,13 +7,10 @@
 
 #include "OI.h"
 
-<<<<<<< HEAD
 #include "RobotMap.h"
-=======
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include "commands/LoadPreferences.h"
->>>>>>> da31fd4c8ee82b6a2e17d2910950e84ed0ac65dd
 
 OI::OI() :
   driver(JOYSTICK_DRIVER)

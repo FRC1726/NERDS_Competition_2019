@@ -11,22 +11,15 @@
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
 
+#include "ConfigLoader.h"
 #include "OI.h"
-<<<<<<< HEAD
 #include "subsystems/Drivetrain.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static OI oi;
   static Drivetrain drivetrain;
-=======
-#include "ConfigLoader.h"
-
-class Robot : public frc::TimedRobot {
- public:
-  static OI m_oi;
   static ConfigLoader loader;
->>>>>>> da31fd4c8ee82b6a2e17d2910950e84ed0ac65dd
 
   void RobotInit() override;
   void RobotPeriodic() override;
