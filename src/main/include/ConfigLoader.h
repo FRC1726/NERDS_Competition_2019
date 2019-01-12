@@ -9,6 +9,7 @@
 
 #include "config.h"
 #include <string>
+#include <vector>
 
 class ConfigLoader {
  public:
@@ -17,9 +18,13 @@ class ConfigLoader {
   int getConfig(ParameterKey<int>);
   bool getConfig(ParameterKey<bool>);
 
+	void savePreference(ParameterKey<int>);
+	void savePreference(ParameterKey<double>);
+	void savePreference(ParameterKey<bool>);
+
   bool saveConfigToFile(std::string);
   bool loadConfigFromFile(std::string);
- private:
 
-    static void printError(size_t, const char*);
+ private:
+	static void printError(size_t, const char*);
 };

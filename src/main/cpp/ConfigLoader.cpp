@@ -43,16 +43,40 @@ bool ConfigLoader::getConfig(ParameterKey<bool> config){
     return frc::Preferences::GetInstance()->GetBoolean(config.key, config.value);
 }
 
+void ConfigLoader::savePreference(ParameterKey<int> param){
+    if(!frc::Preferences::GetInstance()->ContainsKey(param.key))
+        frc::Preferences::GetInstance()->PutInt(param.key, param.value);
+}
+
+void ConfigLoader::savePreference(ParameterKey<bool> param){
+    if(!frc::Preferences::GetInstance()->ContainsKey(param.key))
+        frc::Preferences::GetInstance()->PutBoolean(param.key, param.value);
+}
+
+void ConfigLoader::savePreference(ParameterKey<double> param){
+    if(!frc::Preferences::GetInstance()->ContainsKey(param.key))
+        frc::Preferences::GetInstance()->PutDouble(param.key, param.value);
+}
+
+
 bool ConfigLoader::saveConfigToFile(std::string filename){
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
 
-    baseTable.SaveEntries(filename, "Preferences");
+    std::string error = baseTable.SaveEntries(filename, "Preferences");
+
+    if(!error.empty()){
+        frc::DriverStation::ReportError(error);
+    }
 }
 
 bool ConfigLoader::loadConfigFromFile(std::string filename){
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
 
-    baseTable.LoadEntries(filename, "Preferences", ConfigLoader::printError);
+    std::string error = baseTable.LoadEntries(filename, "Preferences", ConfigLoader::printError);
+
+    if(!error.empty()){
+        frc::DriverStation::ReportError(error);
+    }
 }
 
 void ConfigLoader::printError(size_t line, const char* message){
