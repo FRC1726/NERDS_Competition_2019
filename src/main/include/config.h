@@ -14,7 +14,7 @@ const ParameterKey<double> JOYSTICK_DRIVE_MIN = {"Joystick/Drive/Min Speed", 0.3
 const ParameterKey<double> JOYSTICK_TURN_MIN = {"Joystick/Turn/Min Speed", 0.35};
 const ParameterKey<double> JOYSTICK_TURN_MAX = {"Joystick/Turn/Max Speed", 1};
 const ParameterKey<double> JOYSTICK_DRIVE_DEADZONE = {"Joystick/Drive/Deadzone", 0.02};
-const ParameterKey<double> JOYSTICK_DRIVE_QUICK_TURN = {"Joystick/Drive/Quickturn", 0.02};
+
 //AutoTurn Preferences
 const ParameterKey<double> AUTOTURN_RANGE_MAX = {"AutoTurn/Max Speed", 1};
 const ParameterKey<double> AUTOTURN_RANGE_MIN = {"AutoTurn/Min Speed", .35};
