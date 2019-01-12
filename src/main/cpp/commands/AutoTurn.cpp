@@ -10,7 +10,9 @@
 #include "Robot.h"
 
 AutoTurn::AutoTurn(double target) : PIDCommand(1, 0, 0),
-  targetAngle(target) {
+  timer(),
+  targetAngle(target)
+{
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrain);
@@ -24,11 +26,13 @@ AutoTurn::AutoTurn(double target) : PIDCommand(1, 0, 0),
 // Called just before this Command runs the first time
 void AutoTurn::Initialize() {
   auto controller = GetPIDController();
-
+  controller->SetAbsoluteTolerance(Robot::loader.getConfig(AUTOTURN_PID_TOLERANCE));
   controller->SetOutputRange(-Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MAX));
   controller->SetPID(Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL), Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL), Robot::loader.getConfig(AUTOTURN_PID_DERIVATIVE)); //Change me to preferences
   controller->SetSetpoint(targetAngle);
   controller->Enable();  
+  
+  timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -36,13 +40,20 @@ void AutoTurn::Execute() {
   double currentAngle = Robot::drivetrain.getAngle();
   PIDWrite(currentAngle);
   double turnSpeed = PIDGet();
-  Robot::drivetrain.arcadeDrive(0,turnSpeed);
+  Robot::drivetrain.arcadeDrive(0, turnSpeed);
   }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoTurn::IsFinished() {
   auto controller = GetPIDController();
-  return controller->OnTarget();
+  if(controller->OnTarget()){
+    timer.Start();
+  }else{
+    timer.Stop();
+    timer.Reset();
+  }
+  
+  return timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD));
 }
 
 // Called once after isFinished returns true

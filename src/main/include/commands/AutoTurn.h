@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/PIDCommand.h>
+#include <frc/Timer.h>
 
 class AutoTurn : public frc::PIDCommand {
  public:
@@ -20,5 +21,7 @@ class AutoTurn : public frc::PIDCommand {
 //  void PIDWrite(double) override;
 //  double PIDGet() override;
 private:
+  frc::Timer timer;
+
   double targetAngle;
 };

@@ -17,10 +17,19 @@ LoadPreferences::LoadPreferences() {
 
 // Called just before this Command runs the first time
 void LoadPreferences::Initialize() {
+  //Joysticks
   Robot::loader.savePreference(JOYSTICK_DRIVE_MAX);
   Robot::loader.savePreference(JOYSTICK_DRIVE_MIN);
   Robot::loader.savePreference(JOYSTICK_DRIVE_DEADZONE);
-
+  Robot::loader.savePreference(JOYSTICK_DRIVE_QUICK_TURN);
+  //AutoTurn
+  Robot::loader.savePreference(AUTOTURN_RANGE_MAX);
+  Robot::loader.savePreference(AUTOTURN_RANGE_MIN);
+  Robot::loader.savePreference(AUTOTURN_PID_PROPORTIONAL);
+  Robot::loader.savePreference(AUTOTURN_PID_INTEGRAL);
+  Robot::loader.savePreference(AUTOTURN_PID_DERIVATIVE);
+  Robot::loader.savePreference(AUTOTURN_PID_TOLERANCE);
+  Robot::loader.savePreference(AUTOTURN_PID_TIMEPERIOD);
 }
 
 // Called repeatedly when this Command is scheduled to run
