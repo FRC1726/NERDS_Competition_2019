@@ -5,22 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include "RobotMap.h"
-#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/commands/Command.h>
 
-#include "commands/DriveWithJoysticks.h"
-#include "commands/LoadPreferences.h"
+class DriveWithJoysticks : public frc::Command {
+ public:
+  DriveWithJoysticks();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 
-OI::OI() :
-  driver(JOYSTICK_DRIVER)
-{
-  // Process operator interface input here.
-  frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
-  frc::SmartDashboard::PutData("Commands/Arcade Drive", new DriveWithJoysticks());
-}
-
-double OI::getAxis(int axis){
-  return driver.GetRawAxis(axis);
-}
+  double applyDeadZone(double, double);
+  double driveProfile(double, double, double);
+};

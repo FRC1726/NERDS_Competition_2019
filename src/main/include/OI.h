@@ -7,7 +7,13 @@
 
 #pragma once
 
+#include <frc/Joystick.h>
+
 class OI {
  public:
   OI();
+  double getAxis(int);
+
+private:
+  frc::Joystick driver;
 };

@@ -5,22 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include "RobotMap.h"
-#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/commands/PIDCommand.h>
+#include <frc/Timer.h>
 
-#include "commands/DriveWithJoysticks.h"
-#include "commands/LoadPreferences.h"
+class AutoTurn : public frc::PIDCommand {
+ public:
+  AutoTurn(double);
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+//  void PIDWrite(double) override;
+//  double PIDGet() override;
+private:
+  frc::Timer timer;
 
-OI::OI() :
-  driver(JOYSTICK_DRIVER)
-{
-  // Process operator interface input here.
-  frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
-  frc::SmartDashboard::PutData("Commands/Arcade Drive", new DriveWithJoysticks());
-}
-
-double OI::getAxis(int axis){
-  return driver.GetRawAxis(axis);
-}
+  double targetAngle;
+};

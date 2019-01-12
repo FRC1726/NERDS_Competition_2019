@@ -7,19 +7,28 @@
 
 #pragma once
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
+//drivetrain
+constexpr int DRIVE_FRONT_LEFT = 0;
+constexpr int DRIVE_BACK_LEFT = 1;
+constexpr int DRIVE_FRONT_RIGHT = 3;
+constexpr int DRIVE_BACK_RIGHT = 2;
 
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
+//encodews stuff owo
+constexpr int ENCODER_LEFT_A = 0;
+constexpr int ENCODER_LEFT_B = 1;
+constexpr int ENCODER_RIGHT_A = 2;
+constexpr int ENCODER_RIGHT_B = 3;
 
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
+constexpr double PULSES_PER_REVOLUTION = 360;
+constexpr double GEARING_RATIO = 1;
+constexpr double WHEEL_DIAMETER = 6;
+constexpr double PI = 3.14159265358979323846;
+
+//joysticks
+constexpr int JOYSTICK_DRIVER = 0;
+constexpr int AXIS_LEFT_X = 0;
+constexpr int AXIS_LEFT_Y = 1;
+constexpr int AXIS_RIGHT_X = 4;
+constexpr int AXIS_RIGHT_Y = 5;
+constexpr int AXIS_RIGHT_TRIGGER = 2;
+constexpr int AXIS_LEFT_TRIGGER = 3;
