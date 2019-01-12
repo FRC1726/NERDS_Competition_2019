@@ -20,17 +20,17 @@ void CurvatureWithJoysticks::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void CurvatureWithJoysticks::Execute() { 
-  double speed = Robot::oi.getAxis(AXIS_LEFT_X);
-  double turn = Robot::oi.getAxis(AXIS_RIGHT_Y);
+  double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
+  double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
   
   speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
   turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
   speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
-  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
 
   bool quickTurn;
-  if(turn < Robot::loader.getConfig(JOYSTICK_DRIVE_QUICK_TURN)){
+  if(fabs(speed) < Robot::loader.getConfig(JOYSTICK_DRIVE_QUICK_TURN)){
     quickTurn = true;
   }else{
     quickTurn = false;
@@ -71,6 +71,9 @@ double CurvatureWithJoysticks::applyDeadZone(double input, double deadzone){
 }
 
 double CurvatureWithJoysticks::driveProfile(double input, double max, double min){
+  if(input == 0){
+    return 0;
+  }
   double absolute = fabs(input);
 
   double output = absolute * (max - min) + min;

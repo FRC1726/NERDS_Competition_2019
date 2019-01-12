@@ -9,7 +9,9 @@
 
 #include "RobotMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
- 
+
+#include "commands/DriveWithJoysticks.h"
+#include "commands/CurvatureWithJoysticks.h"
 #include "commands/LoadPreferences.h"
 
 OI::OI() :
@@ -17,6 +19,8 @@ OI::OI() :
 {
   // Process operator interface input here.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
+  frc::SmartDashboard::PutData("Commands/Arcade Drive", new DriveWithJoysticks());
+  frc::SmartDashboard::PutData("Commands/Curvature Drive", new CurvatureWithJoysticks());
 }
 
 double OI::getAxis(int axis){

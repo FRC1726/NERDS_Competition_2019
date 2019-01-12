@@ -30,7 +30,7 @@ void DriveWithJoysticks::Execute() {
   turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
   speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
-  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
 
   Robot::drivetrain.arcadeDrive(speed, turn);
 }
@@ -68,6 +68,9 @@ double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
 }
 
 double DriveWithJoysticks::driveProfile(double input, double max, double min){
+  if(input == 0){
+    return 0;
+  }
   double absolute = fabs(input);
 
   double output = absolute * (max - min) + min;
