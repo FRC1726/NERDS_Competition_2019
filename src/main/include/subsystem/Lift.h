@@ -7,17 +7,15 @@
 
 #pragma once
 
+#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
 #include <frc/commands/Subsystem.h>
-#include <frc/VictorSP.h>
 
 class Lift : public frc::Subsystem {
  public:
   Lift();
   void InitDefaultCommand() override;
-  void runMotor(double)
+  void runMotor(double);
 
  private:
-  VictorSP lift;
-  DigitalInput limitUp;
-  DigitalInput limitDown;
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX lift;
 };

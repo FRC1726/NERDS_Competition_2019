@@ -9,9 +9,7 @@
 #include "RobotMap.h"
 
 Lift::Lift() : Subsystem("Lift"),
-  lift(LIFT_PWM_MOTOR),
-  limitUp(LIFT_DIO_UP),
-  limitDown(LIFT_DIO_DOWN)
+  lift(LIFT_CAN_MOTOR)
 {
 
 }

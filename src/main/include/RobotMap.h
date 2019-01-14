@@ -37,7 +37,7 @@ constexpr int AXIS_RIGHT_TRIGGER = 2;
 constexpr int AXIS_LEFT_TRIGGER = 3;
 
 //Lift
-constexpr int LIFT_PWM_MOTOR = 4;
+constexpr int LIFT_CAN_MOTOR = 2;
 constexpr int LIFT_DIO_UP = 4;
 constexpr int LIFT_DIO_DOWN = 5;
 
