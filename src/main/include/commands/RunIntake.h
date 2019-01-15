@@ -7,15 +7,14 @@
 
 #pragma once
 
-#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
-#include <frc/commands/Subsystem.h>
+#include <frc/commands/Command.h>
 
-class Lift : public frc::Subsystem {
+class RunIntake : public frc::Command {
  public:
-  Lift();
-  void InitDefaultCommand() override;
-  void runMotor(double);
-
- private:
-  ctre::phoenix::motorcontrol::can::WPI_TalonSRX lift;
+  RunIntake();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

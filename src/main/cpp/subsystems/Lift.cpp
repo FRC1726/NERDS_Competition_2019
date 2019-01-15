@@ -5,19 +5,39 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystem/Lift.h"
+#include "subsystems/Lift.h"
 #include "RobotMap.h"
+#include "Commands/RunIntake.h"
+
 
 Lift::Lift() : Subsystem("Lift"),
-  lift(LIFT_CAN_MOTOR)
+  lift(LIFT_CAN_MOTOR),
+  elevator(LIFT_SOLENOID)
 {
-
+  lift.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
+  lift.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
+  lift.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
+  lift.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
+  lift.OverrideLimitSwitchesEnable(false);
 }
 
 void Lift::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
+  // Set the default command for a subsystem here. Just Do It!!!
   // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new RunIntake());
 }
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
+
+void Lift::runMotor(double speed){
+  lift.Set(speed);
+}
+
+void Lift::setElevator(bool enable){
+  elevator.Set(enable);
+}
+
+bool Lift::getElevator(){
+  return elevator.Get();
+}

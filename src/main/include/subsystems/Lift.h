@@ -7,15 +7,19 @@
 
 #pragma once
 
-#include <frc/Joystick.h>
-#include <frc/buttons/JoystickButton.h>
+#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
+#include <frc/commands/Subsystem.h>
+#include <frc/Solenoid.h>
 
-class OI {
+class Lift : public frc::Subsystem {
  public:
-  OI();
-  double getAxis(int);
+  Lift();
+  void InitDefaultCommand() override;
+  void runMotor(double);
+  void setElevator(bool);
+  bool getElevator();
 
-private:
-  frc::Joystick driver;
-  frc::JoystickButton buttonA;
+ private:
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX lift;
+  frc::Solenoid elevator;
 };

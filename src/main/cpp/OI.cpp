@@ -15,11 +15,16 @@
 #include "commands/TurnToHeading.h"
 #include "commands/TurnByAngle.h"
 #include "commands/DriveStraight.h"
+#include "Commands/ToggleElevator.h"
 
 OI::OI() :
-  driver(JOYSTICK_DRIVER)
+  driver(JOYSTICK_DRIVER),
+  buttonA(&driver, BUTTON_A)
 {
-  // Process operator interface input here.
+  //physical buttons
+  buttonA.WhenPressed(new ToggleElevator());
+
+  // virtual buttons.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
   frc::SmartDashboard::PutData("Commands/Arcade Drive", new DriveWithJoysticks());
   frc::SmartDashboard::PutData("Commands/Turn To Heading", new TurnToHeading(90));
