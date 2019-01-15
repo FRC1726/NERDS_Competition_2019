@@ -11,9 +11,9 @@
 #include <frc/Timer.h>
 
 
-class AutoTurn : public frc::PIDCommand {
+class TurnByAngle : public frc::PIDCommand {
  public:
-  AutoTurn(double);
+  TurnByAngle(double);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -22,6 +22,8 @@ class AutoTurn : public frc::PIDCommand {
 
   void PIDWrite(double) override;
   double PIDGet() override;
+
+  double driveProfile(double, double, double);
 
 private:
   frc::Timer timer;
