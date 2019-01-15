@@ -10,7 +10,7 @@
 //Lift
 constexpr int LIFT_CAN_MOTOR = 2;
 constexpr int LIFT_TIMEOUT = 10;
-constexpr int LIFT_SOLENOID = 1;
+constexpr int LIFT_SOLENOID = 4;
 
 //drivetrain
 constexpr int DRIVE_FRONT_LEFT = 0;
