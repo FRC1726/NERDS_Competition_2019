@@ -8,13 +8,14 @@
 #include "commands/DriveStraight.h"
 
 #include "Robot.h"
+#include "RobotMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance", 0, 0, 0),
   driveDistance(target),
   PIDError(0)
 {
-  Requires(&Robot::drivetrain)
+  Requires(&Robot::drivetrain);
   
   auto controller = GetPIDController();
   controller->SetContinuous(true);
@@ -25,7 +26,7 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
 
 // Called just before this Command runs the first time
 void DriveStraight::Initialize() {
-  double currentDistance = Robot::drivetrain.GetDistance(ENCODER_LEFT_SELECT);
+  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
   targetDistance  = currentDistance + driveDistance;
 
   auto controller = GetPIDController();
@@ -46,12 +47,29 @@ void DriveStraight::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraight::Execute() {
-  double currentDistance = Robot::drivetrain.GetDistance(ENCODER_LEFT_SELECT);
-  double driveSpeed;
+  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
   double acceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION);
-  double deceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION) * -1;
-  double rampUp = acceleration * (target - currentDistance);
-  double rampDown = 0 //Define me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  double decceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION) * -1;
+  double rampUp = acceleration * (targetDistance - currentDistance);
+  double rampDown = decceleration * (targetDistance - currentDistance) + (decceleration / targetDistance);
+
+  double driveSpeed;
+  if(rampUp <= rampDown){
+    driveSpeed = rampUp;
+  }else {
+    driveSpeed = rampDown;
+  }
+  if(driveSpeed > 1){
+    driveSpeed = 1;
+  }
+  if(driveSpeed < 0){
+    driveSpeed = 0;
+  }
+  if(targetDistance < currentDistance){
+    driveSpeed = -driveSpeed;
+  }
+
+  driveSpeed = driveProfile(driveSpeed, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
 
   double currentAngle = Robot::drivetrain.getAngle();
   double turn = driveProfile(PIDError, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
@@ -59,11 +77,62 @@ void DriveStraight::Execute() {
   }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveStraight::IsFinished() { return false; }
+bool DriveStraight::IsFinished(){
+  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double tolerance = Robot::loader.getConfig(DRIVESTRAIGHT_PID_TOLERANCE);
+  if(currentDistance > (targetDistance - tolerance) && currentDistance < (targetDistance + tolerance)){
+    timer.Start();
+  }else{
+    timer.Stop();
+    timer.Reset();
+  }
+
+  return timer.HasPeriodPassed(Robot::loader.getConfig(DRIVESTRAIGHT_PID_TIMEPERIOD));
+}
 
 // Called once after isFinished returns true
-void DriveStraight::End() {}
+void DriveStraight::End() {
+  auto controller = GetPIDController();
+  controller->Reset();
+  Robot::drivetrain.arcadeDrive(0,0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveStraight::Interrupted() {}
+void DriveStraight::Interrupted() {
+   auto controller = GetPIDController();
+  controller->Reset();
+  Robot::drivetrain.arcadeDrive(0,0);
+}
+
+void DriveStraight::PIDWrite(double output){
+  PIDError = output;
+}
+
+double DriveStraight::PIDGet(){
+  return Robot::drivetrain.getAngle();
+}
+
+double DriveStraight::ReturnPIDInput(){
+  return 0;
+}
+
+void DriveStraight::UsePIDOutput(double output){
+  
+}
+
+double DriveStraight::driveProfile(double input, double max, double min){
+  if(input == 0){
+    return 0;
+  }
+  double absolute = fabs(input);
+
+  double output = absolute * (max - min) + min;
+  output *= output;
+
+  if(input < 0){
+    return -output;
+  }else{
+    return output;
+  }
+}

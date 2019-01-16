@@ -28,3 +28,5 @@ const ParameterKey<double> AUTOTURN_PID_TIMEPERIOD = {"AutoTurn/PID/Time on Targ
 const ParameterKey<double> DRIVESTRAIGHT_RANGE_MAX = {"DriveStraight/Max Speed", 1};
 const ParameterKey<double> DRIVESTRAIGHT_RANGE_MIN = {"DriveStraight/Min Speed", .35};
 const ParameterKey<double> DRIVESTRAIGHT_ACCELERATION = {"DriveStraight/Acceleration", .2};
+const ParameterKey<double> DRIVESTRAIGHT_PID_TIMEPERIOD = {"DriveStraight/Pid/Time on Target", 0.5};
+const ParameterKey<double> DRIVESTRAIGHT_PID_TOLERANCE = {"DriveStraight/Tolerance", 2};

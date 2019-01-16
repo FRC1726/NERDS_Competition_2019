@@ -33,11 +33,8 @@ void TurnByAngle::Initialize() {
   
   double target = Robot::drivetrain.getAngle() + targetAngle;
 
-  if (target > 180) {
-    target = (target % 360) - 180;
-  } else if (target < -180) {
-    target = (target % 360) + 180;     
-  }
+  target = wrapAngle(target);
+  
   controller->SetSetpoint(target);
   controller->Enable();  
   
@@ -66,7 +63,7 @@ bool TurnByAngle::IsFinished() {
   }
   
   return timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD)); 
-  }
+}
 
 // Called once after isFinished returns true
 void TurnByAngle::End() {
@@ -78,7 +75,7 @@ void TurnByAngle::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void TurnByAngle::Interrupted() {
-   auto controller = GetPIDController();
+  auto controller = GetPIDController();
   controller->Reset();
   Robot::drivetrain.arcadeDrive(0,0);
 }
@@ -113,4 +110,18 @@ double TurnByAngle::driveProfile(double input, double max, double min){
   }else{
     return output;
   }
+}
+
+double TurnByAngle::wrapAngle(double angle){
+  if(angle > 0){
+    while(angle > 180){
+      angle -= 360;
+    }
+  }else{
+    while(angle < -180){
+      angle += 360;
+    }
+  }
+
+  return angle;
 }

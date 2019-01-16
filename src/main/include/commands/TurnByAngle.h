@@ -26,6 +26,7 @@ class TurnByAngle : public frc::PIDCommand {
   double driveProfile(double, double, double);
 
 private:
+  double wrapAngle(double);
   frc::Timer timer;
 
   double targetAngle;

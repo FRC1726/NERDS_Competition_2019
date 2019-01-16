@@ -7,7 +7,8 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
+#include <frc/commands/PIDCommand.h>
+#include <frc/Timer.h>
 
 class DriveStraight : public frc::PIDCommand {
  public:
