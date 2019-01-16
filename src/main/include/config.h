@@ -23,3 +23,8 @@ const ParameterKey<double> AUTOTURN_PID_INTEGRAL = {"AutoTurn/PID/Integral Speed
 const ParameterKey<double> AUTOTURN_PID_DERIVATIVE = {"AutoTurn/PID/Derivative", 0};
 const ParameterKey<double> AUTOTURN_PID_TOLERANCE = {"AutoTurn/PID/Tolerance", 1};
 const ParameterKey<double> AUTOTURN_PID_TIMEPERIOD = {"AutoTurn/PID/Time on Target", .5};
+
+//DriveStraight Preferences
+const ParameterKey<double> DRIVESTRAIGHT_RANGE_MAX = {"DriveStraight/Max Speed", 1};
+const ParameterKey<double> DRIVESTRAIGHT_RANGE_MIN = {"DriveStraight/Min Speed", .35};
+const ParameterKey<double> DRIVESTRAIGHT_ACCELERATION = {"DriveStraight/Acceleration", .2};

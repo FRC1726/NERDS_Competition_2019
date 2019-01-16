@@ -15,7 +15,7 @@ TurnByAngle::TurnByAngle(double target) : frc::PIDCommand("Turn To Angle", 0, 0,
   targetAngle(target),
   PIDError(0) 
 {
-   Requires(&Robot::drivetrain);
+  Requires(&Robot::drivetrain);
 
   auto controller = GetPIDController();
   controller->SetContinuous(true);
@@ -32,6 +32,12 @@ void TurnByAngle::Initialize() {
   controller->SetPID(Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL), Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL), Robot::loader.getConfig(AUTOTURN_PID_DERIVATIVE));
   
   double target = Robot::drivetrain.getAngle() + targetAngle;
+
+  if (target > 180) {
+    target = (target % 360) - 180;
+  } else if (target < -180) {
+    target = (target % 360) + 180;     
+  }
   controller->SetSetpoint(target);
   controller->Enable();  
   
