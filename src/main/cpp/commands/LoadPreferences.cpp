@@ -32,6 +32,13 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(AUTOTURN_PID_DERIVATIVE);
   Robot::loader.savePreference(AUTOTURN_PID_TOLERANCE);
   Robot::loader.savePreference(AUTOTURN_PID_TIMEPERIOD);
+
+  //DriveStraight
+  Robot::loader.savePreference(DRIVESTRAIGHT_RANGE_MAX);
+  Robot::loader.savePreference(DRIVESTRAIGHT_RANGE_MIN);
+  Robot::loader.savePreference(DRIVESTRAIGHT_ACCELERATION);
+  Robot::loader.savePreference(DRIVESTRAIGHT_PID_TIMEPERIOD);
+  Robot::loader.savePreference(DRIVESTRAIGHT_PID_TOLERANCE);
 }
 
 // Called repeatedly when this Command is scheduled to run
