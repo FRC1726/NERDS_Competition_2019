@@ -43,8 +43,15 @@ void TurnByAngle::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void TurnByAngle::Execute() {
+  auto controller = GetPIDController();
+
   double currentAngle = Robot::drivetrain.getAngle();
   double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+
+  if(controller->OnTarget()){
+    turn = 0;
+  }
+
   Robot::drivetrain.arcadeDrive(0, turn);
 
   SmartDashboard::PutNumber("Debug/Auto Turn/Current Angle", currentAngle);

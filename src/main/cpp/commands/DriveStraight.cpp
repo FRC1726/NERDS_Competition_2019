@@ -18,6 +18,7 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
   Requires(&Robot::drivetrain);
   
   auto controller = GetPIDController();
+  
   controller->SetContinuous(true);
   controller->SetInputRange(-180, 180);
   // Use Requires() here to declare subsystem dependencies
@@ -47,6 +48,8 @@ void DriveStraight::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraight::Execute() {
+  auto controller = GetPIDController();
+
   double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
   double acceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION);
   double decceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION) * -1;
@@ -72,7 +75,12 @@ void DriveStraight::Execute() {
   driveSpeed = driveProfile(driveSpeed, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
 
   double currentAngle = Robot::drivetrain.getAngle();
-  double turn = driveProfile(PIDError, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
+  double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+
+  if(controller->OnTarget()){
+    turn = 0;
+  }
+
   Robot::drivetrain.arcadeDrive(driveSpeed, turn);
   }
 
