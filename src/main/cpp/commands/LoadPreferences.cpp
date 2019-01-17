@@ -23,6 +23,7 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(JOYSTICK_TURN_MAX);
   Robot::loader.savePreference(JOYSTICK_TURN_MIN);
   Robot::loader.savePreference(JOYSTICK_DRIVE_DEADZONE);
+  Robot::loader.savePreference(JOYSTICK_REVERSE_FORWARD);
 
   //AutoTurn
   Robot::loader.savePreference(AUTOTURN_RANGE_MAX);

@@ -32,6 +32,11 @@ void DriveWithJoysticks::Execute() {
   speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
   turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
 
+  bool reverse = Robot::loader.getConfig(JOYSTICK_DRIVE_MAX);
+  if(reverse){
+    speed = -speed;
+  }
+
   Robot::drivetrain.arcadeDrive(speed, turn);
 }
 
