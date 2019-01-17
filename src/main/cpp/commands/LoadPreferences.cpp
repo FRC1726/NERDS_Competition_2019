@@ -40,6 +40,9 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(DRIVESTRAIGHT_ACCELERATION);
   Robot::loader.savePreference(DRIVESTRAIGHT_PID_TIMEPERIOD);
   Robot::loader.savePreference(DRIVESTRAIGHT_PID_TOLERANCE);
+
+  //PID TUner AuToTuNe
+  Robot::loader.savePreference(AUTOTUNE_RELAY_SPEED);
 }
 
 // Called repeatedly when this Command is scheduled to run

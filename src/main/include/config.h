@@ -30,3 +30,7 @@ const ParameterKey<double> DRIVESTRAIGHT_RANGE_MIN = {"DriveStraight/Min Speed",
 const ParameterKey<double> DRIVESTRAIGHT_ACCELERATION = {"DriveStraight/Acceleration", .2};
 const ParameterKey<double> DRIVESTRAIGHT_PID_TIMEPERIOD = {"DriveStraight/Pid/Time on Target", 0.5};
 const ParameterKey<double> DRIVESTRAIGHT_PID_TOLERANCE = {"DriveStraight/Tolerance", 2};
+
+//PID autoTune insert cancer
+const ParameterKey<double> AUTOTUNE_RELAY_SPEED = {"AutoTune/Relay Speed", .5};
+const ParameterKey<double> AUTOTUNE_TRIGGER_DEADBAND = {"AutoTune/Deadband", 2};

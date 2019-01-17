@@ -63,3 +63,7 @@ double Drivetrain::getDistance(int encoder){
 double Drivetrain::getAngle(){
   return gyro.GetYaw();
 }
+
+void Drivetrain::resetGyro(){
+  gyro.Reset();
+}

@@ -25,7 +25,9 @@ public:
 
   double getDistance(int);
 
+  //Gyro
   double getAngle();
+  void resetGyro();
 private:
   frc::VictorSP frontLeft;
   frc::VictorSP frontRight;
