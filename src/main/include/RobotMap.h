@@ -15,7 +15,7 @@ constexpr int DRIVE_BACK_RIGHT = 2;
 
 //encodews stuff owo
 constexpr int ENCODER_LEFT_SELECT = 1;
-constexpr int ENCODER_RIGHT_SELECTOR = 2;
+constexpr int ENCODER_RIGHT_SELECT = 2;
 
 constexpr int ENCODER_LEFT_A = 0;
 constexpr int ENCODER_LEFT_B = 1;

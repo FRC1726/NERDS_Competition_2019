@@ -28,9 +28,11 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
 
 // Called just before this Command runs the first time
 void DriveStraight::Initialize() {
-  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
-  initialReading = currentDistance;
-  targetDistance  = currentDistance + driveDistance;
+  encoderRightInitial = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
+  encoderLeftInitial = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double averageReading = (encoderRightInitial + encoderLeftInitial) / 2;
+
+  targetDistance  = averageReading + driveDistance;
   SmartDashboard::PutNumber("Debug/Drive Straight/Target Distance", targetDistance);
 
   auto controller = GetPIDController();
@@ -52,15 +54,18 @@ void DriveStraight::Initialize() {
 void DriveStraight::Execute() {
   auto controller = GetPIDController();
 
-  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double encoderLeftCurrent = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double encoderRightCurrent = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
+  double averageCurrent = (encoderLeftCurrent + encoderRightCurrent) / 2;
 
-  double distanceFromTarget = targetDistance - currentDistance;
-  double distanceMoved = currentDistance - initialReading;
+  double averageInitial = (encoderLeftInitial + encoderRightInitial) / 2;
+
+  double distanceFromTarget = targetDistance - averageCurrent;
+  double distanceMoved = averageCurrent - averageInitial;
 
   double acceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION);
-  double decceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION) * -1;
-  double rampUp = acceleration * distanceFromTarget;
-  double rampDown = acceleration * (driveDistance - distanceMoved);
+  double rampUp = acceleration * fabs(distanceMoved);
+  double rampDown = acceleration * fabs(distanceFromTarget);
 
   double driveSpeed;
   if(rampUp <= rampDown){
@@ -74,7 +79,8 @@ void DriveStraight::Execute() {
   if(driveSpeed < 0){
     driveSpeed = 0;
   }
-  if(targetDistance < currentDistance){
+
+  if(distanceFromTarget < 0){
     driveSpeed = -driveSpeed;
   }
 
@@ -82,7 +88,6 @@ void DriveStraight::Execute() {
 
   double currentAngle = Robot::drivetrain.getAngle();
   double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
-  SmartDashboard::PutNumber("Debug/Drive Straight/Current Distance", currentDistance);
   SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Up", rampUp);
   SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Down", rampDown);
 

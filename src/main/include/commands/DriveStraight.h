@@ -30,7 +30,8 @@ private:
   double PIDError;
   double driveDistance;
   double targetDistance;
-  double initialReading;
+  double encoderRightInitial;
+  double encoderLeftInitial;
 
 protected:
   double ReturnPIDInput() override;
