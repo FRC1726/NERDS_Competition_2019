@@ -21,6 +21,7 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
   
   controller->SetContinuous(true);
   controller->SetInputRange(-180, 180);
+  controller->SetOutputRange(-1, 1);
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
@@ -28,11 +29,12 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
 // Called just before this Command runs the first time
 void DriveStraight::Initialize() {
   double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  initialReading = currentDistance;
   targetDistance  = currentDistance + driveDistance;
+  SmartDashboard::PutNumber("Debug/Drive Straight/Target Distance", targetDistance);
 
   auto controller = GetPIDController();
   controller->SetAbsoluteTolerance(Robot::loader.getConfig(AUTOTURN_PID_TOLERANCE));
-  controller->SetOutputRange(-1, 1);
 
   double p = Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL);
   double i = Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL);
@@ -51,10 +53,14 @@ void DriveStraight::Execute() {
   auto controller = GetPIDController();
 
   double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+
+  double distanceFromTarget = targetDistance - currentDistance;
+  double distanceMoved = currentDistance - initialReading;
+
   double acceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION);
   double decceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION) * -1;
-  double rampUp = acceleration * (targetDistance - currentDistance);
-  double rampDown = decceleration * (targetDistance - currentDistance) + (decceleration / targetDistance);
+  double rampUp = acceleration * distanceFromTarget;
+  double rampDown = acceleration * (driveDistance - distanceMoved);
 
   double driveSpeed;
   if(rampUp <= rampDown){
@@ -76,6 +82,9 @@ void DriveStraight::Execute() {
 
   double currentAngle = Robot::drivetrain.getAngle();
   double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+  SmartDashboard::PutNumber("Debug/Drive Straight/Current Distance", currentDistance);
+  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Up", rampUp);
+  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Down", rampDown);
 
   if(controller->OnTarget()){
     turn = 0;

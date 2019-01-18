@@ -108,6 +108,9 @@ double TurnByAngle::driveProfile(double input, double max, double min){
     return 0;
   }
   double absolute = fabs(input);
+  if(absolute > 1){
+    absolute = 1;
+  }
 
   double output = absolute * (max - min) + min;
   output *= output;
