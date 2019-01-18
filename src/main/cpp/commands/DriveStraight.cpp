@@ -144,13 +144,9 @@ void DriveStraight::UsePIDOutput(double output){
 }
 
 double DriveStraight::driveProfile(double input, double max, double min){
-  if(input == 0){
-    return 0;
-  }
   double absolute = fabs(input);
 
   double output = absolute * (max - min) + min;
-  output *= output;
 
   if(input < 0){
     return -output;
