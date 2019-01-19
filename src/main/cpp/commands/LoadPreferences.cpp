@@ -23,6 +23,7 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(JOYSTICK_TURN_MAX);
   Robot::loader.savePreference(JOYSTICK_TURN_MIN);
   Robot::loader.savePreference(JOYSTICK_DRIVE_DEADZONE);
+  Robot::loader.savePreference(JOYSTICK_REVERSE_FORWARD);
 
   //AutoTurn
   Robot::loader.savePreference(AUTOTURN_RANGE_MAX);
@@ -32,6 +33,13 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(AUTOTURN_PID_DERIVATIVE);
   Robot::loader.savePreference(AUTOTURN_PID_TOLERANCE);
   Robot::loader.savePreference(AUTOTURN_PID_TIMEPERIOD);
+
+  //DriveStraight
+  Robot::loader.savePreference(DRIVESTRAIGHT_RANGE_MAX);
+  Robot::loader.savePreference(DRIVESTRAIGHT_RANGE_MIN);
+  Robot::loader.savePreference(DRIVESTRAIGHT_ACCELERATION);
+  Robot::loader.savePreference(DRIVESTRAIGHT_PID_TIMEPERIOD);
+  Robot::loader.savePreference(DRIVESTRAIGHT_PID_TOLERANCE);
 }
 
 // Called repeatedly when this Command is scheduled to run

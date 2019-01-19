@@ -10,6 +10,8 @@
 #include <frc/DriverStation.h>
 #include "commands/DriveWithJoysticks.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   frontLeft(DRIVE_FRONT_LEFT),
   frontRight(DRIVE_FRONT_RIGHT),
@@ -23,9 +25,11 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   gyro(SerialPort::Port::kUSB1)
 {
   double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
-  double linearDistance = (PI * WHEEL_DIAMETER) * (360 / angularDistance);
+  double linearDistance = PI / 60;
   encoderLeft.SetDistancePerPulse(linearDistance);
   encoderRight.SetDistancePerPulse(linearDistance);
+
+  frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
 }
 
 void Drivetrain::InitDefaultCommand() {

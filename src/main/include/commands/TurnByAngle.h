@@ -10,18 +10,29 @@
 #include <frc/commands/PIDCommand.h>
 #include <frc/Timer.h>
 
-class AutoTurn : public frc::PIDCommand {
+
+class TurnByAngle : public frc::PIDCommand {
  public:
-  AutoTurn(double);
+  TurnByAngle(double);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-//  void PIDWrite(double) override;
-//  double PIDGet() override;
+
+  void PIDWrite(double) override;
+  double PIDGet() override;
+
+  double driveProfile(double, double, double);
+
 private:
+  double wrapAngle(double);
   frc::Timer timer;
 
   double targetAngle;
+  double PIDError;
+
+protected:
+  double ReturnPIDInput() override;
+  void UsePIDOutput(double) override;
 };

@@ -12,6 +12,9 @@
 
 #include "commands/DriveWithJoysticks.h"
 #include "commands/LoadPreferences.h"
+#include "commands/TurnToHeading.h"
+#include "commands/TurnByAngle.h"
+#include "commands/DriveStraight.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER)
@@ -19,6 +22,9 @@ OI::OI() :
   // Process operator interface input here.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
   frc::SmartDashboard::PutData("Commands/Arcade Drive", new DriveWithJoysticks());
+  frc::SmartDashboard::PutData("Commands/Turn To Heading", new TurnToHeading(90));
+  frc::SmartDashboard::PutData("Commands/Turn To Angle", new TurnByAngle(90));
+  frc::SmartDashboard::PutData("Commands/Drive Straight", new DriveStraight(24));
 }
 
 double OI::getAxis(int axis){
