@@ -13,6 +13,8 @@
 #include <frc/SpeedControllerGroup.h>
 #include <frc/Encoder.h>
 
+#include "NERDS/Sharp_2Y0A02.h"
+
 #include <AHRS.h>
 
 class Drivetrain : public frc::Subsystem {
@@ -24,6 +26,9 @@ public:
   void curvatureDrive(double, double, bool);
 
   double getDistance(int);
+  double getSensorRange(int);
+
+  double getAngleToObject();
 
   double getAngle();
 private:
@@ -39,6 +44,9 @@ private:
 
   frc::Encoder encoderLeft;
   frc::Encoder encoderRight;
+
+  nerds::Sharp_2Y0A02 distanceSensorLeft;
+  nerds::Sharp_2Y0A02 distanceSensorRight;
 
   AHRS gyro;
 };

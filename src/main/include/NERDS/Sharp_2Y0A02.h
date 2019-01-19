@@ -8,9 +8,12 @@
 #pragma once
 
 #include <frc/AnalogInput.h>
+namespace nerds{
 
 class Sharp_2Y0A02 : public frc::AnalogInput {
  public:
   Sharp_2Y0A02(int);
   double GetDistance();
 };
+
+}

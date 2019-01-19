@@ -11,6 +11,7 @@
 #include "commands/DriveWithJoysticks.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <cmath>
 
 Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   frontLeft(DRIVE_FRONT_LEFT),
@@ -22,7 +23,9 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   drive(left, right),
   encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
   encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
-  gyro(SerialPort::Port::kUSB1)
+  gyro(SerialPort::Port::kUSB1),
+  distanceSensorLeft(DISTANCE_SENSOR_LEFT),
+  distanceSensorRight(DISTANCE_SENSOR_RIGHT)
 {
   double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
   double linearDistance = PI / 60;
@@ -57,6 +60,39 @@ double Drivetrain::getDistance(int encoder){
     default:
     frc::DriverStation::ReportError("Encoder does not exist.");
     return 0;
+  }
+}
+
+double Drivetrain::getSensorRange(int sensor){
+  switch(sensor){
+    case 1:
+    return distanceSensorLeft.GetDistance();
+    case 2:
+    return distanceSensorRight.GetDistance();
+    default:
+    frc::DriverStation::ReportError("OwO Wooks Wike Yow senso dosn't exist *poof*");
+    return 0;
+  }
+}
+
+double Drivetrain::getAngleToObject(){
+  double left = distanceSensorLeft.GetDistance();
+  double right = distanceSensorRight.GetDistance();
+
+  if (left < 0){
+  frc::DriverStation::ReportError("OwO your weft sensor no wok");
+  }
+  if (right < 0){
+  frc::DriverStation::ReportError("OwO your wight sensor no wok");
+  }
+
+  double difference = fabs(right - left);
+  double angle = atan2 (DISTANCE_BETWEEEN_SENSORS, difference);
+
+  if (right < left){
+    return -angle;
+  } else {
+    return angle;
   }
 }
 

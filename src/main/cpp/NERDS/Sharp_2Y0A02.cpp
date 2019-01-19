@@ -9,6 +9,8 @@
 
 #include <frc/Driverstation.h>
 
+using namespace nerds;
+
 Sharp_2Y0A02::Sharp_2Y0A02(int channel) : frc::AnalogInput(channel) {
 
 }
@@ -20,6 +22,6 @@ double Sharp_2Y0A02::GetDistance() {
         return -1;
     }
 
-    double distance = 9.462/(voltage - 0.01692);
+    double distance = 9.462/(voltage - 0.01692); //Centimeters, change to imperial like a true 'MURICAN
     return distance;
 }
