@@ -39,9 +39,8 @@ constexpr int AXIS_LEFT_TRIGGER = 3;
 //distance sensors
 constexpr int DISTANCE_SENSOR_LEFT = 0;
 constexpr int DISTANCE_SENSOR_RIGHT = 1;
-constexpr int DISTANCE_SENSOR_SELECT_LEFT = 0;
-constexpr int DISTANCE_SENSOR_SELECT_RIGHT = 1;
-constexpr int DISTANCE_SENSOR_A = 0;
-constexpr int DISTANCE_SENSOR_B = 1;
+
+constexpr int DISTANCE_SENSOR_SELECT_LEFT = 1;
+constexpr int DISTANCE_SENSOR_SELECT_RIGHT = 2;
 
 constexpr double DISTANCE_BETWEEEN_SENSORS = 4;

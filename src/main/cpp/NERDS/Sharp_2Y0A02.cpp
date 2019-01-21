@@ -22,6 +22,6 @@ double Sharp_2Y0A02::GetDistance() {
         return -1;
     }
 
-    double distance = 9.462/(voltage - 0.01692); //Centimeters, change to imperial like a true 'MURICAN
+    double distance = 94.62/(voltage - 0.1692); //Centimeters, change to imperial like a true 'MURICAN
     return distance;
 }
