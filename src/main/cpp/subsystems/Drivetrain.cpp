@@ -80,19 +80,20 @@ double Drivetrain::getAngleToObject(){
   double right = distanceSensorRight.GetDistance();
 
   if (left < 0){
-  frc::DriverStation::ReportError("OwO your weft sensor no wok");
+  frc::DriverStation::ReportWarning("Your left sensor doesn't work");
   }
   if (right < 0){
-  frc::DriverStation::ReportError("OwO your wight sensor no wok");
+  frc::DriverStation::ReportError("Your right sensor doesn't work");
   }
 
   double difference = fabs(right - left);
-  double angle = atan2 (DISTANCE_BETWEEEN_SENSORS, difference);
+  double angle = atan2(difference, DISTANCE_BETWEEEN_SENSORS);
+  angle = angle * (180 / PI);
 
   if (right < left){
     return -angle;
   } else {
-    return angle;
+    return angle; 
   }
 }
 

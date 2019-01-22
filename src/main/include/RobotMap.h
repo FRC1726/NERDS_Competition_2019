@@ -43,4 +43,4 @@ constexpr int DISTANCE_SENSOR_RIGHT = 1;
 constexpr int DISTANCE_SENSOR_SELECT_LEFT = 1;
 constexpr int DISTANCE_SENSOR_SELECT_RIGHT = 2;
 
-constexpr double DISTANCE_BETWEEEN_SENSORS = 4;
+constexpr double DISTANCE_BETWEEEN_SENSORS = 9.75;

@@ -25,7 +25,9 @@ void TestIRSensors::Initialize() {
 void TestIRSensors::Execute() {
   double Sensor_Left = Robot::drivetrain.getSensorRange(DISTANCE_SENSOR_SELECT_LEFT);
   double Sensor_Right = Robot::drivetrain.getSensorRange(DISTANCE_SENSOR_SELECT_RIGHT);
+  double sensorAngle = Robot::drivetrain.getAngleToObject();
 
+  frc::SmartDashboard::PutNumber("IR Sensor Angle", sensorAngle);
   frc::SmartDashboard::PutNumber("IR Sensor Left", Sensor_Left);
   frc::SmartDashboard::PutNumber("IR Sensor Right", Sensor_Right);
 }
