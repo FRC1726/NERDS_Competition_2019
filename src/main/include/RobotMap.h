@@ -13,7 +13,7 @@ constexpr int DRIVE_BACK_LEFT = 1;
 constexpr int DRIVE_FRONT_RIGHT = 3;
 constexpr int DRIVE_BACK_RIGHT = 2;
 
-//encodews stuff owo
+//encodews stuff
 constexpr int ENCODER_LEFT_SELECT = 1;
 constexpr int ENCODER_RIGHT_SELECT = 2;
 
@@ -42,5 +42,8 @@ constexpr int DISTANCE_SENSOR_RIGHT = 1;
 
 constexpr int DISTANCE_SENSOR_SELECT_LEFT = 1;
 constexpr int DISTANCE_SENSOR_SELECT_RIGHT = 2;
+
+constexpr int AVERAGE_BITS_LEFT = 5;
+constexpr int AVERAGE_BITS_RIGHT = 5;
 
 constexpr double DISTANCE_BETWEEEN_SENSORS = 9.75;

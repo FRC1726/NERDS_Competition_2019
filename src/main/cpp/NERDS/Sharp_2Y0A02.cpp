@@ -18,7 +18,7 @@ Sharp_2Y0A02::Sharp_2Y0A02(int channel) : frc::AnalogInput(channel) {
 }
 
 double Sharp_2Y0A02::GetDistance() {
-    double voltage = GetVoltage();
+    double voltage = GetAverageVoltage();
 
     double a = 33.25817448287683;
     double b = -0.7187714291119961;

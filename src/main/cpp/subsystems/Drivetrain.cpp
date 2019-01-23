@@ -32,6 +32,9 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   encoderLeft.SetDistancePerPulse(linearDistance);
   encoderRight.SetDistancePerPulse(linearDistance);
 
+  distanceSensorLeft.SetAverageBits(AVERAGE_BITS_LEFT);
+  distanceSensorRight.SetAverageBits(AVERAGE_BITS_RIGHT);
+ 
   frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
 }
 
