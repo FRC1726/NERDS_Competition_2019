@@ -47,3 +47,6 @@ constexpr int AVERAGE_BITS_LEFT = 5;
 constexpr int AVERAGE_BITS_RIGHT = 5;
 
 constexpr double DISTANCE_BETWEEEN_SENSORS = 9.75;
+
+//Auto Position uwu
+constexpr double OFFSET_FROM_TARGET = 12;
