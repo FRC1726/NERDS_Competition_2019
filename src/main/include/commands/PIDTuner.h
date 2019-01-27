@@ -8,9 +8,11 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <vector>
+#include <utility>
 
 class PIDTuner : public frc::Command {
- public:
+public:
   PIDTuner();
   void Initialize() override;
   void Execute() override;
@@ -18,10 +20,16 @@ class PIDTuner : public frc::Command {
   void End() override;
   void Interrupted() override;
 
-  double findPeak(double);
- private:
- double relaySpeed;
- double previousAngle;
- bool potentialPeak;
- double deadband;
+private:
+  double relaySpeed;
+  double previousAngle;
+  double potentialPeak;
+  double potentialValley;
+  double deadband;
+
+  bool findingPeak;
+  bool findingValley;
+  bool stableOscillations;
+  std::vector<std::pair<double,double> > maxPeaks;
+  std::vector<std::pair<double,double> > minValleys;
 };

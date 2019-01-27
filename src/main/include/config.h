@@ -33,4 +33,9 @@ const ParameterKey<double> DRIVESTRAIGHT_PID_TOLERANCE = {"DriveStraight/Toleran
 
 //PID autoTune insert cancer
 const ParameterKey<double> AUTOTUNE_RELAY_SPEED = {"AutoTune/Relay Speed", .5};
-const ParameterKey<double> AUTOTUNE_TRIGGER_DEADBAND = {"AutoTune/Deadband", 2};
+const ParameterKey<double> AUTOTUNE_TRIGGER_DEADBAND = {"AutoTune/Trigger Deadband", 2};
+const ParameterKey<double> AUTOTUNE_PEAK_DEADBAND = {"AutoTune/Peak Deadband", 10};
+const ParameterKey<double> AUTOTUNE_VALLEY_DEADBAND = {"AutoTune/Valley Deadband", -10};
+const ParameterKey<double> AUTOTUNE_PEAKS_TOLERANCE = {"AutoTune/Peaks Tolerance", 10};
+const ParameterKey<double> AUTOTUNE_VALLEY_TOLERANCE = {"AutoTune/Valley Tolerance", -10};
+const ParameterKey<double> AUTOTUNE_DESIRED_SAMPLES = {"AutoTune/Desired Samples", 5};
