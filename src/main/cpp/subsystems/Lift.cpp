@@ -6,13 +6,25 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Lift.h"
+#include "RobotMap.h"
+#include "commands/Runlift.h"
 
-Lift::Lift() : Subsystem("ExampleSubsystem") {}
+Lift::Lift() : Subsystem("Lift"), 
+  reverseLimitSwitch(LIFT_REVERSE_LIMIT_SWITCH),
+  liftMotor(LIFT_MOTOR)
+{
+
+}
 
 void Lift::InitDefaultCommand() {
   // Set the default command for a subsystem here.
   // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new RunLift());
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void Lift::run(double speed) {
+  if(speed < 0 && reverseLimitSwitch.Get()){
+    speed = 0;
+  }
+  liftMotor.Set(speed);
+}

@@ -38,3 +38,13 @@ OI::OI() :
 double OI::getAxis(int axis){
   return driver.GetRawAxis(axis);
 }
+
+bool OI::getDPad(int direction) {
+  //add 45 to everything so that the upper and lower range are from 0 to 360, rather than -45 to 315, negatives are teh bigg succ
+  int POV = driver.GetPOV() + 45;
+
+  int lower = direction;
+  int upper = direction + 90;
+
+  return POV > lower && POV < upper;
+}
