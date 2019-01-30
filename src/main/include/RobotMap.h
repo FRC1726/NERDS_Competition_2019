@@ -42,9 +42,9 @@ constexpr int AXIS_RIGHT_TRIGGER = 2;
 constexpr int AXIS_LEFT_TRIGGER = 3;
 
 constexpr int DPAD_UP = 0;
-constexpr int DPAD_RIGHT = 90;
-constexpr int DPAD_DOWN = 180;
-constexpr int DPAD_LEFT = 270;
+constexpr int DPAD_RIGHT = 1;
+constexpr int DPAD_DOWN = 2;
+constexpr int DPAD_LEFT = 3;
 
 //buttons
 constexpr int BUTTON_A = 1;
