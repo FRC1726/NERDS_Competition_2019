@@ -5,30 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/LoadPreferences.h"
+#include "commands/SavePreferences.h"
 
 #include "Robot.h"
 #include "config.h"
 
-LoadPreferences::LoadPreferences() {
+SavePreferences::SavePreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }
 
 // Called just before this Command runs the first time
-void LoadPreferences::Initialize() {
-  Robot::loader.loadConfigFromFile("test.cfg");
+void SavePreferences::Initialize() {
+  Robot::loader.saveConfigToFile("test.cfg");
 }
 
 // Called repeatedly when this Command is scheduled to run
-void LoadPreferences::Execute() {}
+void SavePreferences::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool LoadPreferences::IsFinished() { return true; }
+bool SavePreferences::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void LoadPreferences::End() {}
+void SavePreferences::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void LoadPreferences::Interrupted() {}
+void SavePreferences::Interrupted() {}

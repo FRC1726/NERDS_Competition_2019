@@ -9,6 +9,7 @@
 #include <NetworkTables/NetworkTableInstance.h>
 #include <wpi/Twine.h>
 #include <sstream>
+#include <cstdio>
 
 #include "ConfigLoader.h"
 
@@ -60,21 +61,34 @@ void ConfigLoader::savePreference(ParameterKey<double> param){
 
 
 bool ConfigLoader::saveConfigToFile(std::string filename){
+    std::string filepath = "/home/lvuser/deploy/";
+    filepath.append(filename);
+
+    int status = std::remove(filepath.c_str());
+    if(status){
+        frc::DriverStation::ReportError("Could not delete old config file");
+    }
+
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+    auto preferencesTable = baseTable.GetTable("Preferences");
+    auto error = preferencesTable->SaveEntries(filepath);
 
-    std::string error = baseTable.SaveEntries(filename, "Preferences");
-
-    if(!error.empty()){
+    if(error){
         frc::DriverStation::ReportError(error);
     }
 }
 
 bool ConfigLoader::loadConfigFromFile(std::string filename){
+    std::string filepath = "/home/lvuser/deploy/";
+    filepath.append(filename);
+
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+    auto preferencesTable = baseTable.GetTable("Preferences");
+    preferencesTable->GetInstance().DeleteAllEntries();
+    
+    auto error = preferencesTable->LoadEntries(filepath, ConfigLoader::printError);
 
-    std::string error = baseTable.LoadEntries(filename, "Preferences", ConfigLoader::printError);
-
-    if(!error.empty()){
+    if(error){
         frc::DriverStation::ReportError(error);
     }
 }

@@ -5,15 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
+#pragma once
 
-#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/commands/Command.h>
 
-#include "commands/LoadPreferences.h"
-#include "commands/SavePreferences.h"
-
-OI::OI() {
-  // Process operator interface input here.
-  frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
-  frc::SmartDashboard::PutData("Commands/Save Preferences", new SavePreferences());
-}
+class SavePreferences : public frc::Command {
+ public:
+  SavePreferences();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+};
