@@ -10,6 +10,8 @@
 #include <wpi/Twine.h>
 #include <sstream>
 #include <cstdio>
+#include <fstream>
+
 
 #include "ConfigLoader.h"
 
@@ -60,13 +62,15 @@ void ConfigLoader::savePreference(ParameterKey<double> param){
 }
 
 
-bool ConfigLoader::saveConfigToFile(std::string filename){
+bool ConfigLoader::saveConfigToFile(std::string filename, bool overwrite){
     std::string filepath = "/home/lvuser/deploy/";
     filepath.append(filename);
-
-    int status = std::remove(filepath.c_str());
-    if(status){
-        frc::DriverStation::ReportError("Could not delete old config file");
+    if (overwrite && fileExists(filepath)){
+        int status = std::remove(filepath.c_str());
+        if(status){
+            frc::DriverStation::ReportError("Could not delete old config file");
+            return false;
+        }
     }
 
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
@@ -75,17 +79,27 @@ bool ConfigLoader::saveConfigToFile(std::string filename){
 
     if(error){
         frc::DriverStation::ReportError(error);
+        return false;
     }
+    return true;
 }
 
-bool ConfigLoader::loadConfigFromFile(std::string filename){
+bool ConfigLoader::loadConfigFromFile(std::string filename, bool overwrite){
     std::string filepath = "/home/lvuser/deploy/";
     filepath.append(filename);
 
+    if(!fileExists(filepath)){
+        frc::DriverStation::ReportError("Owo It seems the conig file doesn't exist");
+       return false;
+    }
+
     nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
     auto preferencesTable = baseTable.GetTable("Preferences");
-    preferencesTable->GetInstance().DeleteAllEntries();
-    
+
+    if(overwrite){
+        preferencesTable->GetInstance().DeleteAllEntries();
+    }
+
     auto error = preferencesTable->LoadEntries(filepath, ConfigLoader::printError);
 
     if(error){
@@ -97,4 +111,9 @@ void ConfigLoader::printError(size_t line, const char* message){
     std::stringstream msgStream;
     msgStream << line << " " << message;
     frc::DriverStation::ReportError(msgStream.str());
+}
+
+bool ConfigLoader::fileExists(const std::string& filePath) {
+    std::ifstream f(filePath.c_str());
+    return f.good();
 }

@@ -22,9 +22,10 @@ class ConfigLoader {
 	void savePreference(ParameterKey<double>);
 	void savePreference(ParameterKey<bool>);
 
-  bool saveConfigToFile(std::string);
-  bool loadConfigFromFile(std::string);
+  bool saveConfigToFile(std::string, bool);
+  bool loadConfigFromFile(std::string, bool);
 
  private:
 	static void printError(size_t, const char*);
+  bool fileExists(const std::string&);
 };
