@@ -23,8 +23,5 @@ void Lift::InitDefaultCommand() {
 }
 
 void Lift::run(double speed) {
-  if(speed < 0 && reverseLimitSwitch.Get()){
-    speed = 0;
-  }
   liftMotor.Set(speed);
 }
