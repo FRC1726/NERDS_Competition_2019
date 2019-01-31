@@ -5,14 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Lift.h"
+#include "subsystems/Elevator.h"
 #include "RobotMap.h"
 #include "Commands/RunIntake.h"
 
 
 Lift::Lift() : Subsystem("Lift"),
   lift(LIFT_CAN_MOTOR),
-  elevator(LIFT_SOLENOID)
+  elevator(LIFT_SOLENOID),
+  firstStage(FIRST_STAGE_A, FIRST_STAGE_B),
+  secondStage(SECOND_STAGE_A, SECOND_STAGE_B)
 {
   lift.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
   lift.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
@@ -40,4 +42,38 @@ void Lift::setElevator(bool enable){
 
 bool Lift::getElevator(){
   return elevator.Get();
+}
+
+void Lift::setfirstStage(bool enable){
+  if(enable){
+    firstStage.Set(frc::DoubleSolenoid::kforward);
+  }else{
+    firstStage.Set(frc::DoubleSolenoid::kreverse);
+  }
+}
+
+void Lift::setSecondStage(bool enable){
+  if(enable){
+    secondStage.Set(frc::DoubleSolenoid::kforward);
+  } else{
+    secondStage.Set(frc::DoubleSolenoid::kreverse);
+  }
+}
+
+bool Lift::getFirstStage(){
+  auto status = firstStage.get();
+  if(status == frc::DoubleSolenoid::kforward){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool Lift::getSecondStage(){
+auto status = secondStage.get();
+  if(status == frc::DoubleSolenoid::kreverse){
+    return true;
+  } else {
+    return false;
+  }
 }

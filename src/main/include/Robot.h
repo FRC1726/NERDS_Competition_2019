@@ -14,7 +14,7 @@
 #include "ConfigLoader.h"
 #include "OI.h"
 #include "subsystems/Drivetrain.h"
-#include "subsystems/Lift.h"
+#include "subsystems/Elevator.h"
 
 class Robot : public frc::TimedRobot {
  public:

@@ -10,6 +10,7 @@
 #include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
 #include <frc/commands/Subsystem.h>
 #include <frc/Solenoid.h>
+#include <frc/DoubleSolenoid.h>
 
 class Lift : public frc::Subsystem {
  public:
@@ -18,8 +19,14 @@ class Lift : public frc::Subsystem {
   void runMotor(double);
   void setElevator(bool);
   bool getElevator();
+  void setfirstStage(bool);
+  void setsecondStage(bool);
+  bool getFirstStage();
+  bool getSecondStage();
 
  private:
   ctre::phoenix::motorcontrol::can::WPI_TalonSRX lift;
   frc::Solenoid elevator;
+  frc::DoubleSolenoid firstStage;
+  frc::DoubleSolenoid secondStage;
 };

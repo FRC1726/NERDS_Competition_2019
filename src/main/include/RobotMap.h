@@ -48,3 +48,10 @@ constexpr int BUTTON_X = 3;
 constexpr int BUTTON_Y = 4;
 constexpr int BUTTON_BUMPER_LEFT = 5;
 constexpr int BUTTON_BUMPER_RIGHT = 6;
+
+
+//solenoids
+constexpr int FIRST_STAGE_A = 5;
+constexpr int FIRST_STAGE_B = 6;
+constexpr int SECOND_STAGE_A = 7;
+constexpr int SECOND_STAGE_B = 8;
