@@ -15,14 +15,17 @@
 #include "commands/TurnToHeading.h"
 #include "commands/TurnByAngle.h"
 #include "commands/DriveStraight.h"
-#include "Commands/ToggleElevator.h"
+#include "commands/ToggleElevator.h"
+#include "commands/ToggleGrabber.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER),
-  buttonA(&driver, BUTTON_A)
+  buttonA(&driver, BUTTON_A),
+  buttonB(&driver, BUTTON_B)
 {
   //physical buttons
   buttonA.WhenPressed(new ToggleElevator());
+  buttonB.WhenPressed(new ToggleGrabber());
 
   // virtual buttons.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
