@@ -20,7 +20,7 @@ class Robot : public frc::TimedRobot {
  public:
   static OI oi;
   static Drivetrain drivetrain;
-  static Lift lift;
+  static Elevator elevator;
   static ConfigLoader loader;
 
   void RobotInit() override;

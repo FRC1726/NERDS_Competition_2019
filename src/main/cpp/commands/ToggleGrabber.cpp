@@ -11,12 +11,12 @@
 ToggleGrabber::ToggleGrabber() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::lift);
+  Requires(&Robot::elevator);
 }
 
 // Called just before this Command runs the first time
 void ToggleGrabber::Initialize() {
-  Robot::lift.setGrabber(!Robot::lift.getGrabber());
+  Robot::elevator.setGrabber(!Robot::elevator.getGrabber());
 }
 
 // Called repeatedly when this Command is scheduled to run

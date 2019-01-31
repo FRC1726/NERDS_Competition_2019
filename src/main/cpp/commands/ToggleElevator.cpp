@@ -11,12 +11,12 @@
 ToggleElevator::ToggleElevator() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::lift);
+  Requires(&Robot::elevator);
 }
 
 // Called just before this Command runs the first time
 void ToggleElevator::Initialize() {
- Robot::lift.setElevator(!Robot::lift.getElevator());
+ Robot::elevator.setElevator(!Robot::elevator.getElevator());
 }
 
 // Called repeatedly when this Command is scheduled to run

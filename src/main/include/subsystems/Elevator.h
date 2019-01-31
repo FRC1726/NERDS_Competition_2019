@@ -12,9 +12,9 @@
 #include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
 
-class Lift : public frc::Subsystem {
+class Elevator : public frc::Subsystem {
  public:
-  Lift();
+  Elevator();
   void InitDefaultCommand() override;
   void runMotor(double);
   void setElevator(bool);
@@ -23,7 +23,7 @@ class Lift : public frc::Subsystem {
   bool getGrabber();
 
  private:
-  ctre::phoenix::motorcontrol::can::WPI_TalonSRX lift;
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX intake;
 
   frc::Solenoid grabber;
 

@@ -12,7 +12,7 @@
 RunIntake::RunIntake() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(&Robot::lift);
+  Requires(&Robot::elevator);
 }
 
 // Called just before this Command runs the first time
@@ -22,12 +22,12 @@ void RunIntake::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void RunIntake::Execute() {
-  double foreward = Robot::oi.getAxis(AXIS_RIGHT_TRIGGER);
+  double forward = Robot::oi.getAxis(AXIS_RIGHT_TRIGGER);
   double backward = Robot::oi.getAxis(AXIS_LEFT_TRIGGER);
 
-  double speed = foreward - backward;
+  double speed = forward - backward;
 
-  Robot::lift.runMotor(speed);
+  Robot::elevator.runMotor(speed);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -37,11 +37,11 @@ bool RunIntake::IsFinished() {
 
 // Called once after isFinished returns true
 void RunIntake::End() {
-  Robot::lift.runMotor(0);
+  Robot::elevator.runMotor(0);
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void RunIntake::Interrupted() {
-  Robot::lift.runMotor(0);
+  Robot::elevator.runMotor(0);
 }

@@ -10,24 +10,24 @@
 #include "Commands/RunIntake.h"
 
 
-Lift::Lift() : Subsystem("Lift"),
-  lift(LIFT_CAN_MOTOR),
+Elevator::Elevator() : Subsystem("Elevator"),
+  intake(LIFT_CAN_MOTOR),
   grabber(LIFT_SOLENOID),
   elevatorLeft(FIRST_STAGE_A, FIRST_STAGE_B),
   elevatorRight(SECOND_STAGE_A, SECOND_STAGE_B)
 {
-  lift.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
-  lift.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
-  lift.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
-  lift.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
-  lift.OverrideLimitSwitchesEnable(false);
+  intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
+  intake.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
+  intake.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
+  intake.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
+  intake.OverrideLimitSwitchesEnable(false);
 
   elevatorLeft.Set(frc::DoubleSolenoid::kForward);
   elevatorRight.Set(frc::DoubleSolenoid::kForward);
   elevatorState = true;
 }
 
-void Lift::InitDefaultCommand() {
+void Elevator::InitDefaultCommand() {
   // Set the default command for a subsystem here. Just Do It!!!
   // SetDefaultCommand(new MySpecialCommand());
   SetDefaultCommand(new RunIntake());
@@ -36,11 +36,11 @@ void Lift::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 
-void Lift::runMotor(double speed){
-  lift.Set(speed);
+void Elevator::runMotor(double speed){
+  intake.Set(speed);
 }
 
-void Lift::setElevator(bool enable){
+void Elevator::setElevator(bool enable){
   if(enable){
     elevatorLeft.Set(frc::DoubleSolenoid::kForward);
     elevatorRight.Set(frc::DoubleSolenoid::kForward);
@@ -52,14 +52,14 @@ void Lift::setElevator(bool enable){
   }
 }
 
-bool Lift::getElevator(){
+bool Elevator::getElevator(){
   return elevatorState;
 }
 
-void Lift::setGrabber(bool enable){
+void Elevator::setGrabber(bool enable){
   grabber.Set(enable);
 }
 
-bool Lift::getGrabber(){
+bool Elevator::getGrabber(){
   return grabber.Get();
 }
