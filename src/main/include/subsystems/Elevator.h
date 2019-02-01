@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
+#include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
 #include <frc/commands/Subsystem.h>
 #include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
@@ -23,7 +23,7 @@ class Elevator : public frc::Subsystem {
   bool getGrabber();
 
  private:
-  ctre::phoenix::motorcontrol::can::WPI_TalonSRX intake;
+  ctre::phoenix::motorcontrol::can::VictorSPX intake;
 
   frc::Solenoid grabber;
 

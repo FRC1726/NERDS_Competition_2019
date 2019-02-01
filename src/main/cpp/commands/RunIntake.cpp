@@ -43,5 +43,5 @@ void RunIntake::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void RunIntake::Interrupted() {
-  Robot::elevator.runMotor(0);
+  Robot::elevator .runMotor(0);
 }
