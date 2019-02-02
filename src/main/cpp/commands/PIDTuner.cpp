@@ -9,6 +9,9 @@
 #include "Robot.h"
 #include "config.h"
 #include "frc/Timer.h"
+#include "RobotMap.h"
+
+#include "frc/smartdashboard/SmartDashboard.h"
 
 PIDTuner::PIDTuner() {
   // Use Requires() here to declare subsystem dependencies
@@ -115,23 +118,45 @@ void PIDTuner::Execute() {
     double avgValleyPeriod = 0;
     double amplitude = 0;
     double Period = 0;
+    double avgPeriod = 0;
+
+    auto previousPeak = maxPeaks[0];
     for(auto peak : maxPeaks){
       avgPeak = avgPeak + peak.first;
+      avgPeriod += peak.second - previousPeak.second;   
+      previousPeak = peak;
     }
+
     avgPeak = avgPeak / maxPeaks.size();
     avgPeakPeriod = avgPeakPeriod / maxPeaks.size();
+
+    auto previousValley = minValleys[0];
     for(auto valley : minValleys){
       avgValley = avgValley + valley.first;
+      avgPeriod += previousValley.second - valley.second;
+      previousValley = valley;
     }
-
     avgValley = avgValley / minValleys.size();
     avgValleyPeriod = avgValleyPeriod / minValleys.size();
+
+    avgPeriod = avgPeriod / (maxPeaks.size() - 1) + (minValleys.size() - 1);
+
     amplitude = avgPeak - avgValley;
 
+    double Pu = avgPeriod;
+    double Ku = (4 * relaySpeed) / (amplitude * PI);
+    double P = 0.6 * Ku;
+    double I = 1.2 * (Ku / Pu);
+    double D = 0.075 * Ku * Pu;
 
+    SmartDashboard::PutNumber("PIDTuner/Amplitude", Ku);
+    SmartDashboard::PutNumber("PIDTuner/Period", Pu);
+    SmartDashboard::PutNumber("PIDTuner/P", P);
+    SmartDashboard::PutNumber("PIDTuner/I", I);
+    SmartDashboard::PutNumber("PIDTuner/D", D);
   }
-  
-}
+
+} 
 
 // Make this return true when this Command no longer needs to run execute()
 bool PIDTuner::IsFinished() { return false; }

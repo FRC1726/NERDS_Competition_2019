@@ -15,6 +15,7 @@
 #include "commands/TurnToHeading.h"
 #include "commands/TurnByAngle.h"
 #include "commands/DriveStraight.h"
+#include "commands/PIDTuner.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER)
@@ -25,6 +26,7 @@ OI::OI() :
   frc::SmartDashboard::PutData("Commands/Turn To Heading", new TurnToHeading(90));
   frc::SmartDashboard::PutData("Commands/Turn To Angle", new TurnByAngle(90));
   frc::SmartDashboard::PutData("Commands/Drive Straight", new DriveStraight(24));
+  frc::SmartDashboard::PutData("Commands/PIDTuner", new PIDTuner());
 }
 
 double OI::getAxis(int axis){
