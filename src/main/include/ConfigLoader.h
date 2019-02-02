@@ -10,6 +10,7 @@
 #include "config.h"
 #include <string>
 #include <vector>
+#include <SendableChooser.h>
 
 class ConfigLoader {
  public:
@@ -28,4 +29,7 @@ class ConfigLoader {
  private:
 	static void printError(size_t, const char*);
   bool fileExists(const std::string&);
+  void populateChoices();
+
+  std::unique_ptr<frc::SendableChooser<std::string> > fileChooser;
 };

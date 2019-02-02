@@ -13,6 +13,7 @@
 LoadPreferences::LoadPreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
+  SetRunWhenDisabled(true);
 }
 
 // Called just before this Command runs the first time

@@ -11,7 +11,8 @@
 #include <sstream>
 #include <cstdio>
 #include <fstream>
-
+#include <sys/types.h>
+#include <dirent.h>
 
 #include "ConfigLoader.h"
 
@@ -116,4 +117,17 @@ void ConfigLoader::printError(size_t line, const char* message){
 bool ConfigLoader::fileExists(const std::string& filePath) {
     std::ifstream f(filePath.c_str());
     return f.good();
+}
+
+void ConfigLoader::populateChoices(){
+    DIR* dirp = opendir("/home/lvuser/deploy/");
+    struct dirent * dp;
+
+    frc::SendableChooser<std::string>* newChooser = new frc::SendableChooser<string>();
+
+    while ((dp = readdir(dirp)) != NULL) {
+        dp->d_name;
+        newChooser->AddOption(dp->d_name, dp->d_name);
+    }
+    closedir(dirp);
 }
