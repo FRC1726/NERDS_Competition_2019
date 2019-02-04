@@ -9,6 +9,7 @@
 
 #include "RobotMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 
 #include "commands/DriveWithJoysticks.h"
 #include "commands/LoadPreferences.h"
@@ -37,4 +38,27 @@ OI::OI() :
 
 double OI::getAxis(int axis){
   return driver.GetRawAxis(axis);
+}
+
+bool OI::getDPad(int direction) {
+  //getting the angle, then returning the correct angle
+  int POV = driver.GetPOV();
+
+  if(POV == -1){
+    return false;
+  }
+
+  switch(direction){
+    case DPAD_UP:
+      return POV >= 315 || POV <= 45;
+    case DPAD_RIGHT:
+      return POV >= 45 && POV <= 135;
+    case DPAD_DOWN:
+      return POV >= 135 && POV <= 225;
+    case DPAD_LEFT:
+      return POV >= 225 && POV <= 315;
+    default:
+      frc::DriverStation::ReportError("Invalid Direction");
+      return false;
+  }
 }

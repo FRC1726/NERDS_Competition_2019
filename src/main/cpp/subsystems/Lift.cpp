@@ -5,19 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/Lift.h"
+#include "RobotMap.h"
+#include "commands/Runlift.h"
 
-#include <frc/Joystick.h>
-#include <frc/buttons/JoystickButton.h>
+Lift::Lift() : Subsystem("Lift"), 
+  reverseLimitSwitch(LIFT_REVERSE_LIMIT_SWITCH),
+  liftMotor(LIFT_MOTOR)
+{
 
-class OI {
- public:
-  OI();
-  double getAxis(int);
-  bool getDPad(int);
+}
 
-private:
-  frc::Joystick driver;
-  frc::JoystickButton buttonA;
-  frc::JoystickButton buttonB;
-};
+void Lift::InitDefaultCommand() {
+  // Set the default command for a subsystem here.
+  // SetDefaultCommand(new MySpecialCommand());
+  SetDefaultCommand(new RunLift());
+}
+
+void Lift::run(double speed) {
+  liftMotor.Set(speed);
+}

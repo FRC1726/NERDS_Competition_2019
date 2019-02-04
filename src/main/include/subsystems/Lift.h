@@ -7,27 +7,17 @@
 
 #pragma once
 
-#include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
 #include <frc/commands/Subsystem.h>
-#include <frc/Solenoid.h>
-#include <frc/DoubleSolenoid.h>
 
-class Elevator : public frc::Subsystem {
- public:
-  Elevator();
+#include <frc/DigitalInput.h>
+#include <frc/VictorSP.h>
+
+class Lift : public frc::Subsystem {
+public:
+  Lift();
   void InitDefaultCommand() override;
-  void runMotor(double);
-  void setElevator(bool);
-  bool getElevator();
-  void setGrabber(bool);
-  bool getGrabber();
-
- private:
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX intake;
-
-  frc::Solenoid grabber;
-
-  frc::DoubleSolenoid elevatorLeft;
-  frc::DoubleSolenoid elevatorRight;
-  bool elevatorState;
+  void run(double);
+private:
+  frc::DigitalInput reverseLimitSwitch;
+  frc::VictorSP liftMotor;
 };

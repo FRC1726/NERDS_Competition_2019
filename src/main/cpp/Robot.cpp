@@ -14,6 +14,7 @@ OI Robot::oi;
 Drivetrain Robot::drivetrain;
 Elevator Robot::elevator;
 ConfigLoader Robot::loader;
+Lift Robot::lift;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);

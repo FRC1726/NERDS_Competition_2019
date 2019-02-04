@@ -38,8 +38,13 @@ constexpr int AXIS_LEFT_X = 0;
 constexpr int AXIS_LEFT_Y = 1;
 constexpr int AXIS_RIGHT_X = 4;
 constexpr int AXIS_RIGHT_Y = 5;
-constexpr int AXIS_RIGHT_TRIGGER = 3;
-constexpr int AXIS_LEFT_TRIGGER = 2;
+constexpr int AXIS_RIGHT_TRIGGER = 2;
+constexpr int AXIS_LEFT_TRIGGER = 3;
+
+constexpr int DPAD_UP = 0;
+constexpr int DPAD_RIGHT = 1;
+constexpr int DPAD_DOWN = 2;
+constexpr int DPAD_LEFT = 3;
 
 //buttons
 constexpr int BUTTON_A = 1;
@@ -49,9 +54,12 @@ constexpr int BUTTON_Y = 4;
 constexpr int BUTTON_BUMPER_LEFT = 5;
 constexpr int BUTTON_BUMPER_RIGHT = 6;
 
-
 //solenoids
 constexpr int FIRST_STAGE_A = 0;
 constexpr int FIRST_STAGE_B = 1;
 constexpr int SECOND_STAGE_A = 2;
 constexpr int SECOND_STAGE_B = 3;
+
+//Lift
+constexpr int LIFT_REVERSE_LIMIT_SWITCH = 4;
+constexpr int LIFT_MOTOR = 4;
