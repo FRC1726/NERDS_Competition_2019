@@ -7,16 +7,14 @@
 
 #pragma once
 
-#include <frc/Joystick.h>
-#include <frc/buttons/JoystickButton.h>
+#include <frc/commands/Command.h>
 
-class OI {
+class RunIntake : public frc::Command {
  public:
-  OI();
-  double getAxis(int);
-
-private:
-  frc::Joystick driver;
-  frc::JoystickButton buttonA;
-  frc::JoystickButton buttonB;
+  RunIntake();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

@@ -12,6 +12,7 @@
 
 OI Robot::oi;
 Drivetrain Robot::drivetrain;
+Elevator Robot::elevator;
 ConfigLoader Robot::loader;
 
 void Robot::RobotInit() {

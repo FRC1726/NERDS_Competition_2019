@@ -7,6 +7,11 @@
 
 #pragma once
 
+//Lift
+constexpr int LIFT_CAN_MOTOR = 2;
+constexpr int LIFT_TIMEOUT = 10;
+constexpr int LIFT_SOLENOID = 4;
+
 //drivetrain
 constexpr int DRIVE_FRONT_LEFT = 0;
 constexpr int DRIVE_BACK_LEFT = 1;
@@ -33,5 +38,20 @@ constexpr int AXIS_LEFT_X = 0;
 constexpr int AXIS_LEFT_Y = 1;
 constexpr int AXIS_RIGHT_X = 4;
 constexpr int AXIS_RIGHT_Y = 5;
-constexpr int AXIS_RIGHT_TRIGGER = 2;
-constexpr int AXIS_LEFT_TRIGGER = 3;
+constexpr int AXIS_RIGHT_TRIGGER = 3;
+constexpr int AXIS_LEFT_TRIGGER = 2;
+
+//buttons
+constexpr int BUTTON_A = 1;
+constexpr int BUTTON_B = 2;
+constexpr int BUTTON_X = 3;
+constexpr int BUTTON_Y = 4;
+constexpr int BUTTON_BUMPER_LEFT = 5;
+constexpr int BUTTON_BUMPER_RIGHT = 6;
+
+
+//solenoids
+constexpr int FIRST_STAGE_A = 0;
+constexpr int FIRST_STAGE_B = 1;
+constexpr int SECOND_STAGE_A = 2;
+constexpr int SECOND_STAGE_B = 3;

@@ -14,11 +14,13 @@
 #include "ConfigLoader.h"
 #include "OI.h"
 #include "subsystems/Drivetrain.h"
+#include "subsystems/Elevator.h"
 
 class Robot : public frc::TimedRobot {
  public:
   static OI oi;
   static Drivetrain drivetrain;
+  static Elevator elevator;
   static ConfigLoader loader;
 
   void RobotInit() override;
