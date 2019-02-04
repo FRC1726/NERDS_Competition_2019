@@ -15,6 +15,7 @@
 #include "OI.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Elevator.h"
+#include "subsystems/Lift.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -22,6 +23,7 @@ class Robot : public frc::TimedRobot {
   static Drivetrain drivetrain;
   static Elevator elevator;
   static ConfigLoader loader;
+  static Lift lift;
 
   void RobotInit() override;
   void RobotPeriodic() override;
