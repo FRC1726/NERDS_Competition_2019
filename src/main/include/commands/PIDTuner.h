@@ -27,6 +27,8 @@ private:
   double potentialValley;
   double deadband;
 
+  bool invert;
+
   bool findingPeak;
   bool findingValley;
   bool stableOscillations;

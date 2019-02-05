@@ -26,27 +26,27 @@ void PIDTuner::Initialize() {
   deadband = Robot::loader.getConfig(AUTOTUNE_TRIGGER_DEADBAND);
   Robot::drivetrain.resetGyro();
 
-  Robot::drivetrain.arcadeDrive(0,relaySpeed);
   previousAngle = 0;
   potentialPeak = 0;
+  potentialValley = 0;
   findingPeak = false;
   findingValley = false;
-
+  invert = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void PIDTuner::Execute() {
 
   double angle = Robot::drivetrain.getAngle();
-  double speed;
   //compares current angle to trigger Line, sets speed to go opposite direction
   if(angle > deadband){
-    speed = -relaySpeed;
+    invert = true;
   }else if(angle < -deadband){
-    speed = relaySpeed;
+    invert = false;
   }
-  Robot::drivetrain.arcadeDrive(0,speed);
 
+  double speed = invert ? relaySpeed : -relaySpeed;
+  Robot::drivetrain.arcadeDrive(0, speed);
 
   /*--------------------------------------------*/
   /*  Start of finding the peaks and valleys    */
@@ -55,33 +55,35 @@ void PIDTuner::Execute() {
 
   //looking for if we are above where we thing peaks will be
   if(angle > Robot::loader.getConfig(AUTOTUNE_PEAK_DEADBAND)){
+    findingPeak = true;
+
+    if(angle > potentialPeak){
+          potentialPeak = angle;
+    }
+
     //puts a valley into our array when we stop looking for valleys
     if(findingValley){
       findingValley = false;
       minValleys.push_back(std::make_pair(potentialValley, frc::Timer::GetFPGATimestamp()));
-    }
-    findingPeak = true;
-    //finds potential Peaks
-    if(angle > potentialPeak){
-      potentialPeak = angle;
+      SmartDashboard::PutNumber("Autotune/New Valley", potentialValley);
+      potentialValley = 0;
     }
   }else if(angle < Robot::loader.getConfig(AUTOTUNE_VALLEY_DEADBAND)){
+    findingValley = true;
+
+    //Replaces old potential valley with new value if the new value is lower
+    if(angle < potentialValley){
+      potentialValley = angle;
+    }
+
     //puts a peak into our array when we stop looking for peaks
     if(findingPeak){
       maxPeaks.push_back(std::make_pair(potentialPeak, frc::Timer::GetFPGATimestamp()));
       findingPeak = false;
+      SmartDashboard::PutNumber("Autotune/New Peak", potentialPeak);
+      potentialPeak = 0;
     }
-    findingValley = true;
-    //finds potential valleys
-    if(angle < potentialValley){
-      potentialValley = angle;
-    }
-  // puts everything in a safe place in case program poops itself
-  }else{
-    findingPeak = false;
-    findingValley = false;
   }
-
 
   /*---------------------------------------------*/
   /*start of array building for peaks and valleys*/
@@ -89,20 +91,24 @@ void PIDTuner::Execute() {
   /*---------------------------------------------*/
 
   if(maxPeaks.size() > Robot::loader.getConfig(AUTOTUNE_DESIRED_SAMPLES) && minValleys.size() > Robot::loader.getConfig(AUTOTUNE_DESIRED_SAMPLES)){
-  for(auto peak : maxPeaks){
-    if(abs(maxPeaks[0].first - peak.first) < Robot::loader.getConfig(AUTOTUNE_PEAKS_TOLERANCE)){
-      stableOscillations = true;
-    }else{
-      stableOscillations = false;
+    for(auto peak : maxPeaks){
+      if(abs(maxPeaks[0].first - peak.first) < Robot::loader.getConfig(AUTOTUNE_PEAKS_TOLERANCE)){
+        stableOscillations = true;
+      }else{
+        stableOscillations = false;
+      }
     }
-  }
-  for(auto valley : minValleys){
-    if(abs(minValleys[0].first - valley.first) < Robot::loader.getConfig(AUTOTUNE_VALLEY_TOLERANCE)){
-      stableOscillations = true;
-    }else{
-      stableOscillations = false;
+    for(auto valley : minValleys){
+      if(abs(minValleys[0].first - valley.first) < Robot::loader.getConfig(AUTOTUNE_VALLEY_TOLERANCE)){
+        stableOscillations = true;
+      }else{
+        stableOscillations = false;
+      }
     }
-  }
+    if(!stableOscillations){
+      maxPeaks.erase(maxPeaks.begin());
+      minValleys.erase(minValleys.begin());
+    }
   }
 
   /*---------------------------------------------*/
