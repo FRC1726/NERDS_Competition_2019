@@ -5,10 +5,12 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 #include <frc/Preferences.h>
+
+#include <sstream>
+
 #include <frc/DriverStation.h>
 #include <NetworkTables/NetworkTableInstance.h>
 #include <wpi/Twine.h>
-#include <sstream>
 
 #include "ConfigLoader.h"
 

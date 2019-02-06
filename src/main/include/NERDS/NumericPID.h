@@ -7,10 +7,12 @@
 
 #pragma once
 
+#include <memory>
+
 #include <frc/PIDSource.h>
 #include <frc/PIDOutput.h>
 #include <frc/PIDController.h>
-#include <memory>
+
 
 class NumericPID : public frc::PIDSource, public frc::PIDOutput {
  public:
@@ -29,6 +31,6 @@ protected:
 private:
   std::shared_ptr<frc::PIDController> controller;
 
-  double PIDInput;
-  double PIDError;
+  double m_pid_input;
+  double m_pid_error;
 };

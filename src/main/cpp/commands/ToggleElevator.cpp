@@ -6,9 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ToggleElevator.h"
+
 #include "Robot.h"
 
-ToggleElevator::ToggleElevator() {
+ToggleElevator::ToggleElevator() : frc::Command("Toggle Elevator") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevator);

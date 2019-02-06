@@ -6,30 +6,31 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Drivetrain.h"
-#include "RobotMap.h"
-#include <frc/DriverStation.h>
-#include "commands/DriveWithJoysticks.h"
 
+#include <frc/DriverStation.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
-Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
-  frontLeft(DRIVE_FRONT_LEFT),
-  frontRight(DRIVE_FRONT_RIGHT),
-  backLeft(DRIVE_BACK_LEFT),
-  backRight(DRIVE_BACK_RIGHT),
-  left(frontLeft, backLeft),
-  right(frontRight, backRight),
-  drive(left, right),
-  encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
-  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
-  gyro(SerialPort::Port::kUSB1)
-{
-  double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
-  double linearDistance = PI / 60;
-  encoderLeft.SetDistancePerPulse(linearDistance);
-  encoderRight.SetDistancePerPulse(linearDistance);
+#include "commands/DriveWithJoysticks.h"
+#include "RobotMap.h"
 
-  frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
+Drivetrain::Drivetrain() : frc::Subsystem("Drivetrain"),
+  m_front_left(DRIVE_FRONT_LEFT),
+  m_front_right(DRIVE_FRONT_RIGHT),
+  m_back_left(DRIVE_BACK_LEFT),
+  m_back_right(DRIVE_BACK_RIGHT),
+  m_left(m_front_left, m_back_left),
+  m_right(m_front_right, m_back_right),
+  m_drive(m_left, m_right),
+  m_encoder_right(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
+  m_encoder_left(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
+  m_gyro(SerialPort::Port::kUSB1)
+{
+  double angular_distance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
+  double linear_distance = PI / 60;
+  m_encoder_left.SetDistancePerPulse(linear_distance);
+  m_encoder_right.SetDistancePerPulse(linear_distance);
+
+  frc::SmartDashboard::PutData("Sensor/Gyro", &m_gyro);
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -41,19 +42,19 @@ void Drivetrain::InitDefaultCommand() {
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 void Drivetrain::arcadeDrive(double speed, double turn){
-  drive.ArcadeDrive(speed, turn, false);
+  m_drive.ArcadeDrive(speed, turn, false);
 }
 
 void Drivetrain::curvatureDrive(double speed, double turn, bool quickTurn){
-  drive.CurvatureDrive(speed, turn, quickTurn);
+  m_drive.CurvatureDrive(speed, turn, quickTurn);
 }
 
 double Drivetrain::getDistance(int encoder){
   switch(encoder){
     case 1:
-    return encoderLeft.GetDistance();
+    return m_encoder_left.GetDistance();
     case 2:
-    return encoderRight.GetDistance();
+    return m_encoder_right.GetDistance();
     default:
     frc::DriverStation::ReportError("Encoder does not exist.");
     return 0;
@@ -61,5 +62,5 @@ double Drivetrain::getDistance(int encoder){
 }
 
 double Drivetrain::getAngle(){
-  return gyro.GetYaw();
+  return m_gyro.GetYaw();
 }

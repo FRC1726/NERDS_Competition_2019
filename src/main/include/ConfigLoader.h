@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include "config.h"
 #include <string>
 #include <vector>
+
+#include "config.h"
 
 class ConfigLoader {
  public:

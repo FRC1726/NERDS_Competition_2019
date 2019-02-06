@@ -8,10 +8,10 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/VictorSP.h>
 #include <frc/Drive/DifferentialDrive.h>
-#include <frc/SpeedControllerGroup.h>
 #include <frc/Encoder.h>
+#include <frc/SpeedControllerGroup.h>
+#include <frc/VictorSP.h>
 
 #include <AHRS.h>
 
@@ -27,18 +27,18 @@ public:
 
   double getAngle();
 private:
-  frc::VictorSP frontLeft;
-  frc::VictorSP frontRight;
-  frc::VictorSP backLeft;
-  frc::VictorSP backRight;
+  frc::VictorSP m_front_left;
+  frc::VictorSP m_front_right;
+  frc::VictorSP m_back_left;
+  frc::VictorSP m_back_right;
 
-  frc::SpeedControllerGroup left;
-  frc::SpeedControllerGroup right;
+  frc::SpeedControllerGroup m_left;
+  frc::SpeedControllerGroup m_right;
 
-  frc::DifferentialDrive drive;
+  frc::DifferentialDrive m_drive;
 
-  frc::Encoder encoderLeft;
-  frc::Encoder encoderRight;
+  frc::Encoder m_encoder_left;
+  frc::Encoder m_encoder_right;
 
-  AHRS gyro;
+  AHRS m_gyro;
 };

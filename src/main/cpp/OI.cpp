@@ -7,17 +7,18 @@
 
 #include "OI.h"
 
-#include "RobotMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DriverStation.h>
 
+#include "commands/DriveStraight.h"
 #include "commands/DriveWithJoysticks.h"
 #include "commands/LoadPreferences.h"
-#include "commands/TurnToHeading.h"
-#include "commands/TurnByAngle.h"
-#include "commands/DriveStraight.h"
 #include "commands/ToggleElevator.h"
 #include "commands/ToggleGrabber.h"
+#include "commands/TurnToHeading.h"
+#include "commands/TurnByAngle.h"
+
+#include "RobotMap.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER),

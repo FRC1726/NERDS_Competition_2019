@@ -6,11 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/RunLift.h"
+
+#include "config.h"
 #include "Robot.h"
 #include "RobotMap.h"
-#include "Config.h"
 
-RunLift::RunLift() {
+RunLift::RunLift() : frc::Command("Run Lift") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::lift);

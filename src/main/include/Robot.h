@@ -7,9 +7,10 @@
 
 #pragma once
 
-#include <frc/TimedRobot.h>
+
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <frc/TimedRobot.h>
 
 #include "ConfigLoader.h"
 #include "OI.h"

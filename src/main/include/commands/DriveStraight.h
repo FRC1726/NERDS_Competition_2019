@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/PIDCommand.h>
+
 #include <frc/Timer.h>
 
 class DriveStraight : public frc::PIDCommand {
@@ -25,13 +26,13 @@ class DriveStraight : public frc::PIDCommand {
   double driveProfile(double, double, double);
 
 private:
-  frc::Timer timer;
+  frc::Timer m_timer;
   
-  double PIDError;
-  double driveDistance;
-  double targetDistance;
-  double encoderRightInitial;
-  double encoderLeftInitial;
+  double m_pid_error;
+  double m_drive_distance;
+  double m_target_distance;
+  double m_encoder_right_initial;
+  double m_encoder_left_initial;
 
 protected:
   double ReturnPIDInput() override;

@@ -6,11 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/DriveWithJoysticks.h"
-#include "Robot.h"
-#include "RobotMap.h"
+
 #include <cmath>
 
-DriveWithJoysticks::DriveWithJoysticks() {
+#include "Robot.h"
+#include "RobotMap.h"
+
+DriveWithJoysticks::DriveWithJoysticks() : frc::Command("Drive With Joysticks") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrain);
@@ -26,11 +28,11 @@ void DriveWithJoysticks::Execute() {
   double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
   
-  speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
-  turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+  speed = apply_deadzone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+  turn = apply_deadzone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
-  speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
-  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
+  speed = drive_profile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+  turn = drive_profile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
 
   bool reverse = Robot::loader.getConfig(JOYSTICK_REVERSE_FORWARD);
   if(reverse){
@@ -56,7 +58,7 @@ void DriveWithJoysticks::Interrupted() {
   Robot::drivetrain.arcadeDrive(0, 0);
 }
 
-double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
+double DriveWithJoysticks::apply_deadzone(double input, double deadzone){
   double absolute = fabs(input);
 
   if(absolute < deadzone) {
@@ -72,7 +74,7 @@ double DriveWithJoysticks::applyDeadZone(double input, double deadzone){
   }
 }
 
-double DriveWithJoysticks::driveProfile(double input, double max, double min){
+double DriveWithJoysticks::drive_profile(double input, double max, double min){
   if(input == 0){
     return 0;
   }

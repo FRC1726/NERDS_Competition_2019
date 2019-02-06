@@ -8,8 +8,8 @@
 #pragma once
 
 #include <frc/commands/PIDCommand.h>
-#include <frc/Timer.h>
 
+#include <frc/Timer.h>
 
 class TurnByAngle : public frc::PIDCommand {
  public:
@@ -27,10 +27,10 @@ class TurnByAngle : public frc::PIDCommand {
 
 private:
   double wrapAngle(double);
-  frc::Timer timer;
+  frc::Timer m_timer;
 
-  double targetAngle;
-  double PIDError;
+  double m_target_angle;
+  double m_pid_error;
 
 protected:
   double ReturnPIDInput() override;

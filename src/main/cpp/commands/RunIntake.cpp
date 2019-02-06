@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/RunIntake.h"
+
 #include "Robot.h"
 #include "RobotMap.h"
 
-RunIntake::RunIntake() {
+RunIntake::RunIntake() : frc::Command("Run Intake") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevator);

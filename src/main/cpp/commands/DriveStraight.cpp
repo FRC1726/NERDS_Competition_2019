@@ -7,13 +7,14 @@
 
 #include "commands/DriveStraight.h"
 
-#include "Robot.h"
-#include "RobotMap.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include "Robot.h"
+#include "RobotMap.h"
+
 DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance", 0, 0, 0),
-  driveDistance(target),
-  PIDError(0)
+  m_drive_distance(target),
+  m_pid_error(0)
 {
   Requires(&Robot::drivetrain);
   
@@ -28,12 +29,12 @@ DriveStraight::DriveStraight(double target) : frc::PIDCommand("Drive by distance
 
 // Called just before this Command runs the first time
 void DriveStraight::Initialize() {
-  encoderRightInitial = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
-  encoderLeftInitial = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
-  double averageReading = (encoderRightInitial + encoderLeftInitial) / 2;
+  m_encoder_right_initial = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
+  m_encoder_left_initial = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double average_reading = (m_encoder_right_initial + m_encoder_left_initial) / 2;
 
-  targetDistance  = averageReading + driveDistance;
-  SmartDashboard::PutNumber("Debug/Drive Straight/Target Distance", targetDistance);
+  m_target_distance  = average_reading + m_drive_distance;
+  SmartDashboard::PutNumber("Debug/Drive Straight/Target Distance", m_target_distance);
 
   auto controller = GetPIDController();
   controller->SetAbsoluteTolerance(Robot::loader.getConfig(AUTOTURN_PID_TOLERANCE));
@@ -47,69 +48,69 @@ void DriveStraight::Initialize() {
   controller->SetSetpoint(target);
   controller->Enable();  
   
-  timer.Reset();
+  m_timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveStraight::Execute() {
   auto controller = GetPIDController();
 
-  double encoderLeftCurrent = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
-  double encoderRightCurrent = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
-  double averageCurrent = (encoderLeftCurrent + encoderRightCurrent) / 2;
+  double encoder_left_current = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double encoder_right_current = Robot::drivetrain.getDistance(ENCODER_RIGHT_SELECT);
+  double average_current = (encoder_left_current + encoder_right_current) / 2;
 
-  double averageInitial = (encoderLeftInitial + encoderRightInitial) / 2;
+  double average_initial = (m_encoder_left_initial + m_encoder_right_initial) / 2;
 
-  double distanceFromTarget = targetDistance - averageCurrent;
-  double distanceMoved = averageCurrent - averageInitial;
+  double distance_from_target = m_target_distance - average_current;
+  double distance_moved = average_current - average_initial;
 
   double acceleration = Robot::loader.getConfig(DRIVESTRAIGHT_ACCELERATION);
-  double rampUp = acceleration * fabs(distanceMoved);
-  double rampDown = acceleration * fabs(distanceFromTarget);
+  double ramp_up = acceleration * fabs(distance_moved);
+  double ramp_down = acceleration * fabs(distance_from_target);
 
-  double driveSpeed;
-  if(rampUp <= rampDown){
-    driveSpeed = rampUp;
+  double drive_speed;
+  if(ramp_up <= ramp_down){
+    drive_speed = ramp_up;
   }else {
-    driveSpeed = rampDown;
+    drive_speed = ramp_down;
   }
-  if(driveSpeed > 1){
-    driveSpeed = 1;
+  if(drive_speed > 1){
+    drive_speed = 1;
   }
-  if(driveSpeed < 0){
-    driveSpeed = 0;
-  }
-
-  if(distanceFromTarget < 0){
-    driveSpeed = -driveSpeed;
+  if(drive_speed < 0){
+    drive_speed = 0;
   }
 
-  driveSpeed = driveProfile(driveSpeed, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
+  if(distance_from_target < 0){
+    drive_speed = -drive_speed;
+  }
 
-  double currentAngle = Robot::drivetrain.getAngle();
-  double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
-  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Up", rampUp);
-  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Down", rampDown);
+  drive_speed = driveProfile(drive_speed, Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MAX), Robot::loader.getConfig(DRIVESTRAIGHT_RANGE_MIN));
+
+  double current_angle = Robot::drivetrain.getAngle();
+  double turn = driveProfile(m_pid_error, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Up", ramp_up);
+  SmartDashboard::PutNumber("Debug/Drive Straight/Ramp Down", ramp_down);
 
   if(controller->OnTarget()){
     turn = 0;
   }
 
-  Robot::drivetrain.arcadeDrive(driveSpeed, turn);
+  Robot::drivetrain.arcadeDrive(drive_speed, turn);
   }
 
 // Make this return true when this Command no longer needs to run execute()
 bool DriveStraight::IsFinished(){
-  double currentDistance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
+  double current_distance = Robot::drivetrain.getDistance(ENCODER_LEFT_SELECT);
   double tolerance = Robot::loader.getConfig(DRIVESTRAIGHT_PID_TOLERANCE);
-  if(currentDistance > (targetDistance - tolerance) && currentDistance < (targetDistance + tolerance)){
-    timer.Start();
+  if(current_distance > (m_target_distance - tolerance) && current_distance < (m_target_distance + tolerance)){
+    m_timer.Start();
   }else{
-    timer.Stop();
-    timer.Reset();
+    m_timer.Stop();
+    m_timer.Reset();
   }
 
-  return timer.HasPeriodPassed(Robot::loader.getConfig(DRIVESTRAIGHT_PID_TIMEPERIOD));
+  return m_timer.HasPeriodPassed(Robot::loader.getConfig(DRIVESTRAIGHT_PID_TIMEPERIOD));
 }
 
 // Called once after isFinished returns true
@@ -128,7 +129,7 @@ void DriveStraight::Interrupted() {
 }
 
 void DriveStraight::PIDWrite(double output){
-  PIDError = output;
+  m_pid_error = output;
 }
 
 double DriveStraight::PIDGet(){

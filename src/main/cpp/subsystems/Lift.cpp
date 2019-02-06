@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Lift.h"
-#include "RobotMap.h"
-#include "commands/Runlift.h"
 
-Lift::Lift() : Subsystem("Lift"), 
+#include "commands/Runlift.h"
+#include "RobotMap.h"
+
+Lift::Lift() : frc::Subsystem("Lift"), 
   reverseLimitSwitch(LIFT_REVERSE_LIMIT_SWITCH),
   liftMotor(LIFT_MOTOR)
 {

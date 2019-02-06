@@ -9,26 +9,26 @@
 
 NumericPID::NumericPID(double p, double i, double d) :
     controller(new frc::PIDController(p, i, d, this, this)),
-    PIDInput(0),
-    PIDError(0)
+    m_pid_input(0),
+    m_pid_error(0)
 {
 
 }
 
 void NumericPID::PIDWrite(double output){
-    PIDError = output;
+    m_pid_error = output;
 }
 
 double NumericPID::PIDGet(){
-    return PIDInput;
+    return m_pid_input;
 }
 
 void NumericPID::Write(double input){
-    PIDInput = input;
+    m_pid_input = input;
 }
 
 double NumericPID::Get(){
-    return PIDError;
+    return m_pid_error;
 }
 
 std::shared_ptr<frc::PIDController> NumericPID::GetController(){

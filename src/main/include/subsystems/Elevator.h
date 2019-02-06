@@ -9,8 +9,8 @@
 
 #include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
 #include <frc/commands/Subsystem.h>
-#include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
+#include <frc/Solenoid.h>
 
 class Elevator : public frc::Subsystem {
  public:

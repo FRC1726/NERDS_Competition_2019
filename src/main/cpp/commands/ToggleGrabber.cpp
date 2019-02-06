@@ -6,9 +6,10 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ToggleGrabber.h"
+
 #include "Robot.h"
 
-ToggleGrabber::ToggleGrabber() {
+ToggleGrabber::ToggleGrabber() : frc::Command("Toggle Grabber") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevator);

@@ -8,7 +8,6 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-
 #include <frc/DigitalInput.h>
 #include <frc/VictorSP.h>
 

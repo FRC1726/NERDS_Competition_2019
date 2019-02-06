@@ -7,8 +7,8 @@
 
 #pragma once
 
-#include <frc/Joystick.h>
 #include <frc/buttons/JoystickButton.h>
+#include <frc/Joystick.h>
 
 class OI {
  public:

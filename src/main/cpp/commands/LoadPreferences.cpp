@@ -7,10 +7,10 @@
 
 #include "commands/LoadPreferences.h"
 
-#include "Robot.h"
 #include "config.h"
+#include "Robot.h"
 
-LoadPreferences::LoadPreferences() {
+LoadPreferences::LoadPreferences() : frc::Command("Load Preferences") {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }

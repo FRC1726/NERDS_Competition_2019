@@ -7,13 +7,14 @@
 
 #include "commands/TurnToHeading.h"
 
-#include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include "Robot.h"
+
 TurnToHeading::TurnToHeading(double target) : frc::PIDCommand("Turn To Angle", 0, 0, 0),
-  timer(),
-  targetAngle(target),
-  PIDError(0)
+  m_timer(),
+  m_target_angle(target),
+  m_pid_error(0)
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -31,18 +32,18 @@ void TurnToHeading::Initialize() {
   controller->SetAbsoluteTolerance(Robot::loader.getConfig(AUTOTURN_PID_TOLERANCE));
   controller->SetOutputRange(-1, 1);
   controller->SetPID(Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL), Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL), Robot::loader.getConfig(AUTOTURN_PID_DERIVATIVE)); //Change me to preferences
-  controller->SetSetpoint(targetAngle);
+  controller->SetSetpoint(m_target_angle);
   controller->Enable();  
   
-  timer.Reset();
+  m_timer.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void TurnToHeading::Execute() {
   auto controller = GetPIDController();
 
-  double currentAngle = Robot::drivetrain.getAngle();
-  double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+  double current_angle = Robot::drivetrain.getAngle();
+  double turn = driveProfile(m_pid_error, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
 
   if(controller->OnTarget()){
     turn = 0;
@@ -50,8 +51,8 @@ void TurnToHeading::Execute() {
   
   Robot::drivetrain.arcadeDrive(0, turn);
 
-  SmartDashboard::PutNumber("Debug/Auto Turn/Current Angle", currentAngle);
-  SmartDashboard::PutNumber("Debug/Auto Turn/Current PID", PIDError);
+  SmartDashboard::PutNumber("Debug/Auto Turn/Current Angle", current_angle);
+  SmartDashboard::PutNumber("Debug/Auto Turn/Current PID", m_pid_error);
   SmartDashboard::PutNumber("Debug/Auto Turn/Current Speed", turn);
   }
 
@@ -59,13 +60,13 @@ void TurnToHeading::Execute() {
 bool TurnToHeading::IsFinished() {
   auto controller = GetPIDController();
   if(controller->OnTarget()){
-    timer.Start();
+    m_timer.Start();
   }else{
-    timer.Stop();
-    timer.Reset();
+    m_timer.Stop();
+    m_timer.Reset();
   }
   
-  return timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD));
+  return m_timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD));
 }
 
 // Called once after isFinished returns true
@@ -84,7 +85,7 @@ void TurnToHeading::Interrupted() {
 }
 
 void TurnToHeading::PIDWrite(double output){
-  PIDError = output;
+  m_pid_error = output;
 }
 
 double TurnToHeading::PIDGet(){

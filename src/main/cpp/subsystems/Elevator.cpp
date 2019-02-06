@@ -6,11 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Elevator.h"
-#include "RobotMap.h"
+
 #include "Commands/RunIntake.h"
+#include "RobotMap.h"
 
-
-Elevator::Elevator() : Subsystem("Elevator"),
+Elevator::Elevator() : frc::Subsystem("Elevator"),
   intake(LIFT_CAN_MOTOR),
   grabber(LIFT_SOLENOID),
   elevatorLeft(FIRST_STAGE_A, FIRST_STAGE_B),

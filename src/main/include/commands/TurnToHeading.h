@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/PIDCommand.h>
+
 #include <frc/Timer.h>
 
 
@@ -26,10 +27,10 @@ class TurnToHeading : public frc::PIDCommand {
   double driveProfile(double, double, double);
 
 private:
-  frc::Timer timer;
+  frc::Timer m_timer;
 
-  double targetAngle;
-  double PIDError;
+  double m_target_angle;
+  double m_pid_error;
 
 protected:
   double ReturnPIDInput() override;

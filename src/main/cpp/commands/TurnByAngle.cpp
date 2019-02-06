@@ -7,13 +7,15 @@
 
 #include "commands/TurnByAngle.h"
 
-#include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
+#include "Robot.h"
+
+
 TurnByAngle::TurnByAngle(double target) : frc::PIDCommand("Turn To Angle", 0, 0, 0),
-  timer(),
-  targetAngle(target),
-  PIDError(0) 
+  m_timer(),
+  m_target_angle(target),
+  m_pid_error(0) 
 {
   Requires(&Robot::drivetrain);
 
@@ -31,14 +33,14 @@ void TurnByAngle::Initialize() {
   controller->SetOutputRange(-1, 1);
   controller->SetPID(Robot::loader.getConfig(AUTOTURN_PID_PROPORTIONAL), Robot::loader.getConfig(AUTOTURN_PID_INTEGRAL), Robot::loader.getConfig(AUTOTURN_PID_DERIVATIVE));
   
-  double target = Robot::drivetrain.getAngle() + targetAngle;
+  double target = Robot::drivetrain.getAngle() + m_target_angle;
 
   target = wrapAngle(target);
   
   controller->SetSetpoint(target);
   controller->Enable();  
   
-  timer.Reset();
+  m_timer.Reset();
   }
 
 // Called repeatedly when this Command is scheduled to run
@@ -46,7 +48,7 @@ void TurnByAngle::Execute() {
   auto controller = GetPIDController();
 
   double currentAngle = Robot::drivetrain.getAngle();
-  double turn = driveProfile(PIDError, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
+  double turn = driveProfile(m_pid_error, Robot::loader.getConfig(AUTOTURN_RANGE_MAX), Robot::loader.getConfig(AUTOTURN_RANGE_MIN));
 
   if(controller->OnTarget()){
     turn = 0;
@@ -55,7 +57,7 @@ void TurnByAngle::Execute() {
   Robot::drivetrain.arcadeDrive(0, turn);
 
   SmartDashboard::PutNumber("Debug/Auto Turn/Current Angle", currentAngle);
-  SmartDashboard::PutNumber("Debug/Auto Turn/Current PID", PIDError);
+  SmartDashboard::PutNumber("Debug/Auto Turn/Current PID", m_pid_error);
   SmartDashboard::PutNumber("Debug/Auto Turn/Current Speed", turn);
   }
 
@@ -63,13 +65,13 @@ void TurnByAngle::Execute() {
 bool TurnByAngle::IsFinished() {
   auto controller = GetPIDController();
   if(controller->OnTarget()){
-    timer.Start();
+    m_timer.Start();
   }else{
-    timer.Stop();
-    timer.Reset();
+    m_timer.Stop();
+    m_timer.Reset();
   }
   
-  return timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD)); 
+  return m_timer.HasPeriodPassed(Robot::loader.getConfig(AUTOTURN_PID_TIMEPERIOD)); 
 }
 
 // Called once after isFinished returns true
@@ -88,7 +90,7 @@ void TurnByAngle::Interrupted() {
 }
 
 void TurnByAngle::PIDWrite(double output){
-  PIDError = output;
+  m_pid_error = output;
 }
 
 double TurnByAngle::PIDGet(){
