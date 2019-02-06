@@ -8,7 +8,7 @@
 #include "OI.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
-#include <frc/DriverStation.h>
+#include <frc/driverStation.h>
 
 #include "commands/DriveStraight.h"
 #include "commands/DriveWithJoysticks.h"
@@ -21,13 +21,13 @@
 #include "RobotMap.h"
 
 OI::OI() :
-  driver(JOYSTICK_DRIVER),
-  buttonA(&driver, BUTTON_A),
-  buttonB(&driver, BUTTON_B)
+  m_driver(JOYSTICK_DRIVER),
+  m_button_a(&m_driver, BUTTON_A),
+  m_button_b(&m_driver, BUTTON_B)
 {
   //physical buttons
-  buttonA.WhenPressed(new ToggleElevator());
-  buttonB.WhenPressed(new ToggleGrabber());
+  m_button_a.WhenPressed(new ToggleElevator());
+  m_button_b.WhenPressed(new ToggleGrabber());
 
   // virtual buttons.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
@@ -38,26 +38,26 @@ OI::OI() :
 }
 
 double OI::getAxis(int axis){
-  return driver.GetRawAxis(axis);
+  return m_driver.GetRawAxis(axis);
 }
 
 bool OI::getDPad(int direction) {
   //getting the angle, then returning the correct angle
-  int POV = driver.GetPOV();
+  int pov = m_driver.GetPOV();
 
-  if(POV == -1){
+  if(pov == -1){
     return false;
   }
 
   switch(direction){
     case DPAD_UP:
-      return POV >= 315 || POV <= 45;
+      return pov >= 315 || pov <= 45;
     case DPAD_RIGHT:
-      return POV >= 45 && POV <= 135;
+      return pov >= 45 && pov <= 135;
     case DPAD_DOWN:
-      return POV >= 135 && POV <= 225;
+      return pov >= 135 && pov <= 225;
     case DPAD_LEFT:
-      return POV >= 225 && POV <= 315;
+      return pov >= 225 && pov <= 315;
     default:
       frc::DriverStation::ReportError("Invalid Direction");
       return false;

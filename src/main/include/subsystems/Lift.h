@@ -17,6 +17,6 @@ public:
   void InitDefaultCommand() override;
   void run(double);
 private:
-  frc::DigitalInput reverseLimitSwitch;
-  frc::VictorSP liftMotor;
+  frc::DigitalInput m_reverse_limit_switch;
+  frc::VictorSP m_lift_motor;
 };

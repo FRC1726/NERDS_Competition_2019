@@ -11,20 +11,20 @@
 #include "RobotMap.h"
 
 Elevator::Elevator() : frc::Subsystem("Elevator"),
-  intake(LIFT_CAN_MOTOR),
-  grabber(LIFT_SOLENOID),
-  elevatorLeft(FIRST_STAGE_A, FIRST_STAGE_B),
-  elevatorRight(SECOND_STAGE_A, SECOND_STAGE_B)
+  m_intake(LIFT_CAN_MOTOR),
+  m_grabber(LIFT_SOLENOID),
+  m_elevator_left(FIRST_STAGE_A, FIRST_STAGE_B),
+  m_elevator_right(SECOND_STAGE_A, SECOND_STAGE_B)
 {
-  intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
-  intake.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
-  intake.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
-  intake.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
-  intake.OverrideLimitSwitchesEnable(false);
+  m_intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
+  m_intake.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
+  m_intake.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
+  m_intake.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
+  m_intake.OverrideLimitSwitchesEnable(false);
 
-  elevatorLeft.Set(frc::DoubleSolenoid::kForward);
-  elevatorRight.Set(frc::DoubleSolenoid::kForward);
-  elevatorState = true;
+  m_elevator_left.Set(frc::DoubleSolenoid::kForward);
+  m_elevator_right.Set(frc::DoubleSolenoid::kForward);
+  m_elevator_state = true;
 }
 
 void Elevator::InitDefaultCommand() {
@@ -37,29 +37,29 @@ void Elevator::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void Elevator::runMotor(double speed){
-  intake.Set(speed);
+  m_intake.Set(speed);
 }
 
 void Elevator::setElevator(bool enable){
   if(enable){
-    elevatorLeft.Set(frc::DoubleSolenoid::kForward);
-    elevatorRight.Set(frc::DoubleSolenoid::kForward);
-    elevatorState = true;
+    m_elevator_left.Set(frc::DoubleSolenoid::kForward);
+    m_elevator_right.Set(frc::DoubleSolenoid::kForward);
+    m_elevator_state = true;
   }else{
-    elevatorLeft.Set(frc::DoubleSolenoid::kReverse);
-    elevatorRight.Set(frc::DoubleSolenoid::kReverse);
-    elevatorState = false;
+    m_elevator_left.Set(frc::DoubleSolenoid::kReverse);
+    m_elevator_right.Set(frc::DoubleSolenoid::kReverse);
+    m_elevator_state = false;
   }
 }
 
 bool Elevator::getElevator(){
-  return elevatorState;
+  return m_elevator_state;
 }
 
 void Elevator::setGrabber(bool enable){
-  grabber.Set(enable);
+  m_grabber.Set(enable);
 }
 
 bool Elevator::getGrabber(){
-  return grabber.Get();
+  return m_grabber.Get();
 }

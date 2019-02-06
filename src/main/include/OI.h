@@ -17,7 +17,7 @@ class OI {
   bool getDPad(int);
 
 private:
-  frc::Joystick driver;
-  frc::JoystickButton buttonA;
-  frc::JoystickButton buttonB;
+  frc::Joystick m_driver;
+  frc::JoystickButton m_button_a;
+  frc::JoystickButton m_button_b;
 };

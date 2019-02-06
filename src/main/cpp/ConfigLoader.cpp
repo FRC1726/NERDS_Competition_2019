@@ -21,7 +21,7 @@ ConfigLoader::ConfigLoader() {
 double ConfigLoader::getConfig(ParameterKey<double> config) {
     //check if exist, if not throws warning and returns default expression
     if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -double ");
+        frc::DriverStation::ReportWarning("the key you were looking for doesn't exist. we substituted our own! -double not detected");
     }
 
     return frc::Preferences::GetInstance()->GetDouble(config.key, config.value);
@@ -30,7 +30,7 @@ double ConfigLoader::getConfig(ParameterKey<double> config) {
 int ConfigLoader::getConfig(ParameterKey<int> config) {
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -integer");
+        frc::DriverStation::ReportWarning("the key you were looking for doesn't exist. we substituted our own! -integer not detected");
     }
 
     return frc::Preferences::GetInstance()->GetInt(config.key, config.value);
@@ -39,7 +39,7 @@ int ConfigLoader::getConfig(ParameterKey<int> config) {
 bool ConfigLoader::getConfig(ParameterKey<bool> config){
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -boolean");
+        frc::DriverStation::ReportWarning("the key you were looking for doesn't exist. we substituted our own! -boolean not detected");
     }
 
     return frc::Preferences::GetInstance()->GetBoolean(config.key, config.value);
@@ -61,20 +61,20 @@ void ConfigLoader::savePreference(ParameterKey<double> param){
 }
 
 
-bool ConfigLoader::saveConfigToFile(std::string filename){
-    nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+bool ConfigLoader::saveConfigToFile(std::string file_name){
+    nt::NetworkTableInstance base_table = nt::NetworkTableInstance::GetDefault();
 
-    std::string error = baseTable.SaveEntries(filename, "Preferences");
+    std::string error = base_table.SaveEntries(file_name, "Preferences");
 
     if(!error.empty()){
         frc::DriverStation::ReportError(error);
     }
 }
 
-bool ConfigLoader::loadConfigFromFile(std::string filename){
-    nt::NetworkTableInstance baseTable = nt::NetworkTableInstance::GetDefault();
+bool ConfigLoader::loadConfigFromFile(std::string file_name){
+    nt::NetworkTableInstance base_table = nt::NetworkTableInstance::GetDefault();
 
-    std::string error = baseTable.LoadEntries(filename, "Preferences", ConfigLoader::printError);
+    std::string error = base_table.LoadEntries(file_name, "Preferences", ConfigLoader::printError);
 
     if(!error.empty()){
         frc::DriverStation::ReportError(error);
@@ -82,7 +82,7 @@ bool ConfigLoader::loadConfigFromFile(std::string filename){
 }
 
 void ConfigLoader::printError(size_t line, const char* message){
-    std::stringstream msgStream;
-    msgStream << line << " " << message;
-    frc::DriverStation::ReportError(msgStream.str());
+    std::stringstream msg_stream;
+    msg_stream << line << " " << message;
+    frc::DriverStation::ReportError(msg_stream.str());
 }

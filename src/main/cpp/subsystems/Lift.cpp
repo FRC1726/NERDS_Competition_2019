@@ -11,8 +11,8 @@
 #include "RobotMap.h"
 
 Lift::Lift() : frc::Subsystem("Lift"), 
-  reverseLimitSwitch(LIFT_REVERSE_LIMIT_SWITCH),
-  liftMotor(LIFT_MOTOR)
+  m_reverse_limit_switch(LIFT_REVERSE_LIMIT_SWITCH),
+  m_lift_motor(LIFT_MOTOR)
 {
 
 }
@@ -24,5 +24,5 @@ void Lift::InitDefaultCommand() {
 }
 
 void Lift::run(double speed) {
-  liftMotor.Set(speed);
+  m_lift_motor.Set(speed);
 }
