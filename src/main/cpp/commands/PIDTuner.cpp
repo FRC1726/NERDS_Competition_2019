@@ -45,7 +45,7 @@ void PIDTuner::Execute() {
     invert = false;
   }
 
-  double speed = invert ? relaySpeed : -relaySpeed;
+  double speed = invert ? -relaySpeed : relaySpeed;
   Robot::drivetrain.arcadeDrive(0, speed);
 
   /*--------------------------------------------*/
@@ -129,7 +129,7 @@ void PIDTuner::Execute() {
     auto previousPeak = maxPeaks[0];
     for(auto peak : maxPeaks){
       avgPeak = avgPeak + peak.first;
-      avgPeriod += peak.second - previousPeak.second;   
+      avgPeakPeriod += peak.second - previousPeak.second;   
       previousPeak = peak;
     }
 
@@ -139,13 +139,13 @@ void PIDTuner::Execute() {
     auto previousValley = minValleys[0];
     for(auto valley : minValleys){
       avgValley = avgValley + valley.first;
-      avgPeriod += previousValley.second - valley.second;
+      avgValleyPeriod += valley.second - previousValley.second;
       previousValley = valley;
     }
     avgValley = avgValley / minValleys.size();
     avgValleyPeriod = avgValleyPeriod / minValleys.size();
 
-    avgPeriod = avgPeriod / (maxPeaks.size() - 1) + (minValleys.size() - 1);
+    avgPeriod = (avgValleyPeriod + avgPeakPeriod) / ((maxPeaks.size() - 1) + (minValleys.size() - 1));
 
     amplitude = avgPeak - avgValley;
 
@@ -155,8 +155,8 @@ void PIDTuner::Execute() {
     double I = 1.2 * (Ku / Pu);
     double D = 0.075 * Ku * Pu;
 
-    SmartDashboard::PutNumber("PIDTuner/Amplitude", Ku);
-    SmartDashboard::PutNumber("PIDTuner/Period", Pu);
+    SmartDashboard::PutNumber("PIDTuner/Amplitude", amplitude);
+    SmartDashboard::PutNumber("PIDTuner/Period", avgPeriod);
     SmartDashboard::PutNumber("PIDTuner/P", P);
     SmartDashboard::PutNumber("PIDTuner/I", I);
     SmartDashboard::PutNumber("PIDTuner/D", D);
@@ -165,11 +165,15 @@ void PIDTuner::Execute() {
 } 
 
 // Make this return true when this Command no longer needs to run execute()
-bool PIDTuner::IsFinished() { return false; }
+bool PIDTuner::IsFinished() { return stableOscillations; }
 
 // Called once after isFinished returns true
-void PIDTuner::End() {}
+void PIDTuner::End() {
+  Robot::drivetrain.arcadeDrive(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void PIDTuner::Interrupted() {}
+void PIDTuner::Interrupted() {
+  Robot::drivetrain.arcadeDrive(0, 0);
+}
