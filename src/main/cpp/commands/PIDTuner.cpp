@@ -131,6 +131,7 @@ void PIDTuner::Execute() {
       avgPeak = avgPeak + peak.first;
       avgPeakPeriod += peak.second - previousPeak.second;   
       previousPeak = peak;
+      
     }
 
     avgPeak = avgPeak / maxPeaks.size();
@@ -141,7 +142,9 @@ void PIDTuner::Execute() {
       avgValley = avgValley + valley.first;
       avgValleyPeriod += valley.second - previousValley.second;
       previousValley = valley;
+      
     }
+
     avgValley = avgValley / minValleys.size();
     avgValleyPeriod = avgValleyPeriod / minValleys.size();
 
@@ -160,6 +163,8 @@ void PIDTuner::Execute() {
     SmartDashboard::PutNumber("PIDTuner/P", P);
     SmartDashboard::PutNumber("PIDTuner/I", I);
     SmartDashboard::PutNumber("PIDTuner/D", D);
+    SmartDashboard::PutNumber("PIDTuner/avgValleyPeriod", avgValleyPeriod);
+    SmartDashboard::PutNumber("PIDTuner/avgPeakPeriod", avgPeakPeriod);
   }
 
 } 
