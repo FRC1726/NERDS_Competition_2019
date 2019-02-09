@@ -32,6 +32,9 @@ void PIDTuner::Initialize() {
   findingPeak = false;
   findingValley = false;
   invert = false;
+  stableOscillations = false;
+  maxPeaks.clear();
+  minValleys.clear();
 }
 
 // Called repeatedly when this Command is scheduled to run
