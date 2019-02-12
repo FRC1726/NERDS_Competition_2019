@@ -10,7 +10,7 @@
 #include "config.h"
 #include <string>
 #include <vector>
-#include <SendableChooser.h>
+#include <frc/SmartDashboard/SendableChooser.h>
 
 class ConfigLoader {
  public:

@@ -10,6 +10,7 @@
 #include <wpi/Twine.h>
 #include <sstream>
 #include <cstdio>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <fstream>
 #include <sys/types.h>
 #include <dirent.h>
@@ -17,7 +18,7 @@
 #include "ConfigLoader.h"
 
 ConfigLoader::ConfigLoader() {
-
+    populateChoices();
 }
 
 double ConfigLoader::getConfig(ParameterKey<double> config) {
@@ -123,11 +124,15 @@ void ConfigLoader::populateChoices(){
     DIR* dirp = opendir("/home/lvuser/deploy/");
     struct dirent * dp;
 
-    frc::SendableChooser<std::string>* newChooser = new frc::SendableChooser<string>();
+    frc::SendableChooser<std::string>*newChooser = new frc::SendableChooser<std::string>();
 
     while ((dp = readdir(dirp)) != NULL) {
         dp->d_name;
         newChooser->AddOption(dp->d_name, dp->d_name);
     }
     closedir(dirp);
+
+    fileChooser.reset(newChooser);
+
+    frc::SmartDashboard::PutData("Preferences/Filepath", fileChooser.get());
 }
