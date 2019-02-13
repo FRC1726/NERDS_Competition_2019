@@ -127,12 +127,15 @@ void ConfigLoader::populateChoices(){
     frc::SendableChooser<std::string>*newChooser = new frc::SendableChooser<std::string>();
 
     while ((dp = readdir(dirp)) != NULL) {
-        dp->d_name;
-        newChooser->AddOption(dp->d_name, dp->d_name);
+        std::string filename = dp->d_name;
+
+        if(filename.find(".") != 0){
+            newChooser->AddOption(filename, filename);
+        }
     }
     closedir(dirp);
 
     fileChooser.reset(newChooser);
 
-    frc::SmartDashboard::PutData("Preferences/Filepath", fileChooser.get());
+    frc::SmartDashboard::PutData("Preferences/files", fileChooser.get());
 }
