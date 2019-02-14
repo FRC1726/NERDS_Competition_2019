@@ -125,7 +125,9 @@ void ConfigLoader::populateChoices(){
     struct dirent * dp;
 
     frc::SendableChooser<std::string>*newChooser = new frc::SendableChooser<std::string>();
-
+    
+    newChooser->SetDefaultOption("New file", "New"); 
+    
     while ((dp = readdir(dirp)) != NULL) {
         std::string filename = dp->d_name;
 

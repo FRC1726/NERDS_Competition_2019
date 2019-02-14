@@ -14,11 +14,12 @@ SavePreferences::SavePreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   SetRunWhenDisabled(true);
-
+  frc::SmartDashboard::PutString("Preferences/New File Name", "default");
 }
 
 // Called just before this Command runs the first time
 void SavePreferences::Initialize() {
+  std::string file = Robot::loader.getChosenFile();
   Robot::loader.saveConfigToFile(Robot::loader.getChosenFile(), true);
 }
 
