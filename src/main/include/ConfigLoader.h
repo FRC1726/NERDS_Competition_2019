@@ -26,10 +26,13 @@ class ConfigLoader {
   bool saveConfigToFile(std::string, bool);
   bool loadConfigFromFile(std::string, bool);
 
+  std::string getChosenFile();
+  
  private:
 	static void printError(size_t, const char*);
   bool fileExists(const std::string&);
   void populateChoices();
 
   std::unique_ptr<frc::SendableChooser<std::string> > fileChooser;
+
 };

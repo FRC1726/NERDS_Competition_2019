@@ -19,7 +19,7 @@ SavePreferences::SavePreferences() {
 
 // Called just before this Command runs the first time
 void SavePreferences::Initialize() {
-  Robot::loader.saveConfigToFile("test.cfg", true);
+  Robot::loader.saveConfigToFile(Robot::loader.getChosenFile(), true);
 }
 
 // Called repeatedly when this Command is scheduled to run

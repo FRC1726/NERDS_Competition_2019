@@ -139,3 +139,7 @@ void ConfigLoader::populateChoices(){
 
     frc::SmartDashboard::PutData("Preferences/files", fileChooser.get());
 }
+
+std::string ConfigLoader::getChosenFile(){
+    return fileChooser->GetSelected();
+}

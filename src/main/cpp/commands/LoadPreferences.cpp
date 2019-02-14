@@ -18,7 +18,7 @@ LoadPreferences::LoadPreferences() {
 
 // Called just before this Command runs the first time
 void LoadPreferences::Initialize() {
-  Robot::loader.loadConfigFromFile("test.cfg", true);
+  Robot::loader.loadConfigFromFile(Robot::loader.getChosenFile(), true);
 }
 
 // Called repeatedly when this Command is scheduled to run
