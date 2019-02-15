@@ -10,6 +10,8 @@
 #include "Robot.h"
 #include "config.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 SavePreferences::SavePreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -20,6 +22,16 @@ SavePreferences::SavePreferences() {
 // Called just before this Command runs the first time
 void SavePreferences::Initialize() {
   std::string file = Robot::loader.getChosenFile();
+  if (file == "New"){
+    std::string newFile = frc::SmartDashboard::GetString("Preferences/New File Name", "default.cfg");
+    while(newFile.find("/") != std::string::npos){
+      newFile.replace(1, 1, "_");
+    }
+    if (newFile.find(".cfg") == std::string::npos){
+        newFile.append(".cfg");
+    }
+
+  }
   Robot::loader.saveConfigToFile(Robot::loader.getChosenFile(), true);
 }
 
