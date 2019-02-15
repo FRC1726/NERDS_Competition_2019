@@ -8,10 +8,11 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/VictorSP.h>
 #include <frc/Drive/DifferentialDrive.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/Encoder.h>
+
+#include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
 
 #include <AHRS.h>
 
@@ -26,11 +27,14 @@ public:
   double getDistance(int);
 
   double getAngle();
+
 private:
-  frc::VictorSP frontLeft;
-  frc::VictorSP frontRight;
-  frc::VictorSP backLeft;
-  frc::VictorSP backRight;
+  void setUpMotors(ctre::phoenix::motorcontrol::can::WPI_VictorSPX&);
+
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontLeft;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX frontRight;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX backLeft;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX backRight;
 
   frc::SpeedControllerGroup left;
   frc::SpeedControllerGroup right;

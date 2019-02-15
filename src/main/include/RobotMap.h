@@ -14,11 +14,13 @@ constexpr int LIFT_TIMEOUT = 10;
 constexpr int LIFT_SOLENOID = 4;
 constexpr double LIFT_FORWARD_SENSOR_LIMIT = 28;
 constexpr double LIFT_REVERSE_SENSOR_LIMIT = 0;
+
 //drivetrain
-constexpr int DRIVE_FRONT_LEFT = 0;
-constexpr int DRIVE_BACK_LEFT = 1;
-constexpr int DRIVE_FRONT_RIGHT = 3;
-constexpr int DRIVE_BACK_RIGHT = 2;
+constexpr int DRIVE_FRONT_LEFT = 3;
+constexpr int DRIVE_BACK_LEFT = 4;
+constexpr int DRIVE_FRONT_RIGHT = 5;
+constexpr int DRIVE_BACK_RIGHT = 6;
+constexpr int DRIVE_TIMEOUT = 10;
 
 //encodews stuff owo
 constexpr int ENCODER_LEFT_SELECT = 1;
@@ -64,4 +66,4 @@ constexpr int SECOND_STAGE_B = 3;
 
 //Lift
 constexpr int LIFT_REVERSE_LIMIT_SWITCH = 4;
-constexpr int LIFT_MOTOR = 4;
+constexpr int LIFT_MOTOR = 0;

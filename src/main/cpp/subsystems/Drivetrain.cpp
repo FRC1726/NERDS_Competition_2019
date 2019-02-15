@@ -24,6 +24,11 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
   gyro(SerialPort::Port::kUSB1)
 {
+  setUpMotors(frontLeft);
+  setUpMotors(frontRight);
+  setUpMotors(backLeft);
+  setUpMotors(backRight);
+
   double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
   double linearDistance = PI / 60;
   encoderLeft.SetDistancePerPulse(linearDistance);
@@ -62,4 +67,12 @@ double Drivetrain::getDistance(int encoder){
 
 double Drivetrain::getAngle(){
   return gyro.GetYaw();
+}
+
+void Drivetrain::setUpMotors(ctre::phoenix::motorcontrol::can::WPI_VictorSPX &motor){
+  motor.ConfigPeakOutputForward(1, DRIVE_TIMEOUT);
+  motor.ConfigPeakOutputReverse(-1, DRIVE_TIMEOUT);
+  motor.ConfigNominalOutputForward(0, DRIVE_TIMEOUT);
+  motor.ConfigNominalOutputReverse(0, DRIVE_TIMEOUT);
+  motor.OverrideLimitSwitchesEnable(false);
 }
