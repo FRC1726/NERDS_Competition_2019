@@ -43,6 +43,13 @@ void LoadPreferences::Initialize() {
 
   //Lift
   Robot::loader.savePreference(LIFT_RUN_SPEED);
+
+  //Elevator
+  Robot::loader.savePreference(ELEVATOR_P);
+  Robot::loader.savePreference(ELEVATOR_I);
+  Robot::loader.savePreference(ELEVATOR_D);
+  Robot::loader.savePreference(ELEVATOR_F);
+  Robot::loader.savePreference(ELEVATOR_MAX_SPEED);
 }
 
 // Called repeatedly when this Command is scheduled to run

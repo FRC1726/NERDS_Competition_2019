@@ -33,3 +33,10 @@ const ParameterKey<double> DRIVESTRAIGHT_PID_TOLERANCE = {"DriveStraight/Toleran
 
 //Lift Preferences
 const ParameterKey<double> LIFT_RUN_SPEED = {"Lift/Speed", 1};
+
+//Elevator Preferences
+const ParameterKey<double> ELEVATOR_P = {"Elevator/P", 1};
+const ParameterKey<double> ELEVATOR_I = {"Elevator/I", 0};
+const ParameterKey<double> ELEVATOR_D = {"Elevator/D", 0};
+const ParameterKey<double> ELEVATOR_F = {"Elevator/F", 1};
+const ParameterKey<double> ELEVATOR_MAX_SPEED = {"Elevator/Max Speed", 1};

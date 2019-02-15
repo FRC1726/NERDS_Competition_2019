@@ -7,11 +7,13 @@
 
 #pragma once
 
-//Lift
+//Elevator
 constexpr int LIFT_CAN_MOTOR = 2;
+constexpr int LIFT_CAN_PID_ID = 1;
 constexpr int LIFT_TIMEOUT = 10;
 constexpr int LIFT_SOLENOID = 4;
-
+constexpr double LIFT_FORWARD_SENSOR_LIMIT = 28;
+constexpr double LIFT_REVERSE_SENSOR_LIMIT = 0;
 //drivetrain
 constexpr int DRIVE_FRONT_LEFT = 0;
 constexpr int DRIVE_BACK_LEFT = 1;

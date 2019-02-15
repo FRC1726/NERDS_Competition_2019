@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <ctre/phoenix/motorcontrol/can/WPI_VictorSPX.h>
+#include <ctre/phoenix/motorcontrol/can/WPI_TalonSRX.h>
 #include <frc/commands/Subsystem.h>
 #include <frc/Solenoid.h>
 #include <frc/DoubleSolenoid.h>
@@ -17,17 +17,28 @@ class Elevator : public frc::Subsystem {
   Elevator();
   void InitDefaultCommand() override;
   void runMotor(double);
+
   void setElevator(bool);
   bool getElevator();
+
   void setGrabber(bool);
   bool getGrabber();
 
+  void setPID(double, double, double, double);
+
+  void setElevatorSetPoint(double);
+  double getElevatorSetPoint();
+
  private:
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX intake;
+  void setSensorLimits(double, double);
+
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX intake;
 
   frc::Solenoid grabber;
 
   frc::DoubleSolenoid elevatorLeft;
   frc::DoubleSolenoid elevatorRight;
   bool elevatorState;
+
+  double elevatorSetPoint;
 };
