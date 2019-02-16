@@ -8,12 +8,11 @@
 #pragma once
 
 //Elevator
-constexpr int LIFT_CAN_MOTOR = 2;
-constexpr int LIFT_CAN_PID_ID = 1;
-constexpr int LIFT_TIMEOUT = 10;
-constexpr int LIFT_SOLENOID = 4;
-constexpr double LIFT_FORWARD_SENSOR_LIMIT = 28;
-constexpr double LIFT_REVERSE_SENSOR_LIMIT = 0;
+constexpr int ELEVATOR_CAN_MOTOR = 2;
+constexpr int ELEVATOR_CAN_PID_ID = 1;
+constexpr int ELEVATOR_TIMEOUT = 10;
+constexpr double ELEVATOR_FORWARD_SENSOR_LIMIT = 28;
+constexpr double ELEVATOR_REVERSE_SENSOR_LIMIT = 0;
 
 //drivetrain
 constexpr int DRIVE_FRONT_LEFT = 3;
@@ -22,7 +21,7 @@ constexpr int DRIVE_FRONT_RIGHT = 5;
 constexpr int DRIVE_BACK_RIGHT = 6;
 constexpr int DRIVE_TIMEOUT = 10;
 
-//encodews stuff owo
+//encoders
 constexpr int ENCODER_LEFT_SELECT = 1;
 constexpr int ENCODER_RIGHT_SELECT = 2;
 
@@ -59,10 +58,11 @@ constexpr int BUTTON_BUMPER_LEFT = 5;
 constexpr int BUTTON_BUMPER_RIGHT = 6;
 
 //solenoids
-constexpr int FIRST_STAGE_A = 0;
-constexpr int FIRST_STAGE_B = 1;
-constexpr int SECOND_STAGE_A = 2;
-constexpr int SECOND_STAGE_B = 3;
+constexpr int EXTENDER_A = 0;
+constexpr int EXTENDER_B = 1;
+constexpr int LAUNCHER_A = 2;
+constexpr int LAUNCHER_B = 3;
+constexpr int GRABBER = 4;
 
 //Lift
 constexpr int LIFT_REVERSE_LIMIT_SWITCH = 4;

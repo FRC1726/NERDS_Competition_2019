@@ -13,25 +13,26 @@
 
 
 Elevator::Elevator() : Subsystem("Elevator"),
-  intake(LIFT_CAN_MOTOR),
-  grabber(LIFT_SOLENOID),
-  elevatorLeft(FIRST_STAGE_A, FIRST_STAGE_B),
-  elevatorRight(SECOND_STAGE_A, SECOND_STAGE_B)
+  intake(ELEVATOR_CAN_MOTOR),
+  grabber(GRABBER),
+  extender(EXTENDER_A, EXTENDER_B),
+  launcher(LAUNCHER_A, LAUNCHER_B)
 {
-  intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
-  intake.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
-  intake.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
-  intake.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
+  intake.ConfigPeakOutputForward(1, ELEVATOR_TIMEOUT);
+  intake.ConfigPeakOutputReverse(-1, ELEVATOR_TIMEOUT);
+  intake.ConfigNominalOutputForward(0, ELEVATOR_TIMEOUT);
+  intake.ConfigNominalOutputReverse(0, ELEVATOR_TIMEOUT);
   intake.OverrideLimitSwitchesEnable(false);
-  intake.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::CTRE_MagEncoder_Relative, LIFT_CAN_PID_ID, LIFT_TIMEOUT);
+  intake.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::CTRE_MagEncoder_Relative, ELEVATOR_CAN_PID_ID, ELEVATOR_TIMEOUT);
 
-  setSensorLimits(LIFT_REVERSE_SENSOR_LIMIT, LIFT_FORWARD_SENSOR_LIMIT);
+  setSensorLimits(ELEVATOR_REVERSE_SENSOR_LIMIT, ELEVATOR_FORWARD_SENSOR_LIMIT);
   intake.ConfigForwardSoftLimitEnable(true);
   intake.ConfigReverseSoftLimitEnable(true);
 
-  elevatorLeft.Set(frc::DoubleSolenoid::kForward);
-  elevatorRight.Set(frc::DoubleSolenoid::kForward);
-  elevatorState = true;
+  extender.Set(frc::DoubleSolenoid::kForward);
+  launcher.Set(frc::DoubleSolenoid::kForward);
+  extenderState = true;
+  launcherState = true;
 }
 
 void Elevator::InitDefaultCommand() {
@@ -47,22 +48,6 @@ void Elevator::runMotor(double speed){
   intake.Set(speed);
 }
 
-void Elevator::setElevator(bool enable){
-  if(enable){
-    elevatorLeft.Set(frc::DoubleSolenoid::kForward);
-    elevatorRight.Set(frc::DoubleSolenoid::kForward);
-    elevatorState = true;
-  }else{
-    elevatorLeft.Set(frc::DoubleSolenoid::kReverse);
-    elevatorRight.Set(frc::DoubleSolenoid::kReverse);
-    elevatorState = false;
-  }
-}
-
-bool Elevator::getElevator(){
-  return elevatorState;
-}
-
 void Elevator::setGrabber(bool enable){
   grabber.Set(enable);
 }
@@ -71,11 +56,39 @@ bool Elevator::getGrabber(){
   return grabber.Get();
 }
 
+void Elevator::setExtender(bool enable){
+  if(enable){
+    extender.Set(frc::DoubleSolenoid::kForward);
+    extenderState = true;
+  }else{
+    extender.Set(frc::DoubleSolenoid::kReverse);
+    extenderState = false;
+  }
+}
+
+bool Elevator::getExtender(){
+  return extenderState;
+}
+
+void Elevator::setLauncher(bool enable){
+  if(enable){
+    launcher.Set(frc::DoubleSolenoid::kForward);
+    launcherState = true;
+  }else{
+    launcher.Set(frc::DoubleSolenoid::kReverse);
+    launcherState = false;
+  }
+}
+
+bool Elevator::getLauncher(){
+  return launcherState;
+}
+
 void Elevator::setPID(double kP, double kI, double kD, double kF){
-  intake.Config_kP(LIFT_CAN_PID_ID, kP, LIFT_TIMEOUT);
-  intake.Config_kI(LIFT_CAN_PID_ID, kI, LIFT_TIMEOUT);
-  intake.Config_kD(LIFT_CAN_PID_ID, kD, LIFT_TIMEOUT);
-  intake.Config_kF(LIFT_CAN_PID_ID, kF, LIFT_TIMEOUT);
+  intake.Config_kP(ELEVATOR_CAN_PID_ID, kP, ELEVATOR_TIMEOUT);
+  intake.Config_kI(ELEVATOR_CAN_PID_ID, kI, ELEVATOR_TIMEOUT);
+  intake.Config_kD(ELEVATOR_CAN_PID_ID, kD, ELEVATOR_TIMEOUT);
+  intake.Config_kF(ELEVATOR_CAN_PID_ID, kF, ELEVATOR_TIMEOUT);
 }
 
 void Elevator::setElevatorSetPoint(double setPoint){
@@ -94,6 +107,6 @@ void Elevator::setSensorLimits(double reverse,double forward){
   double reverseTarget = 4096/(PI * 1.7) * reverse;
   double forwardTarget = 4096/(PI * 1.7) * forward;
 
-  intake.ConfigReverseSoftLimitThreshold(reverseTarget, LIFT_TIMEOUT);
-  intake.ConfigForwardSoftLimitThreshold(forwardTarget, LIFT_TIMEOUT);
+  intake.ConfigReverseSoftLimitThreshold(reverseTarget, ELEVATOR_TIMEOUT);
+  intake.ConfigForwardSoftLimitThreshold(forwardTarget, ELEVATOR_TIMEOUT);
 }

@@ -5,37 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ToggleElevator.h"
+#include "commands/ToggleExtender.h"
+
 #include "Robot.h"
 
-ToggleElevator::ToggleElevator() {
+ToggleExtender::ToggleExtender() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::elevator);
 }
 
 // Called just before this Command runs the first time
-void ToggleElevator::Initialize() {
- Robot::elevator.setElevator(!Robot::elevator.getElevator());
+void ToggleExtender::Initialize() {
+  Robot::elevator.setExtender(!Robot::elevator.getExtender());
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ToggleElevator::Execute() {
-
-}
+void ToggleExtender::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool ToggleElevator::IsFinished() { 
-  return true;
-}
+bool ToggleExtender::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void ToggleElevator::End() {
-
-}
+void ToggleExtender::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ToggleElevator::Interrupted() {
-
-}
+void ToggleExtender::Interrupted() {}

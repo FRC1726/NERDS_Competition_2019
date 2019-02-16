@@ -24,6 +24,12 @@ class Elevator : public frc::Subsystem {
   void setGrabber(bool);
   bool getGrabber();
 
+  void setExtender(bool);
+  bool getExtender();
+
+  void setLauncher(bool);
+  bool getLauncher();
+
   void setPID(double, double, double, double);
 
   void setElevatorSetPoint(double);
@@ -36,9 +42,10 @@ class Elevator : public frc::Subsystem {
 
   frc::Solenoid grabber;
 
-  frc::DoubleSolenoid elevatorLeft;
-  frc::DoubleSolenoid elevatorRight;
-  bool elevatorState;
+  frc::DoubleSolenoid extender;
+  frc::DoubleSolenoid launcher;
+  bool extenderState;
+  bool launcherState;
 
   double elevatorSetPoint;
 };

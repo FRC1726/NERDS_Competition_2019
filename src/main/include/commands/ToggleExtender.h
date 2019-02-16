@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class ToggleElevator : public frc::Command {
+class ToggleExtender : public frc::Command {
  public:
-  ToggleElevator();
+  ToggleExtender();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

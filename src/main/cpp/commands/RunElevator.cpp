@@ -40,10 +40,10 @@ void RunElevator::Execute() {
 
   setPoint += speed * maxSpeed;
 
-  if (setPoint < LIFT_REVERSE_SENSOR_LIMIT){
-    setPoint = LIFT_REVERSE_SENSOR_LIMIT;
-  } else if (setPoint > LIFT_FORWARD_SENSOR_LIMIT){
-    setPoint = LIFT_FORWARD_SENSOR_LIMIT;
+  if (setPoint < ELEVATOR_REVERSE_SENSOR_LIMIT){
+    setPoint = ELEVATOR_REVERSE_SENSOR_LIMIT;
+  } else if (setPoint > ELEVATOR_FORWARD_SENSOR_LIMIT){
+    setPoint = ELEVATOR_FORWARD_SENSOR_LIMIT;
   }
 
   Robot::elevator.setElevatorSetPoint(setPoint);
