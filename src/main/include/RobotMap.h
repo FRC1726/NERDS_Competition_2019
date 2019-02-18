@@ -67,3 +67,6 @@ constexpr int GRABBER = 4;
 //Lift
 constexpr int LIFT_REVERSE_LIMIT_SWITCH = 4;
 constexpr int LIFT_MOTOR = 0;
+
+//Camera swivel
+constexpr int SERVO_PWM = 1; 

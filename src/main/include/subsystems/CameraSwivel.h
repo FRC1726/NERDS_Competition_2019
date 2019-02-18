@@ -7,19 +7,18 @@
 
 #pragma once
 
-#include <frc/Joystick.h>
-#include <frc/buttons/JoystickButton.h>
+#include <frc/commands/Subsystem.h>
+#include <frc/Servo.h>
 
-class OI {
- public:
-  OI();
-  double getAxis(int);
-  bool getDPad(int);
+class CameraSwivel : public frc::Subsystem {
+
+public:
+  CameraSwivel();
+  void InitDefaultCommand() override;
+
+  void SetServoAngle(double);
+  double GetServoAngle();
 
 private:
-  frc::Joystick driver;
-  frc::JoystickButton buttonA;
-  frc::JoystickButton buttonB;
-  frc::JoystickButton buttonX;
-  frc::JoystickButton buttonY;
+  frc::Servo swivel;
 };

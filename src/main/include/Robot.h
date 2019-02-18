@@ -16,6 +16,7 @@
 #include "subsystems/Drivetrain.h"
 #include "subsystems/Elevator.h"
 #include "subsystems/Lift.h"
+#include "subsystems/CameraSwivel.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -24,6 +25,7 @@ class Robot : public frc::TimedRobot {
   static Elevator elevator;
   static ConfigLoader loader;
   static Lift lift;
+  static CameraSwivel cameraswivel;
 
   void RobotInit() override;
   void RobotPeriodic() override;

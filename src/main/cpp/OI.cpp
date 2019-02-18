@@ -19,17 +19,20 @@
 #include "commands/ToggleGrabber.h"
 #include "commands/ToggleExtender.h"
 #include "commands/ToggleLauncher.h"
+#include "commands/ToggleSwivel.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER),
   buttonA(&driver, BUTTON_A),
   buttonB(&driver, BUTTON_B),
-  buttonX(&driver, BUTTON_X)
+  buttonX(&driver, BUTTON_X),
+  buttonY(&driver, BUTTON_Y)
 {
   //physical buttons
   buttonA.WhenPressed(new ToggleExtender());
   buttonX.WhenPressed(new ToggleGrabber());
   buttonB.WhenPressed(new ToggleLauncher());
+  buttonY.WhenPressed(new ToggleSwivel());
 
   // virtual buttons.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());

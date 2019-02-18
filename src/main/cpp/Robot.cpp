@@ -15,6 +15,7 @@ Drivetrain Robot::drivetrain;
 Elevator Robot::elevator;
 ConfigLoader Robot::loader;
 Lift Robot::lift;
+CameraSwivel Robot::cameraswivel;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
