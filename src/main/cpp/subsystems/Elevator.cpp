@@ -22,12 +22,18 @@ Elevator::Elevator() : Subsystem("Elevator"),
   intake.ConfigPeakOutputReverse(-1, ELEVATOR_TIMEOUT);
   intake.ConfigNominalOutputForward(0, ELEVATOR_TIMEOUT);
   intake.ConfigNominalOutputReverse(0, ELEVATOR_TIMEOUT);
-  intake.OverrideLimitSwitchesEnable(false);
+  intake.OverrideLimitSwitchesEnable(true);
   intake.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::CTRE_MagEncoder_Relative, ELEVATOR_CAN_PID_ID, ELEVATOR_TIMEOUT);
+  intake.ConfigClearPositionOnLimitR(true, ELEVATOR_TIMEOUT);
 
   setSensorLimits(ELEVATOR_REVERSE_SENSOR_LIMIT, ELEVATOR_FORWARD_SENSOR_LIMIT);
   intake.ConfigForwardSoftLimitEnable(true);
   intake.ConfigReverseSoftLimitEnable(true);
+  intake.SetSensorPhase(false);
+  intake.SetInverted(true);
+
+  intake.ConfigForwardLimitSwitchSource(ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector, ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen, ELEVATOR_TIMEOUT);
+  intake.ConfigReverseLimitSwitchSource(ctre::phoenix::motorcontrol::LimitSwitchSource_FeedbackConnector, ctre::phoenix::motorcontrol::LimitSwitchNormal_NormallyOpen, ELEVATOR_TIMEOUT);
 
   extender.Set(frc::DoubleSolenoid::kForward);
   launcher.Set(frc::DoubleSolenoid::kForward);
@@ -109,4 +115,8 @@ void Elevator::setSensorLimits(double reverse,double forward){
 
   intake.ConfigReverseSoftLimitThreshold(reverseTarget, ELEVATOR_TIMEOUT);
   intake.ConfigForwardSoftLimitThreshold(forwardTarget, ELEVATOR_TIMEOUT);
+}
+
+double Elevator::getElevatorPosition(){
+  return intake.GetSelectedSensorPosition(ELEVATOR_CAN_PID_ID);
 }

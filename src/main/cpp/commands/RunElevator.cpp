@@ -11,6 +11,8 @@
 #include "RobotMap.h"
 #include "config.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 RunElevator::RunElevator() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -29,6 +31,7 @@ void RunElevator::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void RunElevator::Execute() {
+  
   double maxSpeed = Robot::loader.getConfig(ELEVATOR_MAX_SPEED);
 
   double forward = Robot::oi.getAxis(AXIS_RIGHT_TRIGGER);
@@ -40,13 +43,17 @@ void RunElevator::Execute() {
 
   setPoint += speed * maxSpeed;
 
-  if (setPoint < ELEVATOR_REVERSE_SENSOR_LIMIT){
+  /*if (setPoint < ELEVATOR_REVERSE_SENSOR_LIMIT){
     setPoint = ELEVATOR_REVERSE_SENSOR_LIMIT;
   } else if (setPoint > ELEVATOR_FORWARD_SENSOR_LIMIT){
     setPoint = ELEVATOR_FORWARD_SENSOR_LIMIT;
   }
 
-  Robot::elevator.setElevatorSetPoint(setPoint);
+  Robot::elevator.setElevatorSetPoint(setPoint);*/
+
+  Robot::elevator.runMotor(speed * maxSpeed);
+  SmartDashboard::PutNumber("Debug/Elevator Position", Robot::elevator.getElevatorPosition());
+  SmartDashboard::PutNumber("Debug/Elevator Setpoint", setPoint);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -56,11 +63,13 @@ bool RunElevator::IsFinished() {
 
 // Called once after isFinished returns true
 void RunElevator::End() {
+  Robot::elevator.runMotor(0);
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void RunElevator::Interrupted() {
+  Robot::elevator.runMotor(0);
 
 }

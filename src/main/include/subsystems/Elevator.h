@@ -34,6 +34,7 @@ class Elevator : public frc::Subsystem {
 
   void setElevatorSetPoint(double);
   double getElevatorSetPoint();
+  double getElevatorPosition();
 
  private:
   void setSensorLimits(double, double);
