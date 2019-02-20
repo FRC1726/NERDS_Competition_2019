@@ -27,8 +27,8 @@ Elevator::Elevator() : Subsystem("Elevator"),
   intake.ConfigClearPositionOnLimitR(true, ELEVATOR_TIMEOUT);
 
   setSensorLimits(ELEVATOR_REVERSE_SENSOR_LIMIT, ELEVATOR_FORWARD_SENSOR_LIMIT);
-  intake.ConfigForwardSoftLimitEnable(true);
-  intake.ConfigReverseSoftLimitEnable(true);
+  intake.ConfigForwardSoftLimitEnable(false);
+  intake.ConfigReverseSoftLimitEnable(false);
   intake.SetSensorPhase(false);
   intake.SetInverted(true);
 
