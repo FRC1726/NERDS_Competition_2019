@@ -21,7 +21,7 @@ DeletePreferences::DeletePreferences() {
 // Called just before this Command runs the first time
 void DeletePreferences::Initialize() {
   std::string file = Robot::loader.getChosenFile();
-  if(file == "New File"){
+  if(file == "New"){
     frc::DriverStation::ReportError("Please Select a file to delete");
   } else{
     Robot::loader.deleteConfigFile(file);
