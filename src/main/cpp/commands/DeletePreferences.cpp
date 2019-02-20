@@ -5,45 +5,41 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SavePreferences.h"
+#include "commands/DeletePreferences.h"
 
 #include "Robot.h"
 #include "config.h"
+#include <string>
+#include <frc/DriverStation.h>
 
-#include <frc/smartdashboard/SmartDashboard.h>
-
-SavePreferences::SavePreferences() {
+DeletePreferences::DeletePreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   SetRunWhenDisabled(true);
-  frc::SmartDashboard::PutString("Preferences/New File Name", "default");
 }
 
 // Called just before this Command runs the first time
-void SavePreferences::Initialize() {
+void DeletePreferences::Initialize() {
   std::string file = Robot::loader.getChosenFile();
-  if (file == "New"){
-    std::string newFile = frc::SmartDashboard::GetString("Preferences/New File Name", "default.cfg");
-    while(newFile.find("/") != std::string::npos){
-      newFile.replace(1, 1, "_");
-    }
-    if (newFile.find(".cfg") == std::string::npos){
-        newFile.append(".cfg");
-    }
-    file = newFile;
+  if(file == "New File"){
+    frc::DriverStation::ReportError("Please Select a file to delete");
+  } else{
+    Robot::loader.deleteConfigFile(file);
   }
-  Robot::loader.saveConfigToFile(file, true);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SavePreferences::Execute() {}
+void DeletePreferences::Execute() {
+}
 
 // Make this return true when this Command no longer needs to run execute()
-bool SavePreferences::IsFinished() { return true; }
+bool DeletePreferences::IsFinished() { 
+  return true; 
+}
 
 // Called once after isFinished returns true
-void SavePreferences::End() {}
+void DeletePreferences::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void SavePreferences::Interrupted() {}
+void DeletePreferences::Interrupted() {}

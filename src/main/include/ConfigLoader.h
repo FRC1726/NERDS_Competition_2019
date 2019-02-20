@@ -26,6 +26,8 @@ class ConfigLoader {
   bool saveConfigToFile(std::string, bool);
   bool loadConfigFromFile(std::string, bool);
 
+  bool deleteConfigFile(std::string);
+
   std::string getChosenFile();
   
  private:

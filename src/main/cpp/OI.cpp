@@ -11,9 +11,11 @@
 
 #include "commands/LoadPreferences.h"
 #include "commands/SavePreferences.h"
+#include "commands/DeletePreferences.h"
 
 OI::OI() {
   // Process operator interface input here.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
   frc::SmartDashboard::PutData("Commands/Save Preferences", new SavePreferences());
+  frc::SmartDashboard::PutData("Commands/Delete Preferences", new DeletePreferences());
 }

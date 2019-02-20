@@ -83,6 +83,9 @@ bool ConfigLoader::saveConfigToFile(std::string filename, bool overwrite){
         frc::DriverStation::ReportError(error);
         return false;
     }
+
+    populateChoices();
+
     return true;
 }
 
@@ -91,7 +94,7 @@ bool ConfigLoader::loadConfigFromFile(std::string filename, bool overwrite){
     filepath.append(filename);
 
     if(!fileExists(filepath)){
-        frc::DriverStation::ReportError("Owo It seems the conig file doesn't exist");
+        frc::DriverStation::ReportError("It seems the config file doesn't exist");
        return false;
     }
 
@@ -106,7 +109,31 @@ bool ConfigLoader::loadConfigFromFile(std::string filename, bool overwrite){
 
     if(error){
         frc::DriverStation::ReportError(error);
+        return false;
     }
+
+     populateChoices();
+
+     return true;
+}
+
+bool ConfigLoader::deleteConfigFile(std::string fileName){
+    std::string filepath = "/home/lvuser/deploy/";
+    filepath.append(fileName);
+    if (fileExists(filepath)){
+        int status = std::remove(filepath.c_str());
+        if(status){
+            frc::DriverStation::ReportError("Could not delete old config file");
+            return false;
+        }
+    }else{
+        frc::DriverStation::ReportError("file doesn't exist");
+        return false;
+    }
+
+    populateChoices();
+
+    return true;
 }
 
 void ConfigLoader::printError(size_t line, const char* message){
