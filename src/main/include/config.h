@@ -43,4 +43,4 @@ const ParameterKey<double> ELEVATOR_MAX_SPEED = {"Elevator/Max Speed", 1};
 
 //Camera swivel preferences
 const ParameterKey<double> CAMERA_ANGLE_1 = {"Camera/Angle 1", 0};
-const ParameterKey<double> CAMERA_ANGLE_2 = {"Camera/angle 2", 90};
+const ParameterKey<double> CAMERA_ANGLE_2 = {"Camera/angle 2", 180};
