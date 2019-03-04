@@ -8,7 +8,11 @@
 #include "commands/DriveWithJoysticks.h"
 #include "Robot.h"
 #include "RobotMap.h"
+#include "subsystems/CameraSwivel.h"
+
+#include <frc/commands/Subsystem.h>
 #include <cmath>
+#include <frc/Servo.h>
 
 DriveWithJoysticks::DriveWithJoysticks() {
   // Use Requires() here to declare subsystem dependencies
@@ -25,20 +29,27 @@ void DriveWithJoysticks::Initialize() {
 void DriveWithJoysticks::Execute() {
   double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
-  
-  speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
-  turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+  double swivelCheck = Robot::loader.getConfig(CAMERA_ANGLE_1);
+  if(swivelCheck == 0){
+    speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+    turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
-  speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
-  turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
+    speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+    turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
 
-  bool reverse = Robot::loader.getConfig(JOYSTICK_REVERSE_FORWARD);
-  if(reverse){
-    speed = -speed;
+    bool reverse = Robot::loader.getConfig(JOYSTICK_REVERSE_FORWARD);
+    if(reverse){
+      speed = -speed;
+    }
+  }else{
+      Robot::drivetrain.arcadeDrive(speed, turn);
+    speed = applyDeadZone(-speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+    turn = applyDeadZone(-turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+
+    speed = driveProfile(-speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
+    turn = driveProfile(-turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));
+    }
   }
-
-  Robot::drivetrain.arcadeDrive(speed, turn);
-}
 
 // Make this return true when this Command no longer needs to run execute()
 bool DriveWithJoysticks::IsFinished() { 

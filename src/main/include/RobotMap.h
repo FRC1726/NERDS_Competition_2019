@@ -15,10 +15,10 @@ constexpr double ELEVATOR_FORWARD_SENSOR_LIMIT = 28;
 constexpr double ELEVATOR_REVERSE_SENSOR_LIMIT = 0;
 
 //drivetrain
-constexpr int DRIVE_FRONT_LEFT = 3;
-constexpr int DRIVE_BACK_LEFT = 4;
-constexpr int DRIVE_FRONT_RIGHT = 5;
-constexpr int DRIVE_BACK_RIGHT = 6;
+constexpr int DRIVE_FRONT_LEFT = 0;
+constexpr int DRIVE_BACK_LEFT = 1;
+constexpr int DRIVE_FRONT_RIGHT = 3;
+constexpr int DRIVE_BACK_RIGHT = 2;
 constexpr int DRIVE_TIMEOUT = 10;
 
 //encoders
