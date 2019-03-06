@@ -17,11 +17,13 @@ SavePreferences::SavePreferences() {
   // eg. Requires(Robot::chassis.get());
   SetRunWhenDisabled(true);
   frc::SmartDashboard::PutString("Preferences/New File Name", "default");
+  frc::SmartDashboard::PutBoolean("Preferences/Overwrite", false);
 }
 
 // Called just before this Command runs the first time
 void SavePreferences::Initialize() {
   std::string file = Robot::loader.getChosenFile();
+  bool overwrite = frc::SmartDashboard::GetBoolean("Preferences/Overwrite", false);
   if (file == "New"){
     std::string newFile = frc::SmartDashboard::GetString("Preferences/New File Name", "default.cfg");
     while(newFile.find("/") != std::string::npos){
@@ -32,7 +34,8 @@ void SavePreferences::Initialize() {
     }
     file = newFile;
   }
-  Robot::loader.saveConfigToFile(file, true);
+
+  Robot::loader.saveConfigToFile(file, overwrite);
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -10,15 +10,19 @@
 #include "Robot.h"
 #include "config.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 LoadPreferences::LoadPreferences() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   SetRunWhenDisabled(true);
+  frc::SmartDashboard::PutBoolean("Preferences/Overwrite", false);
 }
 
 // Called just before this Command runs the first time
 void LoadPreferences::Initialize() {
-  Robot::loader.loadConfigFromFile(Robot::loader.getChosenFile(), true);
+  bool overwrite = frc::SmartDashboard::GetBoolean("Preferences/Overwrite", false);
+  Robot::loader.loadConfigFromFile(Robot::loader.getChosenFile(), overwrite);
 }
 
 // Called repeatedly when this Command is scheduled to run
