@@ -25,7 +25,7 @@ void DriveWithJoysticks::Initialize() {
 void DriveWithJoysticks::Execute() {
   double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
-  
+
   speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
   turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
 
@@ -34,6 +34,11 @@ void DriveWithJoysticks::Execute() {
 
   bool reverse = Robot::loader.getConfig(JOYSTICK_REVERSE_FORWARD);
   if(reverse){
+    speed = -speed;
+  }
+
+  double angle1 = Robot::loader.getConfig(CAMERA_ANGLE_1);
+  if(angle1 == Robot::cameraswivel.GetServoAngle()){
     speed = -speed;
   }
 
