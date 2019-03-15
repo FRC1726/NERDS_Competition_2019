@@ -50,6 +50,7 @@ void LoadPreferences::Initialize() {
   Robot::loader.savePreference(ELEVATOR_D);
   Robot::loader.savePreference(ELEVATOR_F);
   Robot::loader.savePreference(ELEVATOR_MAX_SPEED);
+  Robot::loader.savePreference(ELEVATOR_DEADZONE);
 
   //Camera
   Robot::loader.savePreference(CAMERA_ANGLE_1);

@@ -36,6 +36,15 @@ void RunElevator::Execute() {
 
   double forward = Robot::oi.getAxis(AXIS_RIGHT_TRIGGER);
   double backward = Robot::oi.getAxis(AXIS_LEFT_TRIGGER);
+  double deadzone = Robot::loader.getConfig(ELEVATOR_DEADZONE);
+
+  if(forward < deadzone){
+    forward = 0;
+  }
+
+  if(backward < deadzone){
+    backward = 0;
+  }
 
   double speed = forward - backward;
 
@@ -43,15 +52,15 @@ void RunElevator::Execute() {
 
   setPoint += speed * maxSpeed;
 
-  /*if (setPoint < ELEVATOR_REVERSE_SENSOR_LIMIT){
+  if (setPoint < ELEVATOR_REVERSE_SENSOR_LIMIT){
     setPoint = ELEVATOR_REVERSE_SENSOR_LIMIT;
   } else if (setPoint > ELEVATOR_FORWARD_SENSOR_LIMIT){
     setPoint = ELEVATOR_FORWARD_SENSOR_LIMIT;
   }
 
-  Robot::elevator.setElevatorSetPoint(setPoint);*/
+  Robot::elevator.setElevatorSetPoint(setPoint);
 
-  Robot::elevator.runMotor(speed * maxSpeed);
+  //Robot::elevator.runMotor(speed * maxSpeed);
   SmartDashboard::PutNumber("Debug/Elevator Position", Robot::elevator.getElevatorPosition());
   SmartDashboard::PutNumber("Debug/Elevator Setpoint", setPoint);
 }
@@ -63,13 +72,13 @@ bool RunElevator::IsFinished() {
 
 // Called once after isFinished returns true
 void RunElevator::End() {
-  Robot::elevator.runMotor(0);
+  //Robot::elevator.runMotor(0);
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void RunElevator::Interrupted() {
-  Robot::elevator.runMotor(0);
+  //Robot::elevator.runMotor(0);
 
 }

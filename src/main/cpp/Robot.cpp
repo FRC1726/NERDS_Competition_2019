@@ -9,6 +9,7 @@
 
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <cameraserver/CameraServer.h>
 
 OI Robot::oi;
 Drivetrain Robot::drivetrain;
@@ -19,6 +20,7 @@ CameraSwivel Robot::cameraswivel;
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+  frc::CameraServer::GetInstance()->StartAutomaticCapture();
 }
 
 /**
