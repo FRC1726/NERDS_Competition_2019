@@ -11,6 +11,8 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <cameraserver/CameraServer.h>
 
+#include "commands/ElevatorReset.h"
+
 OI Robot::oi;
 Drivetrain Robot::drivetrain;
 Elevator Robot::elevator;
@@ -21,6 +23,8 @@ CameraSwivel Robot::cameraswivel;
 void Robot::RobotInit() {
   frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
   frc::CameraServer::GetInstance()->StartAutomaticCapture();
+  elevator_reset = new ElevatorReset();
+  elevator_reset->Start();
 }
 
 /**

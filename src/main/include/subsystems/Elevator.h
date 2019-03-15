@@ -36,6 +36,9 @@ class Elevator : public frc::Subsystem {
   double getElevatorSetPoint();
   double getElevatorPosition();
 
+  bool GetReverseLimitSwitch();
+  void SetEncoderPosition(int);
+
  private:
   void setSensorLimits(double, double);
 
