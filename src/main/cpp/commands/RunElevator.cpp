@@ -58,7 +58,9 @@ void RunElevator::Execute() {
     setPoint = ELEVATOR_FORWARD_SENSOR_LIMIT;
   }
 
-  Robot::elevator.setElevatorSetPoint(setPoint);
+  if(!Robot::elevator.getExtender()){
+    Robot::elevator.setElevatorSetPoint(setPoint);
+  }
 
   //Robot::elevator.runMotor(speed * maxSpeed);
   SmartDashboard::PutNumber("Debug/Elevator Position", Robot::elevator.getElevatorPosition());
