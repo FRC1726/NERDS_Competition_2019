@@ -9,6 +9,7 @@
 #include <NetworkTables/NetworkTableInstance.h>
 #include <wpi/Twine.h>
 #include <sstream>
+#include <string>
 
 #include "ConfigLoader.h"
 
@@ -19,7 +20,8 @@ ConfigLoader::ConfigLoader() {
 double ConfigLoader::getConfig(ParameterKey<double> config) {
     //check if exist, if not throws warning and returns default expression
     if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -double ");
+        std::string error = "The key you were looking for doesn't exist " + config.key + " type: double";
+        frc::DriverStation::ReportWarning(error);
     }
 
     return frc::Preferences::GetInstance()->GetDouble(config.key, config.value);
@@ -28,7 +30,8 @@ double ConfigLoader::getConfig(ParameterKey<double> config) {
 int ConfigLoader::getConfig(ParameterKey<int> config) {
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -integer");
+        std::string error = "The key you were looking for doesn't exist " + config.key + " type: int";
+        frc::DriverStation::ReportWarning(error);    
     }
 
     return frc::Preferences::GetInstance()->GetInt(config.key, config.value);
@@ -37,7 +40,8 @@ int ConfigLoader::getConfig(ParameterKey<int> config) {
 bool ConfigLoader::getConfig(ParameterKey<bool> config){
 
      if(!frc::Preferences::GetInstance()->ContainsKey(config.key)){
-        frc::DriverStation::ReportWarning("OwO it appeaws that the key you wewe wooking fow doesn't exist. Ow- we substituted ouw own! -boolean");
+        std::string error = "The key you were looking for doesn't exist " + config.key + " type: boolean";
+        frc::DriverStation::ReportWarning(error);    
     }
 
     return frc::Preferences::GetInstance()->GetBoolean(config.key, config.value);
