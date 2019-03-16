@@ -21,8 +21,8 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   right(frontRight, backRight),
   drive(left, right),
   encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
-  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
-  gyro(SerialPort::Port::kUSB1)
+  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true)/*,
+  gyro(SerialPort::Port::kUSB1)*/
 {
   setUpMotors(frontLeft);
   setUpMotors(frontRight);
@@ -34,7 +34,7 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   encoderLeft.SetDistancePerPulse(linearDistance);
   encoderRight.SetDistancePerPulse(linearDistance);
 
-  frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
+  //frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -66,7 +66,8 @@ double Drivetrain::getDistance(int encoder){
 }
 
 double Drivetrain::getAngle(){
-  return gyro.GetYaw();
+  //return gyro.GetYaw();
+  return 0;
 }
 
 void Drivetrain::setUpMotors(ctre::phoenix::motorcontrol::can::WPI_VictorSPX &motor){
