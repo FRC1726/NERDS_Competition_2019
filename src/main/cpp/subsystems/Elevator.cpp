@@ -10,6 +10,7 @@
 #include "Commands/RunElevator.h"
 
 #include <ctre/phoenix/motorcontrol/FeedbackDevice.h>
+#include <ctre/phoenix/MotorControl/SensorCollection.h>
 
 
 Elevator::Elevator() : Subsystem("Elevator"),
@@ -45,7 +46,6 @@ Elevator::Elevator() : Subsystem("Elevator"),
 void Elevator::InitDefaultCommand() {
   // Set the default command for a subsystem here. Just Do It!!!
   // SetDefaultCommand(new MySpecialCommand());
-  SetDefaultCommand(new RunElevator());
 }
 
 // Put methods for controlling this subsystem
@@ -120,4 +120,8 @@ void Elevator::setSensorLimits(double reverse,double forward){
 
 double Elevator::getElevatorPosition(){
   return intake.GetSelectedSensorPosition(ELEVATOR_CAN_PID_ID);
+}
+
+bool Elevator::getLimitSwitch(){
+  return intake.GetSensorCollection().IsRevLimitSwitchClosed();
 }

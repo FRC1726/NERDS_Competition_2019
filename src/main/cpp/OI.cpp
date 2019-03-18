@@ -8,6 +8,7 @@
 #include "OI.h"
 
 #include "RobotMap.h"
+#include "Robot.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DriverStation.h>
 
@@ -20,19 +21,25 @@
 #include "commands/ToggleExtender.h"
 #include "commands/ToggleLauncher.h"
 #include "commands/ToggleSwivel.h"
+#include "commands/SetElevator.h"
+#include "commands/ResetElevator.h"
 
 OI::OI() :
   driver(JOYSTICK_DRIVER),
   buttonA(&driver, BUTTON_A),
   buttonB(&driver, BUTTON_B),
   buttonX(&driver, BUTTON_X),
-  buttonY(&driver, BUTTON_Y)
+  buttonY(&driver, BUTTON_Y),
+  buttonRB(&driver, BUTTON_BUMPER_RIGHT),
+  buttonLB(&driver, BUTTON_BUMPER_LEFT)
 {
   //physical buttons
   buttonA.WhenPressed(new ToggleExtender());
   buttonX.WhenPressed(new ToggleGrabber());
   buttonB.WhenPressed(new ToggleLauncher());
   buttonY.WhenPressed(new ToggleSwivel());
+  buttonLB.WhenPressed(new SetElevator(Robot::loader.getConfig(ELEVATOR_UPPER)));
+  buttonRB.WhenPressed(new SetElevator(Robot::loader.getConfig(ELEVATOR_LOWER)));
 
   // virtual buttons.
   frc::SmartDashboard::PutData("Commands/Load Preferences", new LoadPreferences());
@@ -40,6 +47,7 @@ OI::OI() :
   frc::SmartDashboard::PutData("Commands/Turn To Heading", new TurnToHeading(90));
   frc::SmartDashboard::PutData("Commands/Turn To Angle", new TurnByAngle(90));
   frc::SmartDashboard::PutData("Commands/Drive Straight", new DriveStraight(24));
+  frc::SmartDashboard::PutData("commands/Reset Elevator", new ResetElevator());
 }
 
 double OI::getAxis(int axis){

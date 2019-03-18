@@ -41,6 +41,8 @@ const ParameterKey<double> ELEVATOR_D = {"Elevator/D", 0};
 const ParameterKey<double> ELEVATOR_F = {"Elevator/F", 1};
 const ParameterKey<double> ELEVATOR_MAX_SPEED = {"Elevator/Max Speed", 1};
 const ParameterKey<double> ELEVATOR_DEADZONE = {"Elevator/Deadzone", 0.05};
+const ParameterKey<double> ELEVATOR_UPPER = {"Elevator/Upper", 26};
+const ParameterKey<double> ELEVATOR_LOWER = {"Elevator/Lower", 0};
 
 //Camera swivel preferences
 const ParameterKey<double> CAMERA_ANGLE_1 = {"Camera/Angle 1", 0};

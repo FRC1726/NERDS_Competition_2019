@@ -18,9 +18,6 @@ class Elevator : public frc::Subsystem {
   void InitDefaultCommand() override;
   void runMotor(double);
 
-  void setElevator(bool);
-  bool getElevator();
-
   void setGrabber(bool);
   bool getGrabber();
 
@@ -36,6 +33,7 @@ class Elevator : public frc::Subsystem {
   double getElevatorSetPoint();
   double getElevatorPosition();
 
+  bool getLimitSwitch();
  private:
   void setSensorLimits(double, double);
 
