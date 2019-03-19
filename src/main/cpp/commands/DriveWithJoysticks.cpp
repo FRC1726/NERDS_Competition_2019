@@ -10,10 +10,24 @@
 #include "RobotMap.h"
 #include <cmath>
 
+#include <networktables/NetworkTable.h>
+#include <networktables/NetworkTableInstance.h>
+#include <networktables/EntryListenerFlags.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
 DriveWithJoysticks::DriveWithJoysticks() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(&Robot::drivetrain);
+
+  auto table_instance = nt::NetworkTableInstance::GetDefault();
+  auto table = table_instance.GetTable("");
+
+  deadzone = 0;
+
+  handler = table->AddEntryListener(JOYSTICK_DRIVE_DEADZONE.key, [&] (auto table, auto key, auto entry, auto value, auto flags) ->void {
+    deadzone = value->GetDouble();
+  }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
 }
 
 // Called just before this Command runs the first time
@@ -23,11 +37,13 @@ void DriveWithJoysticks::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoysticks::Execute() {
+  SmartDashboard::PutNumber("Joystick/Deadzone", deadzone);
+
   double speed = Robot::oi.getAxis(AXIS_LEFT_Y);
   double turn = Robot::oi.getAxis(AXIS_RIGHT_X);
-  
-  speed = applyDeadZone(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
-  turn = applyDeadZone(turn, Robot::loader.getConfig(JOYSTICK_DRIVE_DEADZONE));
+
+  speed = applyDeadZone(speed, deadzone);
+  turn = applyDeadZone(turn, deadzone);
 
   speed = driveProfile(speed, Robot::loader.getConfig(JOYSTICK_DRIVE_MAX), Robot::loader.getConfig(JOYSTICK_DRIVE_MIN));
   turn = driveProfile(turn, Robot::loader.getConfig(JOYSTICK_TURN_MAX), Robot::loader.getConfig(JOYSTICK_TURN_MIN));

@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <networktables/NetworkTable.h>
 
 class DriveWithJoysticks : public frc::Command {
  public:
@@ -20,4 +21,8 @@ class DriveWithJoysticks : public frc::Command {
 
   double applyDeadZone(double, double);
   double driveProfile(double, double, double);
+
+  private:
+  double deadzone;
+  NT_EntryListener handler;
 };
