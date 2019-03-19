@@ -25,6 +25,10 @@ class ConfigLoader {
   bool saveConfigToFile(std::string);
   bool loadConfigFromFile(std::string);
 
+  void addListener(ParameterKey<double>, double*);
+  void addListener(ParameterKey<int>, int*);
+  void addListener(ParameterKey<bool>, bool*);
+
  private:
 	static void printError(size_t, const char*);
 };

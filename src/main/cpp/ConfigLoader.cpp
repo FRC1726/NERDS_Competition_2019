@@ -83,6 +83,10 @@ bool ConfigLoader::loadConfigFromFile(std::string filename){
     }
 }
 
+void ConfigLoader::addListener(ParameterKey<double> parameter, double* value){
+    
+}
+
 void ConfigLoader::printError(size_t line, const char* message){
     std::stringstream msgStream;
     msgStream << line << " " << message;
