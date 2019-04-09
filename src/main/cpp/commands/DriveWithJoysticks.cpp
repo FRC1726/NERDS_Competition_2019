@@ -9,6 +9,7 @@
 #include "Robot.h"
 #include "RobotMap.h"
 #include <cmath>
+#include <iostream>
 
 #include <networktables/NetworkTable.h>
 #include <networktables/NetworkTableInstance.h>
@@ -21,12 +22,13 @@ DriveWithJoysticks::DriveWithJoysticks() {
   Requires(&Robot::drivetrain);
 
   auto table_instance = nt::NetworkTableInstance::GetDefault();
-  auto table = table_instance.GetTable("");
+  auto table = table_instance.GetTable("Preferences");
 
   deadzone = 0;
 
   handler = table->AddEntryListener(JOYSTICK_DRIVE_DEADZONE.key, [&] (auto table, auto key, auto entry, auto value, auto flags) ->void {
-    deadzone = value->GetDouble();
+    this->deadzone = value->GetDouble();
+    std::cout << "It worked!";
   }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
 }
 
