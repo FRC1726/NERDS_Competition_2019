@@ -10,21 +10,21 @@
 #include "Commands/RunIntake.h"
 
 
-Elevator::Elevator() : Subsystem("Elevator"),
+Elevator::Elevator() : Subsystem("Elevator")/*,
   intake(LIFT_CAN_MOTOR),
   grabber(LIFT_SOLENOID),
   elevatorLeft(FIRST_STAGE_A, FIRST_STAGE_B),
-  elevatorRight(SECOND_STAGE_A, SECOND_STAGE_B)
+  elevatorRight(SECOND_STAGE_A, SECOND_STAGE_B)*/
 {
-  intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
+  /*intake.ConfigPeakOutputForward(1, LIFT_TIMEOUT);
   intake.ConfigPeakOutputReverse(-1, LIFT_TIMEOUT);
   intake.ConfigNominalOutputForward(0, LIFT_TIMEOUT);
   intake.ConfigNominalOutputReverse(0, LIFT_TIMEOUT);
-  intake.OverrideLimitSwitchesEnable(false);
+  intake.OverrideLimitSwitchesEnable(false);*/
 
-  elevatorLeft.Set(frc::DoubleSolenoid::kForward);
+  /*elevatorLeft.Set(frc::DoubleSolenoid::kForward);
   elevatorRight.Set(frc::DoubleSolenoid::kForward);
-  elevatorState = true;
+  elevatorState = true;*/
 }
 
 void Elevator::InitDefaultCommand() {
@@ -37,11 +37,11 @@ void Elevator::InitDefaultCommand() {
 // here. Call these from Commands.
 
 void Elevator::runMotor(double speed){
-  intake.Set(speed);
+  //intake.Set(speed);
 }
 
 void Elevator::setElevator(bool enable){
-  if(enable){
+  /*if(enable){
     elevatorLeft.Set(frc::DoubleSolenoid::kForward);
     elevatorRight.Set(frc::DoubleSolenoid::kForward);
     elevatorState = true;
@@ -49,17 +49,17 @@ void Elevator::setElevator(bool enable){
     elevatorLeft.Set(frc::DoubleSolenoid::kReverse);
     elevatorRight.Set(frc::DoubleSolenoid::kReverse);
     elevatorState = false;
-  }
+  }*/
 }
 
 bool Elevator::getElevator(){
-  return elevatorState;
+  //return elevatorState;
 }
 
 void Elevator::setGrabber(bool enable){
-  grabber.Set(enable);
+  //grabber.Set(enable);
 }
 
 bool Elevator::getGrabber(){
-  return grabber.Get();
+  //return grabber.Get();
 }

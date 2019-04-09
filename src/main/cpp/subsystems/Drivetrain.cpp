@@ -21,15 +21,15 @@ Drivetrain::Drivetrain() : Subsystem("Drivetrain"),
   right(frontRight, backRight),
   drive(left, right),
   encoderRight(ENCODER_RIGHT_A, ENCODER_RIGHT_B),
-  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true),
-  gyro(SerialPort::Port::kUSB1)
+  encoderLeft(ENCODER_LEFT_A, ENCODER_LEFT_B, true)/*,
+  gyro(SerialPort::Port::kUSB1)*/
 {
   double angularDistance = (360 / PULSES_PER_REVOLUTION) * GEARING_RATIO;
   double linearDistance = PI / 60;
   encoderLeft.SetDistancePerPulse(linearDistance);
   encoderRight.SetDistancePerPulse(linearDistance);
 
-  frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
+  //frc::SmartDashboard::PutData("Sensor/Gyro", &gyro);
 }
 
 void Drivetrain::InitDefaultCommand() {
@@ -61,5 +61,5 @@ double Drivetrain::getDistance(int encoder){
 }
 
 double Drivetrain::getAngle(){
-  return gyro.GetYaw();
+  //return gyro.GetYaw();
 }

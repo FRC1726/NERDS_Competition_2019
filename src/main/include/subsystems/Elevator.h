@@ -23,11 +23,11 @@ class Elevator : public frc::Subsystem {
   bool getGrabber();
 
  private:
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX intake;
+  //ctre::phoenix::motorcontrol::can::WPI_VictorSPX intake;
 
-  frc::Solenoid grabber;
+  //frc::Solenoid grabber;
 
-  frc::DoubleSolenoid elevatorLeft;
-  frc::DoubleSolenoid elevatorRight;
+  //frc::DoubleSolenoid elevatorLeft;
+  //frc::DoubleSolenoid elevatorRight;
   bool elevatorState;
 };

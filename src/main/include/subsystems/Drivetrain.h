@@ -40,5 +40,5 @@ private:
   frc::Encoder encoderLeft;
   frc::Encoder encoderRight;
 
-  AHRS gyro;
+  //AHRS gyro;
 };
