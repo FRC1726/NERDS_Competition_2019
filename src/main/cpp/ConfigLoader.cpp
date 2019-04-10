@@ -4,13 +4,16 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+
+#include "ConfigLoader.h"
+
+#include <sstream>
+
 #include <frc/Preferences.h>
 #include <frc/DriverStation.h>
 #include <NetworkTables/NetworkTableInstance.h>
+#include <networktables/EntryListenerFlags.h>
 #include <wpi/Twine.h>
-#include <sstream>
-
-#include "ConfigLoader.h"
 
 ConfigLoader::ConfigLoader() {
 
@@ -79,8 +82,55 @@ bool ConfigLoader::loadConfigFromFile(std::string filename){
     }
 }
 
-void ConfigLoader::addListener(ParameterKey<double> parameter, double* value){
+void ConfigLoader::addListener(ParameterKey<double> parameter, double* variable){   
+    if(!variable) {
+        std::stringstream error;
+        error << parameter.key << " (double) does not have a valid pointer";
+
+        frc::DriverStation::ReportError(error.str());
+        return;
+    }
+
+    auto table_instance = nt::NetworkTableInstance::GetDefault();
+    auto table = table_instance.GetTable("Preferences");
+
+    table->AddEntryListener(parameter.key, [variable] (auto table, auto key, auto entry, auto value, auto flags) ->void {
+        *variable = value->GetDouble();
+    }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
+}
+
+void ConfigLoader::addListener(ParameterKey<int> parameter, int* variable){
+    if(!variable) {
+        std::stringstream error;
+        error << parameter.key << " (int) does not have a valid pointer";
+
+        frc::DriverStation::ReportError(error.str());
+        return;
+    }
     
+    auto table_instance = nt::NetworkTableInstance::GetDefault();
+    auto table = table_instance.GetTable("Preferences");
+
+    table->AddEntryListener(parameter.key, [variable] (auto table, auto key, auto entry, auto value, auto flags) ->void {
+        *variable = value->GetDouble();
+    }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
+}
+
+void ConfigLoader::addListener(ParameterKey<bool> parameter, bool* variable){
+    if(!variable) {
+        std::stringstream error;
+        error << parameter.key << " (bool) does not have a valid pointer";
+
+        frc::DriverStation::ReportError(error.str());
+        return;
+    }
+
+    auto table_instance = nt::NetworkTableInstance::GetDefault();
+    auto table = table_instance.GetTable("Preferences");
+
+    table->AddEntryListener(parameter.key, [variable] (auto table, auto key, auto entry, auto value, auto flags) ->void {
+        *variable = value->GetBoolean();
+    }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
 }
 
 void ConfigLoader::printError(size_t line, const char* message){

@@ -26,9 +26,11 @@ DriveWithJoysticks::DriveWithJoysticks() {
 
   deadzone = 0;
 
-  table->AddEntryListener(JOYSTICK_DRIVE_DEADZONE.key, [&] (auto table, auto key, auto entry, auto value, auto flags) ->void {
+  /*table->AddEntryListener(JOYSTICK_DRIVE_DEADZONE.key, [&] (auto table, auto key, auto entry, auto value, auto flags) ->void {
     this->deadzone = value->GetDouble();
-  }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);
+  }, nt::EntryListenerFlags::kUpdate | nt::EntryListenerFlags::kNew);*/
+
+  Robot::loader.addListener(JOYSTICK_DRIVE_DEADZONE, &this->deadzone);
 }
 
 // Called just before this Command runs the first time
