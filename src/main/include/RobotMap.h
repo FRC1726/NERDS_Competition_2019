@@ -70,3 +70,11 @@ constexpr int LIFT_MOTOR = 0;
 
 //Camera swivel
 constexpr int SERVO_PWM = 1; 
+
+//DONT ASK ANY QUESTIONS-Luke ;)
+constexpr int AVOGADROS_NUMBER = 6.022;
+constexpr int SPEED_OF_LIGHT = 299792458;
+constexpr int MEANING_OF_LIFE = 42;
+constexpr int JAMES_BOND = 007;
+constexpr int SPARTA = 300;
+
